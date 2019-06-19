@@ -35,5 +35,10 @@ namespace ETModel
 		 public const ushort G2M_CreateUnit = 1031;
 		 public const ushort M2G_CreateUnit = 1032;
 		 public const ushort G2M_SessionDisconnect = 1033;
-	}
+
+        ///20190613
+        public const ushort M2M_CreateEnemyUnit = 8118;
+        public const ushort M2M_GetEnemyUnit = 8119;
+
+    }
 }

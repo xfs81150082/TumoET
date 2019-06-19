@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using ETModel;
 using PF;
 using UnityEngine;
@@ -45,8 +46,22 @@ namespace ETHotfix
 				
 				
 				reply(response);
-			}
-			catch (Exception e)
+
+                #region ///20190613 通知map 广播刷新小怪 NPC Enemy unit  
+                
+                Console.WriteLine(" G2M_CreateUnitHandler-51: " + "通知 map服务器 向客户端 刷新小怪");
+
+                IPEndPoint mapAddress = StartConfigComponent.Instance.MapConfigs[0].GetComponent<InnerConfig>().IPEndPoint;
+                Session mapSession = Game.Scene.GetComponent<NetInnerComponent>().Get(mapAddress);
+                mapSession.Send(new M2M_GetEnemyUnit() { playerUnitId = unit.Id });
+
+                Console.WriteLine(" G2M_CreateUnitHandler-51: " + "通知 map服务器 向客户端 刷新 NPC");
+
+
+                #endregion
+
+            }
+            catch (Exception e)
 			{
 				ReplyError(response, e, reply);
 			}

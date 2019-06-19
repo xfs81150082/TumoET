@@ -48,6 +48,13 @@ namespace ETModel
 	[Message(OuterOpcode.M2C_Reload)]
 	public partial class M2C_Reload : IResponse {}
 
+    #region ///20190613
+    [Message(OuterOpcode.M2C_GetEnemyUnits)]
+    public partial class M2C_GetEnemyUnits : IActorMessage { }
+
+
+    #endregion
+
 }
 namespace ETModel
 {
@@ -68,5 +75,15 @@ namespace ETModel
 		 public const ushort G2C_Test = 113;
 		 public const ushort C2M_Reload = 114;
 		 public const ushort M2C_Reload = 115;
-	}
+
+        #region
+        public const ushort M2C_GetEnemyUnits = 588;
+
+
+
+
+        #endregion
+
+
+    }
 }

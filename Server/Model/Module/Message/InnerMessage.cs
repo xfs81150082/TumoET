@@ -378,4 +378,26 @@ namespace ETModel
 
 	}
 
+
+    #region ///20190613
+
+    [Message(InnerOpcode.M2M_CreateEnemyUnit)]
+    public partial class M2M_CreateEnemyUnit : IRequest
+    {
+        public int RpcId { get; set; }
+
+        public long Count { get; set; }
+    }
+
+    [Message(InnerOpcode.M2M_GetEnemyUnit)]
+    public partial class M2M_GetEnemyUnit : IRequest
+    {
+        public int RpcId { get; set; }
+
+        public long playerUnitId { get; set; }
+    }
+
+
+    #endregion
+
 }

@@ -124,7 +124,15 @@ namespace App
 						Game.Scene.AddComponent<PlayerComponent>();
 						Game.Scene.AddComponent<UnitComponent>();
 
-						Game.Scene.AddComponent<ConsoleComponent>();
+                        #region ///20190613
+                        Console.WriteLine(" 内网： "+innerConfig.Address + " 外网： " + outerConfig.Address);
+                        Game.Scene.AddComponent<EnemyComponent>();
+                        Game.Scene.AddComponent<EnemyUnitComponent>();
+
+
+                        #endregion
+
+                        Game.Scene.AddComponent<ConsoleComponent>();
 						// Game.Scene.AddComponent<HttpComponent>();
 						break;
 					case AppType.Benchmark:

@@ -28,8 +28,17 @@ namespace ETModel
 				Game.Scene.AddComponent<UnitComponent>();
 				Game.Scene.AddComponent<UIComponent>();
 
-				// 下载ab包
-				await BundleHelper.DownloadBundle();
+                #region ///20190613
+                Game.Scene.AddComponent<EnemyComponent>();
+                Game.Scene.AddComponent<EnemyUnitComponent>();
+
+
+
+                #endregion
+
+
+                // 下载ab包
+                await BundleHelper.DownloadBundle();
 
 				Game.Hotfix.LoadHotfixAssembly();
 
