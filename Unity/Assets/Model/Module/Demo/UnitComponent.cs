@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace ETModel
 {
@@ -11,8 +12,27 @@ namespace ETModel
 			self.Awake();
 		}
 	}
-	
-	public class UnitComponent: Component
+
+    [ObjectSystem]
+    public class UnitComponentChangeSystem : ChangeSystem<UnitComponent>
+    {
+        public override void Change(UnitComponent self)
+        {
+            self.Change();
+        }
+    }
+
+    [ObjectSystem]
+    public class UnitComponentUpdateSystem : UpdateSystem<UnitComponent>
+    {
+        public override void Update(UnitComponent self)
+        {
+            self.Update();
+        }       
+    }
+
+
+    public class UnitComponent: Component
 	{
 		public static UnitComponent Instance { get; private set; }
 
@@ -25,7 +45,27 @@ namespace ETModel
 			Instance = this;
 		}
 
-		public override void Dispose()
+        public void Change()
+        {
+            if (MyUnit != null)
+            {
+                //ETModel.Game.EventSystem.Awake<Unit>(ETModel.Game.Scene.GetComponent<CameraComponent>(), MyUnit);      //将参数unit 传给组件CameraComponent awake方法
+                Debug.Log(" UnitComponent-53-Change: " + MyUnit.Id);
+            }
+        }
+
+        public void Update()
+        {
+            if (MyUnit != null)
+            {
+                //ETModel.Game.EventSystem.Awake<Unit>(ETModel.Game.Scene.GetComponent<CameraComponent>(), MyUnit);      //将参数unit 传给组件CameraComponent awake方法
+                //Debug.Log(" UnitComponent-61: " + MyUnit.Id);
+            }
+            //Debug.Log(" UnitComponent-63: " + MyUnit.Id);
+
+        }
+
+        public override void Dispose()
 		{
 			if (this.IsDisposed)
 			{

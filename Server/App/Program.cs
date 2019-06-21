@@ -114,9 +114,15 @@ namespace App
 						Game.Scene.AddComponent<AppManagerComponent>();
 						Game.Scene.AddComponent<RealmGateAddressComponent>();
 						Game.Scene.AddComponent<GateSessionKeyComponent>();
-						
-						// 配置管理
-						Game.Scene.AddComponent<ConfigComponent>();
+
+                        #region ///20190621
+                        ETModel.Game.Scene.AddComponent<NumericWatcherComponent>();     //创建数值组件NumericWatcherComponent
+
+
+                        #endregion
+
+                        // 配置管理
+                        Game.Scene.AddComponent<ConfigComponent>();
 						
 						// recast寻路组件
 						Game.Scene.AddComponent<PathfindingComponent>();

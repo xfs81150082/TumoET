@@ -7,9 +7,9 @@
 		{
 			self.Awake(a);
 		}
-	}
+	} 
 
-	public sealed class Player : Entity
+    public sealed class Player : Entity
 	{
 		public string Account { get; private set; }
 		
@@ -29,5 +29,7 @@
 
 			base.Dispose();
 		}
+
+
 	}
 }

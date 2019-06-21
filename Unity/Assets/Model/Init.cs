@@ -20,7 +20,15 @@ namespace ETModel
 				DontDestroyOnLoad(gameObject);
 				Game.EventSystem.Add(DLLType.Model, typeof(Init).Assembly);
 
-				Game.Scene.AddComponent<TimerComponent>();
+                #region ///20190620
+                ETModel.Game.Scene.AddComponent<CameraComponent>();             //创建相机组件CameraComponent
+                ETModel.Game.Scene.AddComponent<NumericWatcherComponent>();     //创建数值组件NumericWatcherComponent
+
+
+
+                #endregion
+
+                Game.Scene.AddComponent<TimerComponent>();
 				Game.Scene.AddComponent<GlobalConfigComponent>();
 				Game.Scene.AddComponent<NetOuterComponent>();
 				Game.Scene.AddComponent<ResourcesComponent>();

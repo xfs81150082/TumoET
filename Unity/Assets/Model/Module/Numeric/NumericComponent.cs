@@ -17,10 +17,31 @@ namespace ETModel
 
 		public void Awake()
 		{
-			// 这里初始化base值
-		}
+            // 这里初始化base值
 
-		public float GetAsFloat(NumericType numericType)
+            ///20190621
+            //注意，这两个语句都将触发数值改变组件，只是没有写Max的处理函数，所以会没有反应
+            this[NumericType.Max] = 999999999;
+            this[NumericType.Speed] = 1;
+            this[NumericType.SpeedBase] = 1;
+            this[NumericType.SpeedAdd] = 0;
+            this[NumericType.SpeedPct] = 0;
+            this[NumericType.SpeedFinalAdd] = 0;
+            this[NumericType.SpeedFinalPct] = 0;
+
+            this[NumericType.Hp] = 1;
+            this[NumericType.HpBase] = 1;
+
+            this[NumericType.MaxHp] = 1;
+            this[NumericType.MaxHpBase] = 1;
+            this[NumericType.MaxHpAdd] = 0;
+            this[NumericType.MaxHpPct] = 0;
+            this[NumericType.MaxHpFinalAdd] = 0;
+            this[NumericType.MaxHpFinalPct] = 0;
+
+        }
+
+        public float GetAsFloat(NumericType numericType)
 		{
 			return (float)GetByKey((int)numericType) / 10000;
 		}

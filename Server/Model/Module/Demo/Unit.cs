@@ -6,7 +6,8 @@ namespace ETModel
 	public enum UnitType
 	{
 		Hero,
-		Npc
+		Npc,
+        Monster
 	}
 
 	[ObjectSystem]

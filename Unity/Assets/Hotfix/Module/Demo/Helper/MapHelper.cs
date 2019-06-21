@@ -1,5 +1,6 @@
 using System;
 using ETModel;
+using UnityEngine;
 
 namespace ETHotfix
 {
@@ -23,7 +24,9 @@ namespace ETHotfix
 				
                 G2C_EnterMap g2CEnterMap = await ETModel.SessionComponent.Instance.Session.Call(new C2G_EnterMap()) as G2C_EnterMap;
                 PlayerComponent.Instance.MyPlayer.UnitId = g2CEnterMap.UnitId;
-				
+
+                Debug.Log(" MapHelper-PlayerComponent.Instance.MyPlayer.UnitId: " + PlayerComponent.Instance.MyPlayer.UnitId);
+
                 Game.Scene.AddComponent<OperaComponent>();
 				
                 Game.EventSystem.Run(EventIdType.EnterMapFinish);

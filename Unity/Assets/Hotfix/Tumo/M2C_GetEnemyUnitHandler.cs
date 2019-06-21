@@ -22,7 +22,7 @@ namespace ETHotfix
                 Unit unit = EnemyUnitFactory.Create(unitInfo.UnitId);
                 unit.Position = new Vector3(unitInfo.X, unitInfo.Y, unitInfo.Z);
 
-                Debug.Log(" M2C_CreateEnemyUnitHandler-23: " + unitInfo.Z);
+                //Debug.Log(" M2C_CreateEnemyUnitHandler-23: " + unitInfo.Z);
             }
         }
 
