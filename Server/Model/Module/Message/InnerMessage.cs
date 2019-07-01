@@ -1,11 +1,38 @@
 using ETModel;
 using System.Collections.Generic;
+using UnityEngine;
+
 namespace ETModel
 {
-/// <summary>
-/// 传送unit
-/// </summary>
-	[Message(InnerOpcode.M2M_TrasferUnitRequest)]
+    #region ///20190613
+
+    [Message(InnerOpcode.M2M_CreateEnemyUnit)]
+    public partial class M2M_CreateEnemyUnit : IRequest
+    {
+        public int RpcId { get; set; }
+
+        public long Count { get; set; }
+    }
+
+    [Message(InnerOpcode.M2M_GetEnemyUnit)]
+    public partial class M2M_GetEnemyUnit : IRequest
+    {
+        public int RpcId { get; set; }
+
+        public long playerUnitId { get; set; }
+    }
+
+
+
+
+    #endregion
+
+
+    #region
+    /// <summary>
+    /// 传送unit
+    /// </summary>
+    [Message(InnerOpcode.M2M_TrasferUnitRequest)]
 	public partial class M2M_TrasferUnitRequest: IRequest
 	{
 		public int RpcId { get; set; }
@@ -377,27 +404,7 @@ namespace ETModel
 		public long ActorId { get; set; }
 
 	}
-
-
-    #region ///20190613
-
-    [Message(InnerOpcode.M2M_CreateEnemyUnit)]
-    public partial class M2M_CreateEnemyUnit : IRequest
-    {
-        public int RpcId { get; set; }
-
-        public long Count { get; set; }
-    }
-
-    [Message(InnerOpcode.M2M_GetEnemyUnit)]
-    public partial class M2M_GetEnemyUnit : IRequest
-    {
-        public int RpcId { get; set; }
-
-        public long playerUnitId { get; set; }
-    }
-
-
     #endregion
+
 
 }

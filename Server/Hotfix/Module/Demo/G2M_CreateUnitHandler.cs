@@ -30,6 +30,8 @@ namespace ETHotfix
                 reply(response);
 
                 // 广播创建的unit
+                Console.WriteLine(" G2M_CreateUnitHandler-33-UnitComponent: " + Game.Scene.GetComponent<UnitComponent>().Count);
+
                 M2C_CreateUnits createUnits = new M2C_CreateUnits();
                 Unit[] units = Game.Scene.GetComponent<UnitComponent>().GetAll();
                 foreach (Unit u in units)

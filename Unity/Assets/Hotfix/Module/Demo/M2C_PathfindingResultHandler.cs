@@ -9,7 +9,12 @@ namespace ETHotfix
 		protected override void Run(ETModel.Session session, M2C_PathfindingResult message)
 		{
 			Unit unit = ETModel.Game.Scene.GetComponent<UnitComponent>().Get(message.Id);
-			
+
+            ///20190630
+            if (unit == null)
+            {
+                unit = ETModel.Game.Scene.GetComponent<EnemyUnitComponent>().Get(message.Id);
+            }
 			
 			unit.GetComponent<AnimatorComponent>().SetFloatValue("Speed", 5f);
 			UnitPathComponent unitPathComponent = unit.GetComponent<UnitPathComponent>();

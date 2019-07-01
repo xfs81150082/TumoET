@@ -129,6 +129,12 @@
     <Compile Include="Assets\Model\Base\RecyclableMemoryStream\RecyclableMemoryStreamManager.cs" />
     <Compile Include="Assets\Model\Base\TryLocker.cs" />
     <Compile Include="Assets\Model\Base\UnOrderMultiMap.cs" />
+    <Compile Include="Assets\Model\BehaviorTree\Components\AttackComponent.cs" />
+    <Compile Include="Assets\Model\BehaviorTree\Components\CrazyAttackComponent.cs" />
+    <Compile Include="Assets\Model\BehaviorTree\Components\PatrolComponent.cs" />
+    <Compile Include="Assets\Model\BehaviorTree\Components\RunAwayComponent.cs" />
+    <Compile Include="Assets\Model\BehaviorTree\Components\SayComponent.cs" />
+    <Compile Include="Assets\Model\BehaviorTree\Components\SeeComponent.cs" />
     <Compile Include="Assets\Model\Component\Config\ClientConfig.cs" />
     <Compile Include="Assets\Model\Component\Config\DBConfig.cs" />
     <Compile Include="Assets\Model\Component\Config\GlobalProto.cs" />
@@ -303,7 +309,6 @@
     <Compile Include="Assets\Model\Module\Config\ConfigHelper.cs" />
     <Compile Include="Assets\Model\Module\Config\IConfig.cs" />
     <Compile Include="Assets\Model\Module\Demo\AnimatorComponent.cs" />
-    <Compile Include="Assets\Model\Module\Demo\CameraComponent.cs" />
     <Compile Include="Assets\Model\Module\Demo\Config\UnitConfig.cs" />
     <Compile Include="Assets\Model\Module\Demo\MoveComponent.cs" />
     <Compile Include="Assets\Model\Module\Demo\Player.cs" />
@@ -502,6 +507,7 @@
     <Compile Include="Assets\Model\Other\MonoStaticMethod.cs" />
     <Compile Include="Assets\Model\Other\MotionType.cs" />
     <Compile Include="Assets\Model\Other\ReferenceCollector.cs" />
+    <Compile Include="Assets\Model\Tumo\CameraComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Enemy\Enemy.cs" />
     <Compile Include="Assets\Model\Tumo\Enemy\EnemyComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Enemy\EnemyFactory.cs" />

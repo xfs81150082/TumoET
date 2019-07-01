@@ -50,7 +50,7 @@ namespace ETHotfix
 		            ETModel.SessionComponent.Instance.Session.Send(frameClickMap);
 
 					// 测试actor rpc消息
-					this.TestActor().Coroutine();
+					//this.TestActor().Coroutine();
 				}
             }
         }
@@ -62,6 +62,7 @@ namespace ETHotfix
 			    M2C_TestActorResponse response = (M2C_TestActorResponse)await SessionComponent.Instance.Session.Call(
 						new C2M_TestActorRequest() { Info = "actor rpc request" });
 			    Log.Info(response.Info);
+                Debug.Log("  " + response.Message);
 			}
 		    catch (Exception e)
 		    {

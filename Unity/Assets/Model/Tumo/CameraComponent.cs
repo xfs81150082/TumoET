@@ -24,7 +24,7 @@ namespace ETModel
 	{
         // 战斗摄像机
         private Camera mainCamera;
-        private Unit Unit;
+        private Unit playerUnit;
         public Camera MainCamera
 		{
 			get
@@ -43,13 +43,16 @@ namespace ETModel
 
         public void Awake(Unit player)
         {
-            //this.mainCamera = Camera.main;
-            this.Unit = player;
+            this.mainCamera = Camera.main;
+            this.playerUnit = player;
             Init();
         }
 
         public void LateUpdate()
         {
+            //得到 PlayerUnit
+            //GetPlayerUnit();
+
             // 摄像机每帧更新位置
             UpdatePosition();
 
@@ -63,26 +66,33 @@ namespace ETModel
         // 初始化参数
         private void Init()
         {
-            this.mainCamera = Camera.main;
             angles = Camera.main.gameObject.transform.eulerAngles;
             x = angles.x;
             y = angles.y;
             x = 30;   
-        } 
+        }
+
+        private void GetPlayerUnit()
+        {
+            if (UnitComponent.Instance != null && UnitComponent.Instance.MyUnit != null)
+            {
+                playerUnit = UnitComponent.Instance.MyUnit;
+            }
+        }
 
         // 摄像机每帧更新位置
         private void UpdatePosition()
         {
-            if (Unit != null)
+            if (playerUnit != null)
             {
                 //Vector3 cameraPos = this.mainCamera.transform.position;
                 //this.mainCamera.transform.position = new Vector3(this.Unit.Position.x, cameraPos.y, this.Unit.Position.z - 10);
 
-                y = Unit.GameObject.transform.eulerAngles.y;
+                y = playerUnit.GameObject.transform.eulerAngles.y;
                 Quaternion rotation = Quaternion.Euler(x, y, 0);
                 mainCamera.transform.rotation = Quaternion.Euler(x, y, 0);
 
-                Vector3 position = Unit.GameObject.transform.position - (rotation * Vector3.forward * distance + new Vector3(0, -TargetHeight, 0));
+                Vector3 position = playerUnit.GameObject.transform.position - (rotation * Vector3.forward * distance + new Vector3(0, -TargetHeight, 0));
                 mainCamera.transform.position = position;
             }
         }

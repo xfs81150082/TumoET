@@ -11,13 +11,12 @@ namespace ETHotfix
         protected override void Run(Session session, M2M_GetEnemyUnit message)
         {
             try
-            {
-                Console.WriteLine(" M2M_GetEnemyUnitHandler-15-playerUnitId: " + message.playerUnitId);
-                
+            {                
                 /// 广播刷新小怪到客户端 unit
                 Unit[] units = Game.Scene.GetComponent<EnemyUnitComponent>().GetAll();
-                SetEnemyUnits(units);
+                SetEnemyUnits(units, message.playerUnitId);
 
+                Console.WriteLine(" M2M_GetEnemyUnitHandler-15-playerUnitId: " + message.playerUnitId);
                 Console.WriteLine(" M2M_GetEnemyUnitHandler-19: " + Game.Scene.GetComponent<EnemyUnitComponent>().Count);
             }
             catch (Exception ex)
@@ -26,7 +25,7 @@ namespace ETHotfix
             }
         }
 
-        void SetEnemyUnits(Unit[] units)
+        void SetEnemyUnits(Unit[] units, long playerUnitId)
         {
             /// 广播创建的unit
             M2C_GetEnemyUnits createUnits = new M2C_GetEnemyUnits();
@@ -39,9 +38,8 @@ namespace ETHotfix
                 unitInfo.UnitId = u.Id;
                 createUnits.Units.Add(unitInfo);
             }
-            MessageHelper.Broadcast(createUnits);
+            MessageHelper.Broadcast(createUnits ,playerUnitId);
         }
-
-
+        
     }
 }

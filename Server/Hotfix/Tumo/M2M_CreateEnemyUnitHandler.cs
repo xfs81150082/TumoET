@@ -30,17 +30,18 @@ namespace ETHotfix
 
                     await unit.AddComponent<MailBoxComponent>().AddLocation();
                     Game.Scene.GetComponent<EnemyUnitComponent>().Add(unit);
-                }
+                    //Game.Scene.GetComponent<UnitComponent>().Add(unit);
 
+                    unit.AddComponent<BookerTreeComponent>();
+
+                    Console.WriteLine(" M2M_CreateEnemyUnitHandler-Id-35: " + unit.Id + " :Id/InstanceId: " + unit.InstanceId);
+                }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
         }
-
-
-
 
     }
 }
