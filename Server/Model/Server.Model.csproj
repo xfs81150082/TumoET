@@ -324,13 +324,11 @@
   <ItemGroup>
     <Folder Include="Base\RecyclableMemoryStream\" />
     <Folder Include="Base\Base\" />
-    <Folder Include="BehaviorTree\Tree\" />
     <Folder Include="Component\Config\" />
     <Folder Include="Module\Message\Network\KCP\" />
     <Folder Include="Module\Message\Network\TCP\" />
     <Folder Include="Module\Message\MessagePool\" />
     <Folder Include="Module\Numeric\" />
-    <Folder Include="Tumo\Numeric\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Pathfinding.Ionic.Zip.Reduced, Version=1.9.1.9000, Culture=neutral, PublicKeyToken=null">

@@ -16,9 +16,7 @@ namespace ETHotfix
             }
 
             self.Target = target;
-
-            Unit unit = self.GetParent<Unit>();
-            
+            Unit unit = self.GetParent<Unit>();            
             
             PathfindingComponent pathfindingComponent = Game.Scene.GetComponent<PathfindingComponent>();
             self.ABPath = ComponentFactory.Create<ABPathWrap, Vector3, Vector3>(unit.Position, new Vector3(target.x, target.y, target.z));

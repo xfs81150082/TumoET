@@ -10,15 +10,22 @@ namespace ETHotfix
 		{
 			Unit unit = ETModel.Game.Scene.GetComponent<UnitComponent>().Get(message.Id);
 
+
             ///20190630
             if (unit == null)
             {
                 unit = ETModel.Game.Scene.GetComponent<EnemyUnitComponent>().Get(message.Id);
+                unit.GetComponent<AnimatorComponent>().SetFloatValue("Speed", 2f);
             }
-			
-			unit.GetComponent<AnimatorComponent>().SetFloatValue("Speed", 5f);
-			UnitPathComponent unitPathComponent = unit.GetComponent<UnitPathComponent>();
+            else
+            {
+                unit.GetComponent<AnimatorComponent>().SetFloatValue("Speed", 5f);
+            }
+            if (unit == null) return;
 
+
+
+            UnitPathComponent unitPathComponent = unit.GetComponent<UnitPathComponent>();
 			unitPathComponent.StartMove(message).Coroutine();
 
 			GizmosDebug.Instance.Path.Clear();

@@ -18,9 +18,9 @@ namespace ETModel
 			{
 				Vector3 v = this.Path[i];
 
-				float speed = 5;
+                float speed = 5;
 
-				if (i == 0)
+                if (i == 0)
 				{
 					// 矫正移动速度
 					Vector3 clientPos = this.GetParent<Unit>().Position;

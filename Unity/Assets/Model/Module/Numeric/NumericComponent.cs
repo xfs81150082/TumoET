@@ -21,24 +21,19 @@ namespace ETModel
 
             ///20190621
             //注意，这两个语句都将触发数值改变组件，只是没有写Max的处理函数，所以会没有反应
-            this[NumericType.Max] = 999999999;
-            this[NumericType.Speed] = 1;
-            this[NumericType.SpeedBase] = 1;
-            this[NumericType.SpeedAdd] = 0;
-            this[NumericType.SpeedPct] = 0;
-            this[NumericType.SpeedFinalAdd] = 0;
-            this[NumericType.SpeedFinalPct] = 0;
+            this.Set(NumericType.Max, 981150082);
 
-            this[NumericType.Hp] = 1;
-            this[NumericType.HpBase] = 1;
+            this.Set(NumericType.SpeedBase, 4);
+            this.Set(NumericType.HpBase, 40);
+            this.Set(NumericType.MaxHpBase, 140);
+            this.Set(NumericType.MpBase, 40);
+            this.Set(NumericType.MaxMpBase, 100);
+            this.Set(NumericType.AttackBase, 14);
+            this.Set(NumericType.SkillBase, 40);
 
-            this[NumericType.MaxHp] = 1;
-            this[NumericType.MaxHpBase] = 1;
-            this[NumericType.MaxHpAdd] = 0;
-            this[NumericType.MaxHpPct] = 0;
-            this[NumericType.MaxHpFinalAdd] = 0;
-            this[NumericType.MaxHpFinalPct] = 0;
-
+            this.Set(NumericType.Exp, 1);
+            this.Set(NumericType.Level, 1);
+            this.Set(NumericType.Coin, 1);            
         }
 
         public float GetAsFloat(NumericType numericType)
@@ -111,10 +106,14 @@ namespace ETModel
 			int finalAdd = final * 10 + 4;
 			int finalPct = final * 10 + 5;
 
-			// 一个数值可能会多种情况影响，比如速度,加个buff可能增加速度绝对值100，也有些buff增加10%速度，所以一个值可以由5个值进行控制其最终结果
-			// final = (((base + add) * (100 + pct) / 100) + finalAdd) * (100 + finalPct) / 100;
-			int result = (int)(((this.GetByKey(bas) + this.GetByKey(add)) * (100 + this.GetAsFloat(pct)) / 100f + this.GetByKey(finalAdd)) * (100 + this.GetAsFloat(finalPct)) / 100f * 10000);
-			this.NumericDic[final] = result;
+            // 一个数值可能会多种情况影响，比如速度,加个buff可能增加速度绝对值100，也有些buff增加10%速度，所以一个值可以由5个值进行控制其最终结果
+            // final = (((base + add) * (100 + pct) / 100) + finalAdd) * (100 + finalPct) / 100;
+            //int result = (int)(((this.GetByKey(bas) + this.GetByKey(add)) * (100 + this.GetAsFloat(pct)) / 100f + this.GetByKey(finalAdd)) * (100 + this.GetAsFloat(finalPct)) / 100f * 10000);
+
+            ///20190702  将原来(上面的一行-117行)最后面 *10000 删除了
+            int result = (int)(((this.GetByKey(bas) + this.GetByKey(add)) * (100 + this.GetAsFloat(pct)) / 100f + this.GetByKey(finalAdd)) * (100 + this.GetAsFloat(finalPct)) / 100f );
+
+            this.NumericDic[final] = result;
 			Game.EventSystem.Run(EventIdType.NumbericChange, this.Entity.Id, (NumericType) final, result);
 		}
 	}

@@ -21,8 +21,9 @@ namespace ETModel
 				Game.EventSystem.Add(DLLType.Model, typeof(Init).Assembly);
 
                 #region ///20190620
-                ETModel.Game.Scene.AddComponent<CameraComponent>();             //创建相机组件CameraComponent
-                ETModel.Game.Scene.AddComponent<NumericWatcherComponent>();     //创建数值组件NumericWatcherComponent
+                Game.Scene.AddComponent<CameraComponent>();             //创建相机组件CameraComponent
+                Game.Scene.AddComponent<NumericWatcherComponent>();     //创建数值组件NumericWatcherComponent
+
 
 
 

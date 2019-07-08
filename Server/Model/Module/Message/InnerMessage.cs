@@ -11,6 +11,8 @@ namespace ETModel
     {
         public int RpcId { get; set; }
 
+        public long EnemyId { get; set; }
+
         public long Count { get; set; }
     }
 
@@ -22,6 +24,23 @@ namespace ETModel
         public long playerUnitId { get; set; }
     }
 
+    [Message(InnerOpcode.M2M_CreateNpcerUnit)]
+    public partial class M2M_CreateNpcerUnit : IRequest
+    {
+        public int RpcId { get; set; }
+
+        public long NpcerId { get; set; }
+
+        public long Count { get; set; }
+    }
+
+    [Message(InnerOpcode.M2M_GetNpcerUnit)]
+    public partial class M2M_GetNpcerUnit : IRequest
+    {
+        public int RpcId { get; set; }
+
+        public long playerUnitId { get; set; }
+    }
 
 
 
@@ -380,9 +399,9 @@ namespace ETModel
 	[Message(InnerOpcode.M2G_CreateUnit)]
 	public partial class M2G_CreateUnit: IResponse
 	{
-		public int RpcId { get; set; }
+        public int RpcId { get; set; }
 
-		public int Error { get; set; }
+        public int Error { get; set; }
 
 		public string Message { get; set; }
 

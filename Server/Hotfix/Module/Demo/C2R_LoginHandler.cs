@@ -15,34 +15,53 @@ namespace ETHotfix
 		private async ETVoid RunAsync(Session session, C2R_Login message, Action<R2C_Login> reply)
 		{
 			R2C_Login response = new R2C_Login();
-			try
-			{
-				//if (message.Account != "abcdef" || message.Password != "111111")
-				//{
-				//	response.Error = ErrorCode.ERR_AccountOrPasswordError;
-				//	reply(response);
-				//	return;
-				//}
+            try
+            {
+                User user = Game.Scene.GetComponent<UserComponent>().Get(message.Account);
+                if (user != null)
+                {
+                    if (message.Password == user.Password)
+                    {
+                        Console.WriteLine(" 用户名: " + user.Account + " 验证通过！");
 
-				// 随机分配一个Gate
-				StartConfig config = Game.Scene.GetComponent<RealmGateAddressComponent>().GetAddress();
-				//Log.Debug($"gate address: {MongoHelper.ToJson(config)}");
-				IPEndPoint innerAddress = config.GetComponent<InnerConfig>().IPEndPoint;
-				Session gateSession = Game.Scene.GetComponent<NetInnerComponent>().Get(innerAddress);
+                        // 随机分配一个Gate
+                        StartConfig config = Game.Scene.GetComponent<RealmGateAddressComponent>().GetAddress();
+                        //Log.Debug($"gate address: {MongoHelper.ToJson(config)}");
+                        IPEndPoint innerAddress = config.GetComponent<InnerConfig>().IPEndPoint;
+                        Session gateSession = Game.Scene.GetComponent<NetInnerComponent>().Get(innerAddress);
 
-				// 向gate请求一个key,客户端可以拿着这个key连接gate
-				G2R_GetLoginKey g2RGetLoginKey = (G2R_GetLoginKey)await gateSession.Call(new R2G_GetLoginKey() {Account = message.Account});
+                        // 向gate请求一个key,客户端可以拿着这个key连接gate
+                        G2R_GetLoginKey g2RGetLoginKey = (G2R_GetLoginKey)await gateSession.Call(new R2G_GetLoginKey() { Account = message.Account });
+                        string outerAddress = config.GetComponent<OuterConfig>().Address2;
 
-				string outerAddress = config.GetComponent<OuterConfig>().Address2;
+                        response.Address = outerAddress;
+                        response.Key = g2RGetLoginKey.Key;
+                        reply(response);
+                    }
+                    else
+                    {
+                        Console.WriteLine(" 用户名: " + message.Account + " 密码验证错误！");
 
-				response.Address = outerAddress;
-				response.Key = g2RGetLoginKey.Key;
-				reply(response);
-			}
-			catch (Exception e)
-			{
-				ReplyError(response, e, reply);
-			}
+                        response.Error = ErrorCode.ERR_AccountOrPasswordError;
+                        response.Message = " 用户名: " + message.Account + " 密码验证错误！";
+                        reply(response);
+                        return;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("用户名：" + message.Account + "不存在！");
+
+                    response.Error = ErrorCode.ERR_AccountOrPasswordError;
+                    response.Message = " 用户名: " + message.Account + " 不存在！";
+                    reply(response);
+                    return;
+                }              
+            }
+            catch (Exception e)
+            {
+                ReplyError(response, e, reply);
+            }
 		}
 	}
 }

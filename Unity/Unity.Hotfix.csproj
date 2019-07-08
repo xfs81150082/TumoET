@@ -126,6 +126,8 @@
     <Compile Include="Assets\Hotfix\Module\UI\UIComponent.cs" />
     <Compile Include="Assets\Hotfix\Module\UI\UIType.cs" />
     <Compile Include="Assets\Hotfix\Tumo\M2C_GetEnemyUnitsHandler.cs" />
+    <Compile Include="Assets\Hotfix\Tumo\M2C_RemoveEnemyUnitsHandler.cs" />
+    <Compile Include="Assets\Hotfix\Tumo\RaycastHitComponent.cs" />
     <None Include="Assets\Hotfix\Unity.Hotfix.asmdef" />
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

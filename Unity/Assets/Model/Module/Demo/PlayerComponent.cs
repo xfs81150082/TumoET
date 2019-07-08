@@ -37,12 +37,15 @@ namespace ETModel
 		{
 			Instance = this;
 		}
-		
-		public void Add(Player player)
-		{
-			this.idPlayers.Add(player.Id, player);
-			player.Parent = this;
-		}
+
+        public void Add(Player player)
+        {
+            if (!this.idPlayers.Keys.Contains(player.Id))
+            {
+                this.idPlayers.Add(player.Id, player);
+                player.Parent = this;
+            }
+        }
 
 		public Player Get(long id)
 		{

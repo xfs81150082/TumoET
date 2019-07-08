@@ -1,4 +1,6 @@
-﻿namespace ETModel
+﻿using UnityEngine;
+
+namespace ETModel
 {
 	[ObjectSystem]
 	public class PlayerSystem : AwakeSystem<Player, string>
@@ -11,16 +13,32 @@
 
     public sealed class Player : Entity
 	{
-		public string Account { get; private set; }
-		
-		public long UnitId { get; set; }
+		public string Account { get; set; }
 
-		public void Awake(string account)
+        public long UserId { get; set; }
+
+        public long UnitId { get; set; }
+
+        public Vector3 spawnPosition;
+
+        public Player() { }
+
+        public Player(string account)
+        {
+            this.Account = account;
+        }
+
+        public void Awake(string account)
 		{
 			this.Account = account;
 		}
 		
-		public override void Dispose()
+        public void SetAccount(string account)
+        {
+            this.Account = account;
+        }
+
+        public override void Dispose()
 		{
 			if (this.IsDisposed)
 			{

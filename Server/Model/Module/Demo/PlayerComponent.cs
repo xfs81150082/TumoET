@@ -24,19 +24,34 @@ namespace ETModel
 		{
 			Instance = this;
 		}
-		
-		public void Add(Player player)
-		{
-			this.idPlayers.Add(player.Id, player);
-		}
 
-		public Player Get(long id)
-		{
-			this.idPlayers.TryGetValue(id, out Player gamer);
-			return gamer;
-		}
+        public void Add(Player player)
+        {
+            if (!idPlayers.Keys.Contains(player.Id))
+            {
+                this.idPlayers.Add(player.Id, player);
+            }
+        }
 
-		public void Remove(long id)
+        public Player Get(long id)
+        {
+            this.idPlayers.TryGetValue(id, out Player gamer);
+            return gamer;
+        }
+        public Player[] GetByUserId(long userid)
+        {
+            List<Player> players = new List<Player>();
+            foreach(Player tem in this.idPlayers.Values.ToArray())
+            {
+                if(tem.UserId == userid)
+                {
+                    players.Add(tem);
+                }
+            }
+            return players.ToArray();
+        }
+
+        public void Remove(long id)
 		{
 			this.idPlayers.Remove(id);
 		}

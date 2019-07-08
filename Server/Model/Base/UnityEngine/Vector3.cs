@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Numerics;
 
 namespace UnityEngine
 {
@@ -651,6 +652,11 @@ namespace UnityEngine
             vector3.y = value.y * num;
             vector3.z = value.z * num;
             return vector3;
+        }
+
+        public static implicit operator Vector3(System.Numerics.Vector3 v)
+        {
+            throw new NotImplementedException();
         }
     }
 }

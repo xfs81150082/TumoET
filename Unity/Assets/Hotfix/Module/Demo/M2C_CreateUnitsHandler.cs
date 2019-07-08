@@ -23,24 +23,30 @@ namespace ETHotfix
 
                 
                 ///20190621
+                 ETModel.Game.EventSystem.Awake<Unit>(ETModel.Game.Scene.GetComponent<CameraComponent>(), unit);      //将参数unit 传给组件CameraComponent awake方法
+              
+                
                 //为小骷髅添加数值组件  ///20190621
-                NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
+                //NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
                 //为小骷髅设置生命值，这将触发数值改变事件
-                numericComponent.Set(NumericType.HpBase, 10);
+                //numericComponent.Set(NumericType.HpBase, 10);
 
 
                 ///20190619
                 Debug.Log(" unit.InstanceId: " + unit.InstanceId + " unit.Id: " + unit.Id);
                 Debug.Log(" M2C_CreateUnitsHandler-PlayerComponent.Instance.MyPlayer.UnitId: " + PlayerComponent.Instance.MyPlayer.UnitId);
 
-                ETModel.Game.EventSystem.Awake<Unit>(ETModel.Game.Scene.GetComponent<CameraComponent>(), unit);      //将参数unit 传给组件CameraComponent awake方法
 
-                if (unit.Id == PlayerComponent.Instance.MyPlayer.UnitId)
-                {
-                    UnitComponent.Instance.MyUnit = unit;
-                }
+                //if (unit.Id == PlayerComponent.Instance.MyPlayer.UnitId)
+                //{
+                //    UnitComponent.Instance.MyUnit = unit;
+                //}
 
             }
-		}
-	}
+
+            ///20190703
+            Game.Scene.AddComponent<RaycastHitComponent>();
+
+        }
+    }
 }

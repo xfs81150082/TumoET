@@ -21,6 +21,11 @@ namespace ETHotfix
 			}
 		}
 
+        /// <summary>
+        /// 后来增加
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="playerUnitId"></param>
         public static void Broadcast(IActorMessage message, long playerUnitId)
         {
             Unit unit = Game.Scene.GetComponent<UnitComponent>().Get(playerUnitId);

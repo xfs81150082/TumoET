@@ -7,7 +7,8 @@ namespace ETModel
 	{
 		Hero,
 		Npc,
-        Monster
+        Monster,
+        Player,
 	}
 
 	[ObjectSystem]

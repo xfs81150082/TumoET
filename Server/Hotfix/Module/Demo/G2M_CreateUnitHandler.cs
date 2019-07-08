@@ -19,34 +19,91 @@ namespace ETHotfix
 			M2G_CreateUnit response = new M2G_CreateUnit();
             try
             {
-                Unit unit = ComponentFactory.CreateWithId<Unit>(IdGenerater.GenerateId());
+                Player player = Game.Scene.GetComponent<PlayerComponent>().Get(message.PlayerId);
+                Unit unit = ComponentFactory.CreateWithId<Unit>(player.Id);
                 unit.AddComponent<MoveComponent>();
                 unit.AddComponent<UnitPathComponent>();
-                unit.Position = new Vector3(-10, 0, -10);
+                unit.Position = new Vector3(-40, 0, -10);
+                unit.Position = new Vector3(player.spawnPosition.x, 0, player.spawnPosition.z);
                 await unit.AddComponent<MailBoxComponent>().AddLocation();
                 unit.AddComponent<UnitGateComponent, long>(message.GateSessionId);
                 Game.Scene.GetComponent<UnitComponent>().Add(unit);
+
                 response.UnitId = unit.Id;
                 reply(response);
 
-                // 广播创建的unit
-                Console.WriteLine(" G2M_CreateUnitHandler-33-UnitComponent: " + Game.Scene.GetComponent<UnitComponent>().Count);
+                Console.WriteLine(" G2M_CreateUnitHandler-38-myunitId: " + unit.Id);
 
-                M2C_CreateUnits createUnits = new M2C_CreateUnits();
-                Unit[] units = Game.Scene.GetComponent<UnitComponent>().GetAll();
-                foreach (Unit u in units)
-                {
-                    UnitInfo unitInfo = new UnitInfo();
-                    unitInfo.X = u.Position.x;
-                    unitInfo.Y = u.Position.y;
-                    unitInfo.Z = u.Position.z;
-                    unitInfo.UnitId = u.Id;
-                    createUnits.Units.Add(unitInfo);
-                }
-                MessageHelper.Broadcast(createUnits);
+                ///20190702 玩家
+                Game.EventSystem.Awake<UnitType>(unit, UnitType.Player);
+                unit.AddComponent<SqrDistanceComponent>();
+                unit.AddComponent<NumericComponent>();
+                unit.AddComponent<AttackComponent>();
+                unit.AddComponent<RecoverComponent>();
+                unit.AddComponent<RayUnitComponent>();
+                unit.AddComponent<AoiUnitComponent>();
+                unit.AddComponent<AoiPlayerComponent>();
 
+                SetNumeric(unit ,player);
 
-                #region ///20190613 通知map 广播刷新小怪 NPC Enemy unit                
+                ///生产玩家本人的单元实例
+                SpawnMyPlayerUnit(unit);
+
+                //BroadcastPlayerUnit();
+
+                BroadcastEnemyUnit(unit);
+
+            }
+            catch (Exception e)
+            {
+                ReplyError(response, e, reply);
+            }
+		}
+
+        void SetNumeric(Unit unit, Player player)
+        {
+            if (unit.GetComponent<NumericComponent>() == null) return;
+            NumericComponent num = unit.GetComponent<NumericComponent>();
+
+            num.Set(NumericType.HpAdd, 400);
+            num.Set(NumericType.MaxHpAdd, 400);
+
+            Console.WriteLine(" M2M_CreateEnemyUnitHandler-Id-57: " + unit.Id + " MaxHp: " + num[NumericType.MaxHp] + " MaxHpBase: " + num[NumericType.MaxHpBase] + " MaxHpAdd: " + num[NumericType.MaxHpAdd]);
+        }
+
+        void SpawnMyPlayerUnit(Unit unit)
+        {
+            /// 创建 本人的 unit
+            M2C_CreateUnits createUnits = new M2C_CreateUnits();
+            UnitInfo unitInfo = new UnitInfo();
+            unitInfo.X = unit.Position.x;
+            unitInfo.Y = unit.Position.y;
+            unitInfo.Z = unit.Position.z;
+            unitInfo.UnitId = unit.Id;
+            createUnits.Units.Add(unitInfo);          
+            MessageHelper.Broadcast(createUnits);
+        }
+
+        void BroadcastPlayerUnit()
+        {
+            /// 广播创建的unit
+            M2C_CreateUnits createUnits = new M2C_CreateUnits();
+            Unit[] units = Game.Scene.GetComponent<UnitComponent>().GetAll();
+            foreach (Unit u in units)
+            {
+                UnitInfo unitInfo = new UnitInfo();
+                unitInfo.X = u.Position.x;
+                unitInfo.Y = u.Position.y;
+                unitInfo.Z = u.Position.z;
+                unitInfo.UnitId = u.Id;
+                createUnits.Units.Add(unitInfo);
+            }
+            MessageHelper.Broadcast(createUnits);
+        }
+
+        void BroadcastEnemyUnit(Unit unit)
+        {
+                ///20190613 通知map 广播刷新小怪 NPC Enemy unit                
                 Console.WriteLine(" G2M_CreateUnitHandler-51: " + "通知 map服务器 向客户端 刷新小怪");
                 IPEndPoint mapAddress = StartConfigComponent.Instance.MapConfigs[0].GetComponent<InnerConfig>().IPEndPoint;
                 Session mapSession = Game.Scene.GetComponent<NetInnerComponent>().Get(mapAddress);
@@ -55,15 +112,8 @@ namespace ETHotfix
                 Console.WriteLine(" G2M_CreateUnitHandler-51: " + "通知 map服务器 向客户端 刷新 NPC");
                 ///TOTO......
 
-
-                #endregion
-
-            }
-            catch (Exception e)
-            {
-                ReplyError(response, e, reply);
-            }
-		}
+        }
+             
 
     }
 }

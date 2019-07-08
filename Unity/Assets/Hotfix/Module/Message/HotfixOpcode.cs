@@ -1,7 +1,22 @@
 using ETModel;
 namespace ETHotfix
 {
-	[Message(HotfixOpcode.C2R_Login)]
+
+    /// <summary>
+    /// 20190704
+    /// </summary>
+    #region
+    [Message(HotfixOpcode.C2M_RaycastHitActorRequest)]
+    public partial class C2M_RaycastHitActorRequest : IActorLocationRequest { }
+
+    [Message(HotfixOpcode.M2C_RaycastHitActorResponse)]
+    public partial class M2C_RaycastHitActorResponse : IActorLocationResponse { }
+
+
+    #endregion
+
+    #region
+    [Message(HotfixOpcode.C2R_Login)]
 	public partial class C2R_Login : IRequest {}
 
 	[Message(HotfixOpcode.R2C_Login)]
@@ -30,21 +45,33 @@ namespace ETHotfix
 
 	[Message(HotfixOpcode.G2C_PlayerInfo)]
 	public partial class G2C_PlayerInfo : IResponse {}
-
+    #endregion
 }
 namespace ETHotfix
 {
-	public static partial class HotfixOpcode
-	{
-		 public const ushort C2R_Login = 10001;
-		 public const ushort R2C_Login = 10002;
-		 public const ushort C2G_LoginGate = 10003;
-		 public const ushort G2C_LoginGate = 10004;
-		 public const ushort G2C_TestHotfixMessage = 10005;
-		 public const ushort C2M_TestActorRequest = 10006;
-		 public const ushort M2C_TestActorResponse = 10007;
-		 public const ushort PlayerInfo = 10008;
-		 public const ushort C2G_PlayerInfo = 10009;
-		 public const ushort G2C_PlayerInfo = 10010;
-	}
+    public static partial class HotfixOpcode
+    {
+        /// <summary>
+        /// 20190704
+        /// </summary>
+        #region
+        public const ushort C2M_RaycastHitActorRequest = 41001;
+        public const ushort M2C_RaycastHitActorResponse = 41002;
+
+
+        #endregion
+
+        #region
+        public const ushort C2R_Login = 10001;
+        public const ushort R2C_Login = 10002;
+        public const ushort C2G_LoginGate = 10003;
+        public const ushort G2C_LoginGate = 10004;
+        public const ushort G2C_TestHotfixMessage = 10005;
+        public const ushort C2M_TestActorRequest = 10006;
+        public const ushort M2C_TestActorResponse = 10007;
+        public const ushort PlayerInfo = 10008;
+        public const ushort C2G_PlayerInfo = 10009;
+        public const ushort G2C_PlayerInfo = 10010;
+        #endregion
+    }
 }

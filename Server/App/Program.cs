@@ -116,7 +116,8 @@ namespace App
 						Game.Scene.AddComponent<GateSessionKeyComponent>();
 
                         #region ///20190621
-                        ETModel.Game.Scene.AddComponent<NumericWatcherComponent>();     //创建数值组件NumericWatcherComponent
+                        Game.Scene.AddComponent<AoiGridComponent>();            //创建 AOI 组件
+                        Game.Scene.AddComponent<NumericWatcherComponent>();     //创建数值组件NumericWatcherComponent
 
 
                         #endregion
@@ -132,8 +133,11 @@ namespace App
 
                         #region ///20190613
                         Console.WriteLine(" 内网： "+innerConfig.Address + " 外网： " + outerConfig.Address);
-                        Game.Scene.AddComponent<EnemyComponent>();
                         Game.Scene.AddComponent<EnemyUnitComponent>();
+                        Game.Scene.AddComponent<EnemyComponent>();
+                        //Game.Scene.AddComponent<NpcerUnitComponent>();
+                        //Game.Scene.AddComponent<NpcerComponent>();
+                        Game.Scene.AddComponent<UserComponent>();
 
 
                         #endregion

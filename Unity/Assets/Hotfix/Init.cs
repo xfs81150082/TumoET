@@ -39,7 +39,11 @@ namespace ETHotfix
 				Log.Debug($"config {JsonHelper.ToJson(unitConfig)}");
 
 				Game.EventSystem.Run(EventIdType.InitSceneStart);
-			}
+
+                ///20180703
+                //Game.Scene.AddComponent<RaycastHitComponent>();
+
+            }
 			catch (Exception e)
 			{
 				Log.Error(e);

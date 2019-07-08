@@ -1,5 +1,6 @@
 ﻿using System;
 using ETModel;
+using UnityEngine;
 
 namespace ETHotfix
 {
@@ -18,22 +19,27 @@ namespace ETHotfix
                     response.Message = "Gate key验证失败!";
                     reply(response);
                     return;
-                }
-                Player player = ComponentFactory.Create<Player, string>(account);
-                Game.Scene.GetComponent<PlayerComponent>().Add(player);
+                }            
+
+                User user = Game.Scene.GetComponent<UserComponent>().Get(account);
+                Player[] players = Game.Scene.GetComponent<PlayerComponent>().GetByUserId(user.Id);
+                Player player = players[0];
+
                 session.AddComponent<SessionPlayerComponent>().Player = player;
-                session.AddComponent<MailBoxComponent, string>(MailboxType.GateSession);
+                session.AddComponent<MailBoxComponent, string>(MailboxType.GateSession);               
+
                 response.PlayerId = player.Id;
                 reply(response);
 
-                session.Send(new G2C_TestHotfixMessage() { Info = "recv hotfix message success" });
+                Console.WriteLine(" C2G_LoginGateHandler-34-playerId: " + player.Id);
+
+                //session.Send(new G2C_TestHotfixMessage() { Info = "recv hotfix message success" });
             }
             catch (Exception e)
             {
                 ReplyError(response, e, reply);
             }
 		}
-        
-        
+
     }
 }

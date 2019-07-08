@@ -4,9 +4,17 @@ namespace ETModel
     #region ///20190613
     [Message(OuterOpcode.M2C_GetEnemyUnits)]
     public partial class M2C_GetEnemyUnits : IActorMessage { }
+    [Message(OuterOpcode.M2C_RemoveEnemyUnits)]
+    public partial class M2C_RemoveEnemyUnits : IActorMessage { }
 
-    [Message(OuterOpcode.Booker_PatrolMap)]
-    public partial class Booker_PatrolMap : IActorLocationMessage { }
+    [Message(OuterOpcode.Patrol_Map)]
+    public partial class Patrol_Map : IActorLocationMessage { }
+    [Message(OuterOpcode.SqrDistance_Map)]
+    public partial class SqrDistance_Map : IActorLocationMessage { }
+    [Message(OuterOpcode.See_Map)]
+    public partial class See_Map : IActorLocationMessage { }
+    [Message(OuterOpcode.Attack_Map)]
+    public partial class Attack_Map : IActorLocationMessage { }
 
 
 
@@ -70,7 +78,12 @@ namespace ETModel
     {
         #region ///20190613
         public const ushort M2C_GetEnemyUnits = 588;
-        public const ushort Booker_PatrolMap = 590;
+        public const ushort M2C_RemoveEnemyUnits = 589;
+
+        public const ushort Patrol_Map = 590;
+        public const ushort SqrDistance_Map = 592;
+        public const ushort See_Map = 594;
+        public const ushort Attack_Map = 596;
 
 
 
@@ -94,8 +107,5 @@ namespace ETModel
         public const ushort C2M_Reload = 114;
         public const ushort M2C_Reload = 115;
         #endregion
-
-
-
     }
 }

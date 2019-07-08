@@ -5,6 +5,8 @@ namespace ETModel
         ///20190613
         public const ushort M2M_CreateEnemyUnit = 8118;
         public const ushort M2M_GetEnemyUnit = 8119;
+        public const ushort M2M_CreateNpcerUnit = 8120;
+        public const ushort M2M_GetNpcerUnit = 8121;
 
 
         #region
