@@ -29,7 +29,7 @@ namespace ETHotfix
                     ///从格子 注销 因为已死亡
                     if (unit.GetComponent<AoiUnitComponent>() != null)
                     {
-                        Game.Scene.GetComponent<AoiGridComponent>().Remove(unit.GetComponent<AoiUnitComponent>());
+                        Game.Scene.GetComponent<AoiGridComponent>().RemoveUnitId(unit.GetComponent<AoiUnitComponent>());
                     }
 
                     ///通知 播放 死亡录像

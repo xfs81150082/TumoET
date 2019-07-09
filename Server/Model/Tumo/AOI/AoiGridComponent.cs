@@ -4,20 +4,9 @@ using System.Linq;
 using System.Text;
 
 namespace ETModel
-{
-    [ObjectSystem]
-    public class AoiGridComponentAwakeSystem : AwakeSystem<AoiGridComponent>
-    {
-        public override void Awake(AoiGridComponent self)
-        {
-            self.Awake();
-
-            Console.WriteLine(" AoiGridComponentAwakeSystem-15-count: " + self.Count);
-        }
-    }
-
+{ 
     /// <summary>
-    /// 挂在 Sense场景上 ， Update更新格子内容
+    /// 挂在 Sense场景上，Update更新AOI格子和单元内容
     /// </summary>
     public class AoiGridComponent : Component
     {
@@ -29,19 +18,27 @@ namespace ETModel
 
         public int mapWide = 100;
 
-        public void Awake()
+        #region
+        public void Add(AoiGrid aoiGrid)
         {
-            for (int y = 0; y < rcCount; y++)
+            grids.Add(aoiGrid.gridId, aoiGrid);
+        }
+
+        public AoiGrid Get(long gridId)
+        {
+            return grids.TryGetValue(gridId, out var aoiGrid) ? aoiGrid : null;
+        }
+
+        public AoiGrid[] GetAll()
+        {
+            return this.grids.Values.ToArray();
+        }
+
+        public int Count
+        {
+            get
             {
-                for (int x = 0; x < rcCount; x++)
-                {
-                    AoiGrid grid = new AoiGrid((x + y * rcCount), x, y);
-                    grid.minX = x * gridWide;
-                    grid.maxX = (x + 1) * gridWide;
-                    grid.minY = y * gridWide;
-                    grid.maxY = (y + 1) * gridWide;
-                    grids.Add(grid.gridId, grid);
-                }
+                return this.grids.Count;
             }
         }
 
@@ -59,11 +56,17 @@ namespace ETModel
             }
             this.grids.Clear();
         }
+        #endregion
 
-        public void Add(AoiUnitComponent aoiUnit)
+        #region
+        /// <summary>
+        /// 根据坐标 即时 向地图固定格子 里注册 unitId
+        /// </summary>
+        /// <param name="aoiUnit"></param>
+        public void AddUnitId(AoiUnitComponent aoiUnit)
         {
-            bool yes = grids.TryGetValue(aoiUnit.gridId, out AoiGrid aoiGrid);
-            if (yes)
+            grids.TryGetValue(aoiUnit.gridId, out AoiGrid aoiGrid);
+            if (aoiGrid != null)
             {
                 UnitType unitType = aoiUnit.GetParent<Unit>().UnitType;
                 switch (unitType)
@@ -89,10 +92,15 @@ namespace ETModel
                 }
             }
         }
-        public void Remove(AoiUnitComponent aoiUnit)
+
+        /// <summary>
+        /// 根据坐标 即时 向地图固定格子 里删除 unitId
+        /// </summary>
+        /// <param name="aoiUnit"></param>
+        public void RemoveUnitId(AoiUnitComponent aoiUnit)
         {
-            bool yes = grids.TryGetValue(aoiUnit.gridId, out AoiGrid aoiGrid);
-            if (yes)
+            grids.TryGetValue(aoiUnit.gridId, out AoiGrid aoiGrid);
+            if (aoiGrid != null)
             {
                 UnitType unitType = aoiUnit.GetParent<Unit>().UnitType;
                 switch (unitType)
@@ -118,138 +126,104 @@ namespace ETModel
                 }
             }
         }
-        public int Count
+
+        /// <summary>
+        /// 更新 AoiUnitInfo ，当换格时
+        /// </summary>
+        /// <param name="aoiUnit"></param>
+        public void UpdateAoiUnitInfo(AoiUnitComponent aoiUnit)
         {
-            get
-            {
-                return this.grids.Count;
-            }
-        }
-        public AoiGrid Get(long gridId)
-        {
-            return grids.TryGetValue(gridId, out var aoiGrid) ? aoiGrid : null;
-        }
-        public AoiGrid[] GetAll()
-        {
-            return this.grids.Values.ToArray();
+            // 把新的AOI节点转移到旧的节点里           
+            aoiUnit.playerIds.OldMovesSet = aoiUnit.playerIds.MovesSet.Select(d => d).ToHashSet();
+            aoiUnit.enemyIds.OldMovesSet = aoiUnit.enemyIds.MovesSet.Select(d => d).ToHashSet();
+            aoiUnit.npcerIds.OldMovesSet = aoiUnit.npcerIds.MovesSet.Select(d => d).ToHashSet();
+
+            //// 移动到新的位置
+            //MoveToChangeAoiGrid(aoiUnit);
+
+            // 查找 周围 可见九宫格内单元 unitId 
+            FindAoi(aoiUnit);
+
+            // 差集计算
+            aoiUnit.playerIds.Enters = aoiUnit.playerIds.MovesSet.Except(aoiUnit.playerIds.OldMovesSet).ToHashSet();
+            aoiUnit.playerIds.Leaves = aoiUnit.playerIds.OldMovesSet.Except(aoiUnit.playerIds.MovesSet).ToHashSet();
+
+            aoiUnit.enemyIds.Enters = aoiUnit.enemyIds.MovesSet.Except(aoiUnit.enemyIds.OldMovesSet).ToHashSet();
+            aoiUnit.enemyIds.Leaves = aoiUnit.enemyIds.OldMovesSet.Except(aoiUnit.enemyIds.MovesSet).ToHashSet();
+
+            aoiUnit.npcerIds.Enters = aoiUnit.npcerIds.MovesSet.Except(aoiUnit.npcerIds.OldMovesSet).ToHashSet();
+            aoiUnit.npcerIds.Leaves = aoiUnit.npcerIds.OldMovesSet.Except(aoiUnit.npcerIds.MovesSet).ToHashSet();
         }
 
         /// <summary>
-        /// 得到 九宫格内 实例 Player Enemy Npcer
+        /// 根据坐标 更换地图固定格子 注册注销 unitId
         /// </summary>
-        /// <param name="aoiGrids"></param>
-        /// <returns></returns>
-        public Unit[] GetPlayerUnits(long[] aoiGridIds)
+        /// <param name="aoiUnit"></param>
+        public void MoveToChangeAoiGrid(AoiUnitComponent aoiUnit)
         {
-            HashSet<Unit> units = new HashSet<Unit>();
-            HashSet<long> unitIds = new HashSet<long>();
-            foreach (long temid in aoiGridIds)
-            {
-                if (Get(temid).players.Count > 0)
-                {
-                    foreach (long temlong in Get(temid).players)
-                    {
-                        unitIds.Add(temlong);
-                    }
-                }
-            }
-            if (unitIds.Count > 0)
-            {
-                foreach (long id in unitIds)
-                {
-                    Unit unit = Game.Scene.GetComponent<UnitComponent>().Get(id);
-                    if (unit != null && unit.GetComponent<AttackComponent>() != null && !unit.GetComponent<AttackComponent>().isDeath)
-                    {
-                        units.Add(unit);
-                    }
-                }
-            }
-            return units.ToArray();
+            long oldid = aoiUnit.gridId;
+            RemoveUnitId(aoiUnit);
+            aoiUnit.gridId = GetGridId(aoiUnit);
+            AddUnitId(aoiUnit);
+
+            Console.WriteLine(" AoiGridComponent-169-oldid/gridId: " + oldid + " => " + aoiUnit.gridId);
         }
-        public Unit[] GetMonsterUnits(long[] aoiGrids)
+        public long GetGridId(AoiUnitComponent aoiUnit)
         {
-            HashSet<Unit> units = new HashSet<Unit>();
-            HashSet<long> unitIds = new HashSet<long>();
-            foreach (long temid in aoiGrids)
-            {
-                if (Get(temid).enemys.Count > 0)
-                {
-                    foreach (long temlong in Get(temid).enemys)
-                    {
-                        unitIds.Add(temlong);
-                    }
-                }
-            }
-            //Console.WriteLine(" AoiGridComponent-180-unitIds: " + unitIds.Count);
-            if (unitIds.Count > 0)
-            {
-                foreach (long id in unitIds)
-                {
-                    Unit unit = Game.Scene.GetComponent<EnemyUnitComponent>().Get(id);
-                    if (unit != null && unit.GetComponent<AttackComponent>() != null && !unit.GetComponent<AttackComponent>().isDeath)
-                    {
-                        units.Add(unit);
-                    }
-                }
-                //Console.WriteLine(" AoiGridComponent-187-units: " + units.Count);
-            }
-            return units.ToArray();
+            float x = aoiUnit.GetParent<Unit>().Position.x;
+            float y = aoiUnit.GetParent<Unit>().Position.z;
+            long id = GetDridX(x) + GetDridY(y) * rcCount;
+            return id;
         }
-        public Unit[] GetNpcerUnits(long[] aoiGrids)
+        int GetDridX(float x)
         {
-            HashSet<Unit> units = new HashSet<Unit>();
-            HashSet<long> unitIds = new HashSet<long>();
-            foreach (long temid in aoiGrids)
-            {
-                if (Get(temid).npcers.Count > 0)
-                {
-                    foreach (long temlong in Get(temid).npcers)
-                    {
-                        unitIds.Add(temlong);
-                    }
-                }
-            }
-            if (unitIds.Count > 0)
-            {
-                foreach (long id in unitIds)
-                {
-                    Unit unit = Game.Scene.GetComponent<NpcerUnitComponent>().Get(id);
-                    if (unit != null && unit.GetComponent<AttackComponent>() != null && !unit.GetComponent<AttackComponent>().isDeath)
-                    {
-                        units.Add(unit);
-                    }
-                }
-            }
-            return units.ToArray();
+            int gX = (int)Math.Floor((x + mapWide / 2) / gridWide);
+            return gX;
+        }
+        int GetDridY(float y)
+        {
+            int gY = (int)Math.Floor((y + mapWide / 2) / gridWide);
+            return gY;
         }
 
-        public long[] GetPlayerIds(long[] aoiGridIds)
+        /// <summary>
+        /// 得到本人的 九宫格内 最新的 所有单元的 unitId
+        /// </summary>
+        /// <param name="aoiUnit"></param>
+        void FindAoi(AoiUnitComponent aoiUnit)
         {
-            HashSet<long> unitIds = new HashSet<long>();
-            foreach (long temid in aoiGridIds)
-            {
-                unitIds.Union(Get(temid).players);
-            }
-            return unitIds.ToArray();
-        }
-        public long[] GetMonsterIds(long[] aoiGrids)
-        {
-            HashSet<long> unitIds = new HashSet<long>();
-            foreach (long temid in aoiGrids)
-            {
-                unitIds.Union(Get(temid).enemys);
-            }
-            return unitIds.ToArray();
-        }
-        public long[] GetNpcerIds(long[] aoiGrids)
-        {
-            HashSet<long> unitIds = new HashSet<long>();
-            foreach (long temid in aoiGrids)
-            {
-                unitIds.Union(Get(temid).npcers);
-            }
-            return unitIds.ToArray();
-        }
+            aoiUnit.playerIds.MovesSet.Clear();
+            aoiUnit.enemyIds.MovesSet.Clear();
+            aoiUnit.npcerIds.MovesSet.Clear();
 
+            AoiGrid mygrid = Get(aoiUnit.gridId);
+            foreach (long gid in mygrid.seeGrids)
+            {
+                AoiGrid nineGrid = Get(gid);
+                if (nineGrid.players.Count > 0)
+                {
+                    foreach (long unitId1 in nineGrid.players)
+                    {
+                        aoiUnit.playerIds.MovesSet.Add(unitId1);
+                    }
+                }
+                if (nineGrid.enemys.Count > 0)
+                {
+                    foreach (long unitId2 in nineGrid.enemys)
+                    {
+                        aoiUnit.enemyIds.MovesSet.Add(unitId2);
+                    }
+                }
+                if (nineGrid.npcers.Count > 0)
+                {
+                    foreach (long unitId3 in nineGrid.npcers)
+                    {
+                        aoiUnit.npcerIds.MovesSet.Add(unitId3);
+                    }
+                }
+            }
+        }
+        #endregion
+        
     }
 }

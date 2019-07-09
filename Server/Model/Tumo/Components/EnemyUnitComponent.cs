@@ -66,6 +66,15 @@ namespace ETModel
         {
             return this.idUnits.Values.ToArray();
         }
+        public Unit[] GetAllByIds(long[] unitIds)
+        {
+            HashSet<Unit> units = new HashSet<Unit>();
+            foreach(long id in unitIds)
+            {
+                units.Add(Get(id));
+            }
+            return units.ToArray();
+        }
 
     }
 }

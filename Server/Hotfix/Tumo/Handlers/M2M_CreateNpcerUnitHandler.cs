@@ -32,7 +32,7 @@ namespace ETHotfix
                 Game.Scene.GetComponent<NpcerUnitComponent>().Add(unit);
 
                 ///20190702
-                Game.EventSystem.Awake<UnitType>(unit, UnitType.Monster);
+                Game.EventSystem.Awake<UnitType>(unit, UnitType.Npc);
                 unit.AddComponent<SqrDistanceComponent>();
                 unit.AddComponent<NumericComponent>();
                 unit.AddComponent<AttackComponent>();

@@ -23,20 +23,20 @@ namespace ETHotfix
 
             if ((nowtime - self.startTime) > self.resTime)
             {
-                Unit[] enters = Game.Scene.GetComponent<AoiGridComponent>().GetMonsterUnits(aoiUnit.Enters.ToArray());
+                Unit[] enters = Game.Scene.GetComponent<EnemyUnitComponent>().GetAllByIds(aoiUnit.enemyIds.Enters.ToArray());
                 if (enters.Length > 0)
                 {
-                    UpdateEnterUnits(enters, self.GetParent<Unit>().Id);
-                    Console.WriteLine(" AoiPlayerConponentUpdateSystem-38-enters: " + enters.Length);
+                    //UpdateEnterUnits(enters, self.GetParent<Unit>().Id);
+                    Console.WriteLine(" AoiPlayerConponentUpdateSystem-30-enters: " + enters.Length);
                 }
 
-                Unit[] leaves = Game.Scene.GetComponent<AoiGridComponent>().GetMonsterUnits(aoiUnit.Leaves.ToArray());
+                Unit[] leaves = Game.Scene.GetComponent<EnemyUnitComponent>().GetAllByIds(aoiUnit.enemyIds.Leaves.ToArray());
                 if (leaves.Length > 0)
                 {
-                    UpdateRemoveUnits(leaves, self.GetParent<Unit>().Id);
-                    Console.WriteLine(" AoiPlayerConponentUpdateSystem-43-leaves: " + leaves.Length);
+                    //UpdateRemoveUnits(leaves, self.GetParent<Unit>().Id);
+                    Console.WriteLine(" AoiPlayerConponentUpdateSystem-37-leaves: " + leaves.Length);
                 }
-                
+
             }       
         }
 

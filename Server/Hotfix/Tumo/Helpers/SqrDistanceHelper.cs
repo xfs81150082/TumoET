@@ -1,6 +1,7 @@
 ﻿using ETModel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using UnityEngine;
 
@@ -8,6 +9,40 @@ namespace ETHotfix
 {
     public static class SqrDistanceHelper
     {
+        public static void SqrDistance(this SqrDistanceComponent self)
+        {
+            AoiUnitComponent aoiUnit = self.GetParent<Unit>().GetComponent<AoiUnitComponent>();
+
+            UnitType unitType = self.GetParent<Unit>().UnitType;
+            switch (unitType)
+            {
+                case UnitType.Player:
+                    if (aoiUnit.enemyIds.MovesSet.Count == 0) return;
+                    Unit[] units1 = Game.Scene.GetComponent<EnemyUnitComponent>().GetAllByIds(aoiUnit.enemyIds.MovesSet.ToArray());
+                    self.SqrDistance(units1);
+
+                    Console.WriteLine(" SqrDistanceHelper-24-enemyIds.MovesSet: ids/units: " + aoiUnit.enemyIds.MovesSet.Count + " / " + units1.Length);
+                    break;
+                case UnitType.Monster:
+                    if (aoiUnit.playerIds.MovesSet.Count == 0) return;
+                    Unit[] units2 = Game.Scene.GetComponent<UnitComponent>().GetAllByIds(aoiUnit.playerIds.MovesSet.ToArray());
+                    Unit[] units3 = Game.Scene.GetComponent<NpcerUnitComponent>().GetAllByIds(aoiUnit.npcerIds.MovesSet.ToArray());
+                    self.SqrDistance(units2);
+
+                    Console.WriteLine(" SqrDistanceHelper-31-playerIds.MovesSet: ids/units: " + aoiUnit.playerIds.MovesSet.Count + " / " + units2.Length);
+                    break;
+                case UnitType.Npc:
+                    if (aoiUnit.playerIds.MovesSet.Count == 0) return;
+                    Unit[] units4 = Game.Scene.GetComponent<EnemyUnitComponent>().GetAllByIds(aoiUnit.enemyIds.MovesSet.ToArray());
+                    self.SqrDistance(units4);
+
+                    Console.WriteLine(" SqrDistanceHelper-40-enemyIds.MovesSet: ids/units: " + aoiUnit.enemyIds.MovesSet.Count + " / " + units4.Length);
+                    break;
+                default:
+                    break;
+            }
+        }
+
         public static void SqrDistance(this SqrDistanceComponent self, Unit[] units)
         {
             if (units.Length == 0)

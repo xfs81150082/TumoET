@@ -12,14 +12,42 @@ namespace ETModel
     {
         public long gridId { get; set; } = -1;
 
-        public AoiGrid aoiGrid { get; set; }
+        public long changerGridId { get; set; } = -1;
 
-        public HashSet<long> NineGridIds { get; set; } = new HashSet<long>();
+        public AoiUintInfo playerIds;
 
-        public HashSet<long> OldNineGridIds { get; set; } = new HashSet<long>();
+        public AoiUintInfo enemyIds;
 
-        public HashSet<long> Enters { get; set; } = new HashSet<long>();
+        public AoiUintInfo npcerIds;
 
-        public HashSet<long> Leaves { get; set; } = new HashSet<long>();
+        public AoiUnitComponent()
+        {
+            playerIds = new AoiUintInfo { MovesSet = new HashSet<long>(), OldMovesSet = new HashSet<long>() };
+            enemyIds = new AoiUintInfo { MovesSet = new HashSet<long>(), OldMovesSet = new HashSet<long>() };
+            npcerIds = new AoiUintInfo { MovesSet = new HashSet<long>(), OldMovesSet = new HashSet<long>() };
+        }
+
+        public void MoveToChangeAoiGrid()
+        {
+            Game.Scene.GetComponent<AoiGridComponent>().MoveToChangeAoiGrid(this);
+        }
+        public void UpdateAoiUnitInfo()
+        {
+            Game.Scene.GetComponent<AoiGridComponent>().UpdateAoiUnitInfo(this);
+        }
+
+        public override void Dispose()
+        {
+            if (this.IsDisposed) return;
+
+            playerIds.Dispose();
+            enemyIds.Dispose();
+            npcerIds.Dispose();
+
+            gridId = 0;
+
+            base.Dispose();
+        }
+
     }
 }

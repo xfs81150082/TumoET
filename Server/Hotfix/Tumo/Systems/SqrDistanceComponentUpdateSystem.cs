@@ -10,26 +10,8 @@ namespace ETHotfix
     public class SqrDistanceComponentUpdateSystem : UpdateSystem<SqrDistanceComponent>
     {
         public override void Update(SqrDistanceComponent self)
-        {
-            UnitType unitType = self.GetParent<Unit>().UnitType;
-            switch (unitType)
-            {
-                case UnitType.Player:
-                    Unit[] units = Game.Scene.GetComponent<AoiGridComponent>().GetMonsterUnits(self.GetParent<AoiUnitComponent>().NineGridIds.ToArray());
-                    self.SqrDistance(units);
-                    break;
-                case UnitType.Monster:
-                    Unit[] units2 = Game.Scene.GetComponent<AoiGridComponent>().GetPlayerUnits(self.GetParent<AoiUnitComponent>().NineGridIds.ToArray());
-                    Unit[] units3 = Game.Scene.GetComponent<AoiGridComponent>().GetNpcerUnits(self.GetParent<AoiUnitComponent>().NineGridIds.ToArray());
-                    self.SqrDistance(units2.Union(units3).ToArray());
-                    break;
-                case UnitType.Npc:
-                    Unit[] units6 = Game.Scene.GetComponent<AoiGridComponent>().GetMonsterUnits(self.GetParent<AoiUnitComponent>().NineGridIds.ToArray());
-                    self.SqrDistance(units6);
-                    break;
-                default:
-                    break;
-            }
+        {            
+            self.SqrDistance();           
 
             if (self.neastDistance > self.seeDistance)
             {

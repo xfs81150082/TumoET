@@ -113,26 +113,29 @@ namespace App
 						// manager server组件，用来管理其它进程使用
 						Game.Scene.AddComponent<AppManagerComponent>();
 						Game.Scene.AddComponent<RealmGateAddressComponent>();
-						Game.Scene.AddComponent<GateSessionKeyComponent>();
-
-                        #region ///20190621
-                        Game.Scene.AddComponent<AoiGridComponent>();            //创建 AOI 组件
-                        Game.Scene.AddComponent<NumericWatcherComponent>();     //创建数值组件NumericWatcherComponent
-
-
-                        #endregion
+						Game.Scene.AddComponent<GateSessionKeyComponent>();                        
 
                         // 配置管理
                         Game.Scene.AddComponent<ConfigComponent>();
 						
 						// recast寻路组件
 						Game.Scene.AddComponent<PathfindingComponent>();
-						
 						Game.Scene.AddComponent<PlayerComponent>();
 						Game.Scene.AddComponent<UnitComponent>();
 
+                        Game.Scene.AddComponent<ConsoleComponent>();
+                        // Game.Scene.AddComponent<HttpComponent>();
+
+                        Console.WriteLine(" 内网： " + innerConfig.Address + " 外网： " + outerConfig.Address);
+
+                        #region ///20190621
+                        Game.Scene.AddComponent<AoiGridComponent>();            //创建 AOI 组件
+                        Game.Scene.AddComponent<NumericWatcherComponent>();     //创建数值组件NumericWatcherComponent
+				
+
+                        #endregion
+
                         #region ///20190613
-                        Console.WriteLine(" 内网： "+innerConfig.Address + " 外网： " + outerConfig.Address);
                         Game.Scene.AddComponent<EnemyUnitComponent>();
                         Game.Scene.AddComponent<EnemyComponent>();
                         //Game.Scene.AddComponent<NpcerUnitComponent>();
@@ -142,8 +145,8 @@ namespace App
 
                         #endregion
 
-                        Game.Scene.AddComponent<ConsoleComponent>();
-						// Game.Scene.AddComponent<HttpComponent>();
+                        Console.WriteLine(" 服务器配置完成： " + AppType.AllServer + "  " + DateTime.Now.ToString("yyyy MM dd HH:mm:ss"));
+
 						break;
 					case AppType.Benchmark:
 						Game.Scene.AddComponent<NetOuterComponent>();
