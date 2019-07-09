@@ -24,12 +24,11 @@ namespace ETHotfix
                 //}
 
                 ///移动后 根据坐标 更换地图固定格子 注册注销 unitId
-                self.MoveToChangeAoiGrid();
+                Game.Scene.GetComponent<AoiGridComponent>().UpdateAoiUnitInfo(self);
 
             }
         }
-
-
+        
 
     }
 }

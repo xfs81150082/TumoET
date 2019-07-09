@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ETModel
 {
-    public class AoiGrid : Entity
+    public class AoiGrid : Component
     {
         public long gridId { get; set; }
         public int X { get; set; }
@@ -13,20 +13,16 @@ namespace ETModel
         public int maxX { get; set; }
         public int minY { get; set; }
         public int maxY { get; set; }
-        public int playerChangeCount = -1;
-        public int enemyChangeCount = -1;
-        public int npcerChangeCount = -1;
         public HashSet<long> seeGrids = new HashSet<long>();
         public HashSet<long> players = new HashSet<long>();
         public HashSet<long> enemys = new HashSet<long>();
         public HashSet<long> npcers = new HashSet<long>();
-        public AoiGrid() { this.AddComponent<AoiGridItemComponent>(); }
+        public AoiGrid() {   }
         public AoiGrid(long id,int x ,int y)
         {
             this.gridId = id;
             this.X = x;
             this.Y = y;
-            this.AddComponent<AoiGridItemComponent>();
         }
         
     }

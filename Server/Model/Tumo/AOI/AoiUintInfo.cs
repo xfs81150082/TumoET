@@ -26,4 +26,27 @@ namespace ETModel
         }
 
     }
+    public struct AoiChangeInfo
+    {
+        public int movesSet;
+
+        public int oldMovesSet;
+
+        public int enters;
+
+        public int leaves;
+
+        public void Dispose()
+        {
+            movesSet = -1;
+
+            oldMovesSet = -1;
+
+            enters = -1;
+
+            leaves = -1;
+        }
+
+    }
+
 }

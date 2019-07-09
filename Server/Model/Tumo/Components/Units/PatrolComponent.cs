@@ -25,7 +25,7 @@ namespace ETModel
         public long patolTimer = 0;
         public long lifeCdTime = 400;
 
-        public int coreDis = 40;
+        public int coreDis = 20;
         public int coreRan = 0;
         public Vector3 spawnPosition { get; set; } = new Vector3(0, 0, 0);
         public Vector3 goalPoint;

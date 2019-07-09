@@ -42,7 +42,6 @@ namespace ETHotfix
                 unit.AddComponent<RecoverComponent>();
                 unit.AddComponent<RayUnitComponent>();
                 unit.AddComponent<AoiUnitComponent>();
-                unit.AddComponent<AoiPlayerComponent>();
 
                 SetNumeric(unit ,player);
 

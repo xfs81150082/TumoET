@@ -56,7 +56,10 @@ namespace ETHotfix
             NumericComponent num = unit.GetComponent<NumericComponent>();
             NumericComponent numEnemy = enemy.GetComponent<NumericComponent>();
 
-            num[NumericType.MaxHpAdd] = numEnemy[NumericType.MaxHpAdd];        
+            num[NumericType.MaxHpAdd] = numEnemy[NumericType.MaxHpAdd];
+
+            ///小怪当前速度
+            unit.AddComponent<MoveComponent>().Speed = 2.0f;
 
         }
 

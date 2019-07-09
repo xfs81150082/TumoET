@@ -25,16 +25,7 @@ namespace ETModel
             playerIds = new AoiUintInfo { MovesSet = new HashSet<long>(), OldMovesSet = new HashSet<long>() };
             enemyIds = new AoiUintInfo { MovesSet = new HashSet<long>(), OldMovesSet = new HashSet<long>() };
             npcerIds = new AoiUintInfo { MovesSet = new HashSet<long>(), OldMovesSet = new HashSet<long>() };
-        }
-
-        public void MoveToChangeAoiGrid()
-        {
-            Game.Scene.GetComponent<AoiGridComponent>().MoveToChangeAoiGrid(this);
-        }
-        public void UpdateAoiUnitInfo()
-        {
-            Game.Scene.GetComponent<AoiGridComponent>().UpdateAoiUnitInfo(this);
-        }
+        }      
 
         public override void Dispose()
         {
