@@ -29,24 +29,34 @@ namespace ETHotfix
                     self.target = null;
                 }
 
-                self.seeTimer += 1;
-                if (self.seeTimer > self.resTime)
+                ///如果卡住在地图到达不了目标点 此计时40秒后 重置巡逻目标点
+                if (!self.startNull)
+                {
+                    self.seeTimer = TimeHelper.ClientNow();
+                    self.startNull = true;
+                }
+
+                ///精确到毫秒
+                long timeNow = TimeHelper.ClientNow();
+
+                if ((timeNow - self.seeTimer) > self.resTime)
                 {
                     //如果追到目标后，离目标距离小于2米，不追击
                     if (self.targetDistance < 4f) return;
 
-                    // 每间隔 40 MS 发送一次目标点坐标 消息
+                    // 每间隔 resTime（100） MS 发送一次目标点坐标 消息
                     self.seeMap = self.GetSeeMap();
                     if (self.seeMap != null)
                     {
                         ActorLocationSender actorLocationSender = Game.Scene.GetComponent<ActorLocationSenderComponent>().Get((self.Parent as Unit).Id);
                         actorLocationSender.Send(self.seeMap);
-                        self.seeTimer = 0;
+
+                        self.startNull = false;
                     }
                 }
-
             }
-        }       
+        }
+
 
     }
 }

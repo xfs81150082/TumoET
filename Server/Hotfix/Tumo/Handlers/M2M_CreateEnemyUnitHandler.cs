@@ -34,13 +34,13 @@ namespace ETHotfix
 
                 ///20190702
                 Game.EventSystem.Awake<UnitType>(unit, UnitType.Monster);
+                unit.AddComponent<AoiUnitComponent>();
                 unit.AddComponent<SqrDistanceComponent>();
                 unit.AddComponent<NumericComponent>();
                 unit.AddComponent<AttackComponent>();
                 unit.AddComponent<RecoverComponent>();
                 unit.AddComponent<PatrolComponent>();
                 unit.AddComponent<SeeComponent>();
-                unit.AddComponent<AoiUnitComponent>();
 
                 SetNumeric(unit, enemy);
             }
@@ -59,7 +59,7 @@ namespace ETHotfix
             num[NumericType.MaxHpAdd] = numEnemy[NumericType.MaxHpAdd];
 
             ///小怪当前速度
-            unit.AddComponent<MoveComponent>().Speed = 2.0f;
+            unit.AddComponent<MoveComponent>().Speed = 1.0f;
 
         }
 

@@ -189,19 +189,27 @@ namespace ETHotfix
                 case UnitType.Player:
                     foreach(long tem in aoiUnit.enemyIds.Enters)
                     {
+                        ///通知 刚进入本人视野的小怪（多个） 加入本人的Id（1个） 
                         Game.Scene.GetComponent<EnemyUnitComponent>().Get(tem).GetComponent<AoiUnitComponent>().playerIds.MovesSet.Add(aoiUnit.GetParent<Unit>().Id);
-                        ///ToTo 通知aoiunit客户端(1个)  加入这些小怪（多个）
-                        
+
+                        ///ToTo 通知 本人的客户端(1个)  加入这些小怪（多个）
+
+
                         Console.WriteLine(" 小怪-Id：" + tem + " 进入 PlayerId：" + aoiUnit.GetParent<Unit>().Id + "的视野。");
+                        Console.WriteLine(" 小怪-Id：" + tem + " 他能看到玩家数量：" + Game.Scene.GetComponent<EnemyUnitComponent>().Get(tem).GetComponent<AoiUnitComponent>().playerIds.MovesSet.Count);
                     }
                     break;
                 case UnitType.Monster:
                     foreach (long tem in aoiUnit.playerIds.Enters)
                     {
+                        ///通知 刚进入小怪视野的玩家（多个） 加入这个小怪的Id（1个） 
                         Game.Scene.GetComponent<UnitComponent>().Get(tem).GetComponent<AoiUnitComponent>().enemyIds.MovesSet.Add(aoiUnit.GetParent<Unit>().Id);
+
                         ///ToTo 通知tem客户端(多个)  加入此小怪（1个）
-                        
+
+
                         Console.WriteLine(" 小怪+Id：" + aoiUnit.GetParent<Unit>().Id + " 进入 PlayerId：" + tem + "的视野。");
+                        Console.WriteLine(" 小怪+Id：" + aoiUnit.GetParent<Unit>().Id + " 他能看到玩家数量：" + aoiUnit.GetParent<Unit>().GetComponent<AoiUnitComponent>().playerIds.MovesSet.Count);
                     }
                     break;
                 case UnitType.Npc:

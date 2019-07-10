@@ -10,40 +10,31 @@ namespace ETHotfix
     public class SqrDistanceComponentUpdateSystem : UpdateSystem<SqrDistanceComponent>
     {
         public override void Update(SqrDistanceComponent self)
-        {            
-            self.SqrDistance();           
+        {
+            self.SqrDistance();
 
-            if (self.neastDistance > self.seeDistance)
+            SetIsAttacking(self);
+        }
+
+        void SetIsAttacking(SqrDistanceComponent self)
+        {
+            if (self.neastDistance < self.GetParent<Unit>().GetComponent<AttackComponent>().enterAttackDistance)
             {
-                SetIsAttacking(self.GetParent<Unit>(), false);
-                SetIsPatrol(self.GetParent<Unit>(), true);
+                self.GetParent<Unit>().GetComponent<AttackComponent>().isAttacking = true;
+
+                if (self.GetParent<Unit>().GetComponent<PatrolComponent>() != null)
+                {
+                    self.GetParent<Unit>().GetComponent<PatrolComponent>().isPatrol = false;
+                }
             }
             else
             {
-                SetIsAttacking(self.GetParent<Unit>(), true);
-                SetIsPatrol(self.GetParent<Unit>(), false);
-            }
-        }
+                self.GetParent<Unit>().GetComponent<AttackComponent>().isAttacking = false;
 
-        void SetIsAttacking(Unit unit, bool boo)
-        {
-            if (unit.GetComponent<AttackComponent>() != null)
-            {
-                unit.GetComponent<AttackComponent>().isAttacking = boo;
-            }
-        }
-        void SetIsPatrol(Unit unit , bool boo)
-        {
-            if (unit.GetComponent<PatrolComponent>() != null)
-            {
-                unit.GetComponent<PatrolComponent>().isPatrol = boo;
-            }
-        }
-        void SetIsSeeing(Unit unit, bool boo)
-        {
-            if (unit.GetComponent<SeeComponent>() != null)
-            {
-                unit.GetComponent<SeeComponent>().isSee = boo;
+                if (self.GetParent<Unit>().GetComponent<PatrolComponent>() != null)
+                {
+                    self.GetParent<Unit>().GetComponent<PatrolComponent>().isPatrol = true;
+                }
             }
         }
 

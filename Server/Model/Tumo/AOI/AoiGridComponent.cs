@@ -12,9 +12,9 @@ namespace ETModel
     {
         private readonly Dictionary<long, AoiGrid> grids = new Dictionary<long, AoiGrid>();
 
-        public int rcCount = 10;
+        public int rcCount = 5;
 
-        public int gridWide = 10;
+        public int gridWide = 20;
 
         public int mapWide = 100;
 

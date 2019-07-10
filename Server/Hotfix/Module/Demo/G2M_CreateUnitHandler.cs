@@ -36,12 +36,12 @@ namespace ETHotfix
 
                 ///20190702 玩家
                 Game.EventSystem.Awake<UnitType>(unit, UnitType.Player);
+                unit.AddComponent<AoiUnitComponent>();
                 unit.AddComponent<SqrDistanceComponent>();
                 unit.AddComponent<NumericComponent>();
                 unit.AddComponent<AttackComponent>();
                 unit.AddComponent<RecoverComponent>();
                 unit.AddComponent<RayUnitComponent>();
-                unit.AddComponent<AoiUnitComponent>();
 
                 SetNumeric(unit ,player);
 

@@ -18,32 +18,25 @@ namespace ETHotfix
             {
                 case UnitType.Player:
                     if (aoiUnit.enemyIds.MovesSet.Count == 0) return;
-                    Unit[] units1 = Game.Scene.GetComponent<EnemyUnitComponent>().GetAllByIds(aoiUnit.enemyIds.MovesSet.ToArray());
-                    self.SqrDistance(units1);
-
-                    //Console.WriteLine(" SqrDistanceHelper-24-enemyIds.MovesSet: ids/units: " + aoiUnit.enemyIds.MovesSet.Count + " / " + units1.Length);
+                    Unit[] units10 = Game.Scene.GetComponent<EnemyUnitComponent>().GetAllByIds(aoiUnit.enemyIds.MovesSet.ToArray());
+                    self.SqrDistance(units10);
                     break;
                 case UnitType.Monster:
                     if (aoiUnit.playerIds.MovesSet.Count == 0) return;
-                    Unit[] units2 = Game.Scene.GetComponent<UnitComponent>().GetAllByIds(aoiUnit.playerIds.MovesSet.ToArray());
-                    Unit[] units3 = Game.Scene.GetComponent<NpcerUnitComponent>().GetAllByIds(aoiUnit.npcerIds.MovesSet.ToArray());
-                    self.SqrDistance(units2);
-
-                    //Console.WriteLine(" SqrDistanceHelper-31-playerIds.MovesSet: ids/units: " + aoiUnit.playerIds.MovesSet.Count + " / " + units2.Length);
+                    Unit[] units20 = Game.Scene.GetComponent<UnitComponent>().GetAllByIds(aoiUnit.playerIds.MovesSet.ToArray());
+                    self.SqrDistance(units20);
                     break;
                 case UnitType.Npc:
-                    if (aoiUnit.playerIds.MovesSet.Count == 0) return;
-                    Unit[] units4 = Game.Scene.GetComponent<EnemyUnitComponent>().GetAllByIds(aoiUnit.enemyIds.MovesSet.ToArray());
-                    self.SqrDistance(units4);
-
-                    //Console.WriteLine(" SqrDistanceHelper-40-enemyIds.MovesSet: ids/units: " + aoiUnit.enemyIds.MovesSet.Count + " / " + units4.Length);
+                    //if (aoiUnit.playerIds.MovesSet.Count == 0) return;
+                    //Unit[] units30 = Game.Scene.GetComponent<NpcerUnitComponent>().GetAllByIds(aoiUnit.playerIds.MovesSet.ToArray());
+                    //self.SqrDistance(units30);
                     break;
                 default:
                     break;
             }
         }
 
-        public static void SqrDistance(this SqrDistanceComponent self, Unit[] units)
+        static void SqrDistance(this SqrDistanceComponent self, Unit[] units)
         {
             if (units.Length == 0)
             {
@@ -51,7 +44,9 @@ namespace ETHotfix
                 self.neastUnit = null;
                 return;
             }
+
             self.neastUnit = NeastUnit(self.GetParent<Unit>(), units);
+
             if (self.neastUnit != null)
             {
                 self.neastDistance = Distance(self.GetParent<Unit>().Position, self.neastUnit.Position);
@@ -60,7 +55,9 @@ namespace ETHotfix
             {
                 self.neastDistance = float.PositiveInfinity;
             }
-        }      
+
+            //Console.WriteLine(" SqrDistanceHelper-62-Id:Type/neastId/neastDis: " + self.GetParent<Unit>().Id + " : " + self.GetParent<Unit>().UnitType + " / " + self.neastUnit.Id + " / " + self.neastDistance);
+        }
 
         public static Unit NeastUnit(Unit unit, Unit[] units)
         {
