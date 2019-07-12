@@ -4,8 +4,10 @@ namespace ETModel
     #region ///20190613
     [Message(OuterOpcode.M2C_GetEnemyUnits)]
     public partial class M2C_GetEnemyUnits : IActorMessage { }
-    [Message(OuterOpcode.M2C_RemoveEnemyUnits)]
-    public partial class M2C_RemoveEnemyUnits : IActorMessage { }
+    [Message(OuterOpcode.M2C_AddUnits)]
+    public partial class M2C_AddUnits : IActorMessage { }
+    [Message(OuterOpcode.M2C_RemoveUnits)]
+    public partial class M2C_RemoveUnits : IActorMessage { }
 
     [Message(OuterOpcode.Patrol_Map)]
     public partial class Patrol_Map : IActorLocationMessage { }
@@ -16,9 +18,11 @@ namespace ETModel
     [Message(OuterOpcode.Attack_Map)]
     public partial class Attack_Map : IActorLocationMessage { }
 
+    [Message(OuterOpcode.M2C_AddUnit)]
+    public partial class M2C_AddUnit : IActorMessage { }
     [Message(OuterOpcode.M2C_RemoveUnit)]
     public partial class M2C_RemoveUnit : IActorMessage { }
-       
+
 
     #endregion
 
@@ -80,13 +84,15 @@ namespace ETModel
     {
         #region ///20190613
         public const ushort M2C_GetEnemyUnits = 588;
-        public const ushort M2C_RemoveEnemyUnits = 589;
+        public const ushort M2C_AddUnits = 587;
+        public const ushort M2C_RemoveUnits = 589;
 
         public const ushort Patrol_Map = 590;
         public const ushort SqrDistance_Map = 592;
         public const ushort See_Map = 594;
         public const ushort Attack_Map = 596;
-        public const ushort M2C_RemoveUnit = 598;
+        public const ushort M2C_AddUnit = 598;
+        public const ushort M2C_RemoveUnit = 599;
 
 
 

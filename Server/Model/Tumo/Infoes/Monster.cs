@@ -6,15 +6,15 @@ using UnityEngine;
 namespace ETModel
 {
     [ObjectSystem]
-    public class EnemyAwakeSystem : AwakeSystem<Enemy, string>
+    public class MonsterAwakeSystem : AwakeSystem<Monster, string>
     {
-        public override void Awake(Enemy self, string a)
+        public override void Awake(Monster self, string a)
         {
             self.Awake(a);
         }
     }
 
-    public sealed class Enemy : Entity
+    public sealed class Monster : Entity
     {
         public string map { get; set; }
 
@@ -22,9 +22,9 @@ namespace ETModel
 
         public Vector3 spawnPosition;
         
-        public Enemy() { }
+        public Monster() { }
         
-        public Enemy(string map)
+        public Monster(string map)
         {
             this.map = map;
         }

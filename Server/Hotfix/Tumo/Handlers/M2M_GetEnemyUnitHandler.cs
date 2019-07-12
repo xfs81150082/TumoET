@@ -13,8 +13,9 @@ namespace ETHotfix
             try
             {                
                 /// 广播刷新小怪到客户端 unit
-                Unit[] units = Game.Scene.GetComponent<EnemyUnitComponent>().GetAll();
-                SetEnemyUnits(units, message.playerUnitId);
+                Unit[] units = Game.Scene.GetComponent<MonsterUnitComponent>().GetAll();
+                //SetEnemyUnits(units, message.playerUnitId);
+                SetUnits(units, message.playerUnitId);
 
                 Console.WriteLine(" M2M_GetEnemyUnitHandler-19-playerUnitId: " + message.playerUnitId);
             }
@@ -22,6 +23,24 @@ namespace ETHotfix
             {
                 Console.WriteLine(ex.Message);
             }
+        }
+        void SetUnits(Unit[] units, long playerUnitId)
+        {
+            /// 广播创建的unit
+            M2C_AddUnits m2C_AddUnits = new M2C_AddUnits();
+
+            m2C_AddUnits.UnitType = (int)UnitType.Monster;
+
+            foreach (Unit u in units)
+            {
+                UnitInfo unitInfo = new UnitInfo();
+                unitInfo.X = u.Position.x;
+                unitInfo.Y = u.Position.y;
+                unitInfo.Z = u.Position.z;
+                unitInfo.UnitId = u.Id;
+                m2C_AddUnits.Units.Add(unitInfo);
+            }
+            MessageHelper.Broadcast(m2C_AddUnits, playerUnitId);
         }
 
         void SetEnemyUnits(Unit[] units, long playerUnitId)

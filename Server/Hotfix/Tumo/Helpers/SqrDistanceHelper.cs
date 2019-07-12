@@ -18,7 +18,7 @@ namespace ETHotfix
             {
                 case UnitType.Player:
                     if (aoiUnit.enemyIds.MovesSet.Count == 0) return;
-                    Unit[] units10 = Game.Scene.GetComponent<EnemyUnitComponent>().GetAllByIds(aoiUnit.enemyIds.MovesSet.ToArray());
+                    Unit[] units10 = Game.Scene.GetComponent<MonsterUnitComponent>().GetAllByIds(aoiUnit.enemyIds.MovesSet.ToArray());
                     self.SqrDistance(units10);
                     break;
                 case UnitType.Monster:
@@ -26,7 +26,7 @@ namespace ETHotfix
                     Unit[] units20 = Game.Scene.GetComponent<UnitComponent>().GetAllByIds(aoiUnit.playerIds.MovesSet.ToArray());
                     self.SqrDistance(units20);
                     break;
-                case UnitType.Npc:
+                case UnitType.Npcer:
                     //if (aoiUnit.playerIds.MovesSet.Count == 0) return;
                     //Unit[] units30 = Game.Scene.GetComponent<NpcerUnitComponent>().GetAllByIds(aoiUnit.playerIds.MovesSet.ToArray());
                     //self.SqrDistance(units30);

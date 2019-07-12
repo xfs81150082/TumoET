@@ -11,7 +11,7 @@ namespace ETHotfix
         protected override async ETTask Run(Unit unit, C2M_RaycastHitActorRequest message, Action<M2C_RaycastHitActorResponse> reply)
         {
 
-            Unit mesUnit = Game.Scene.GetComponent<EnemyUnitComponent>().Get(long.Parse(message.Info));
+            Unit mesUnit = Game.Scene.GetComponent<MonsterUnitComponent>().Get(long.Parse(message.Info));
             if(mesUnit == null)
             {
                 mesUnit = Game.Scene.GetComponent<UnitComponent>().Get(long.Parse(message.Info));

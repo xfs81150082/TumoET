@@ -33,7 +33,7 @@ namespace ETHotfix
                             aoiGrid.enemys.Add(aoiUnit.GetParent<Unit>().Id);
                         }
                         break;
-                    case UnitType.Npc:
+                    case UnitType.Npcer:
                         if (!aoiGrid.npcers.Contains(aoiUnit.GetParent<Unit>().Id))
                         {
                             aoiGrid.npcers.Add(aoiUnit.GetParent<Unit>().Id);
@@ -67,7 +67,7 @@ namespace ETHotfix
                             aoiGrid.enemys.Remove(aoiUnit.GetParent<Unit>().Id);
                         }
                         break;
-                    case UnitType.Npc:
+                    case UnitType.Npcer:
                         if (aoiGrid.npcers.Contains(aoiUnit.GetParent<Unit>().Id))
                         {
                             aoiGrid.npcers.Remove(aoiUnit.GetParent<Unit>().Id);
@@ -190,13 +190,13 @@ namespace ETHotfix
                     foreach(long tem in aoiUnit.enemyIds.Enters)
                     {
                         ///通知 刚进入本人视野的小怪（多个） 加入本人的Id（1个） 
-                        Game.Scene.GetComponent<EnemyUnitComponent>().Get(tem).GetComponent<AoiUnitComponent>().playerIds.MovesSet.Add(aoiUnit.GetParent<Unit>().Id);
+                        Game.Scene.GetComponent<MonsterUnitComponent>().Get(tem).GetComponent<AoiUnitComponent>().playerIds.MovesSet.Add(aoiUnit.GetParent<Unit>().Id);
 
                         ///ToTo 通知 本人的客户端(1个)  加入这些小怪（多个）
 
 
                         Console.WriteLine(" 小怪-Id：" + tem + " 进入 PlayerId：" + aoiUnit.GetParent<Unit>().Id + "的视野。");
-                        Console.WriteLine(" 小怪-Id：" + tem + " 他能看到玩家数量：" + Game.Scene.GetComponent<EnemyUnitComponent>().Get(tem).GetComponent<AoiUnitComponent>().playerIds.MovesSet.Count);
+                        Console.WriteLine(" 小怪-Id：" + tem + " 他能看到玩家数量：" + Game.Scene.GetComponent<MonsterUnitComponent>().Get(tem).GetComponent<AoiUnitComponent>().playerIds.MovesSet.Count);
                     }
                     break;
                 case UnitType.Monster:
@@ -212,7 +212,7 @@ namespace ETHotfix
                         Console.WriteLine(" 小怪+Id：" + aoiUnit.GetParent<Unit>().Id + " 他能看到玩家数量：" + aoiUnit.GetParent<Unit>().GetComponent<AoiUnitComponent>().playerIds.MovesSet.Count);
                     }
                     break;
-                case UnitType.Npc:
+                case UnitType.Npcer:
                     break;
                 default:
                     break;
@@ -230,7 +230,7 @@ namespace ETHotfix
                 case UnitType.Player:
                     foreach (long tem in aoiUnit.enemyIds.Enters)
                     {
-                        Game.Scene.GetComponent<EnemyUnitComponent>().Get(tem).GetComponent<AoiUnitComponent>().playerIds.MovesSet.Remove(aoiUnit.GetParent<Unit>().Id);
+                        Game.Scene.GetComponent<MonsterUnitComponent>().Get(tem).GetComponent<AoiUnitComponent>().playerIds.MovesSet.Remove(aoiUnit.GetParent<Unit>().Id);
                         ///ToTo 通知aoiunit客户端(1个)  删除 这些小怪（多个）
                         
                         Console.WriteLine(" 小怪-Id：" + tem + " 离开 PlayerId：" + aoiUnit.GetParent<Unit>().Id + "的视野。");
@@ -245,7 +245,7 @@ namespace ETHotfix
                         Console.WriteLine(" 小怪+Id：" + aoiUnit.GetParent<Unit>().Id + " 离开 PlayerId：" + tem + "的视野。");
                     }
                     break;
-                case UnitType.Npc:
+                case UnitType.Npcer:
 
                     break;
                 default:

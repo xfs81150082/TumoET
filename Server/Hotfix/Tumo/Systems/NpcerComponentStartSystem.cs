@@ -14,7 +14,7 @@ namespace ETHotfix
         {
             GetEnemyFromBD();
 
-            SetEnemyToMap();
+            //SetEnemyToMap();
 
             Console.WriteLine(" NpcerComponentStartSystem-18: " + " BD服务器 Npcer数据；map服务器 实例Npcer： " + Game.Scene.GetComponent<NpcerComponent>().Count);
         }
@@ -53,7 +53,7 @@ namespace ETHotfix
 
                 foreach (Npcer tem in Game.Scene.GetComponent<NpcerComponent>().GetAll())
                 {
-                    mapSession.Send(new M2M_CreateNpcerUnit() { NpcerId = tem.Id });
+                    mapSession.Send(new M2M_CreateUnit() { RolerId = tem.Id });
                     Console.WriteLine(" NpcerComponentStartSystem-57: " + " BD服务器 Npcer数据；map服务器 实例Npcer： " + Game.Scene.GetComponent<NpcerComponent>().Count);
                 }
             }

@@ -5,13 +5,13 @@ using UnityEngine;
 
 namespace ETModel
 {
-    public class EnemyInfo : Entity
+    public class MonsterInfo : Entity
     {
-        public EnemyInfo()
+        public MonsterInfo()
         {
             GetEnemyFromBD();
         }
-        public Dictionary<long, Enemy> enemys = new Dictionary<long, Enemy>();
+        public Dictionary<long, Monster> enemys = new Dictionary<long, Monster>();
 
         /// <summary>
         /// 先向 BD 服务器 初始化小怪数据
@@ -40,7 +40,7 @@ namespace ETModel
         {
             for (int i = 0; i < count; i++)
             {
-                Enemy enemy = ComponentFactory.CreateWithId<Enemy>(IdGenerater.GenerateId());
+                Monster enemy = ComponentFactory.CreateWithId<Monster>(IdGenerater.GenerateId());
 
                 ///20190702
                 enemy.AddComponent<NumericComponent>();
@@ -57,7 +57,7 @@ namespace ETModel
 
             SetPosition(enemys);
         }
-        void SetNumeric(Enemy enemy, object obj)
+        void SetNumeric(Monster enemy, object obj)
         {
             if (enemy.GetComponent<NumericComponent>() == null) return;
             NumericComponent num = enemy.GetComponent<NumericComponent>();
@@ -66,7 +66,7 @@ namespace ETModel
         }
 
 
-        void SetPosition(Dictionary<long, Enemy> enemys)
+        void SetPosition(Dictionary<long, Monster> enemys)
         {
             List<long> list = new List<long>(enemys.Keys);
 

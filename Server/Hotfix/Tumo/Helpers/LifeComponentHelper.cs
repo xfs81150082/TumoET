@@ -140,7 +140,7 @@ namespace ETHotfix
                             switch (selfUnit.UnitType)
                             {
                                 case UnitType.Player:
-                                    numeric = Game.Scene.GetComponent<EnemyUnitComponent>().Get(tem).GetComponent<NumericComponent>();
+                                    numeric = Game.Scene.GetComponent<MonsterUnitComponent>().Get(tem).GetComponent<NumericComponent>();
 
                                     numeric[NumericType.ExpAdd] += addexp;
                                     numeric[NumericType.CoinAdd] += addcoin;
@@ -159,7 +159,7 @@ namespace ETHotfix
 
                                     Console.WriteLine(" DeathSettlement-160-type:addexp/exp addcoin/coin: " + numeric.GetParent<Unit>().UnitType + ": " + addexp + "/" + numeric[NumericType.Exp] + "  " + addcoin + "/" + numeric[NumericType.Coin]);
                                     break;
-                                case UnitType.Npc:
+                                case UnitType.Npcer:
 
                                     break;
                             }
@@ -178,7 +178,9 @@ namespace ETHotfix
 
         static void SendUnitIdToRemoveUnit(Unit self )
         {
-            MapSessionHelper.Session().Send(new M2M_RemoveUnit() { UnitId = self.Id, UnitType = (int)self.UnitType });
+            M2M_RemoveUnits m2M_RemoveUnits = new M2M_RemoveUnits() { UnitType = (int)self.UnitType };
+            m2M_RemoveUnits.UnitIds.Add(self.Id);
+            MapSessionHelper.Session().Send(m2M_RemoveUnits);
 
             Console.WriteLine(" SendUnitIdToRemoveUnit-183-id/UnitType: " + self.Id + " / " + self.UnitType);
         }

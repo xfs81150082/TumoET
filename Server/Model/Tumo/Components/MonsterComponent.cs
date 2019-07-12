@@ -7,50 +7,50 @@ using UnityEngine;
 namespace ETModel
 {
     [ObjectSystem]
-    public class EnemyComponentAwakeSystem : AwakeSystem<EnemyComponent>
+    public class MonsterComponentAwakeSystem : AwakeSystem<MonsterComponent>
     {
-        public override void Awake(EnemyComponent self)
+        public override void Awake(MonsterComponent self)
         {
             self.Awake();
         }
     }  
 
-    public class EnemyComponent : Component
+    public class MonsterComponent : Component
     {
-        public static EnemyComponent Instance { get; private set; }
+        public static MonsterComponent Instance { get; private set; }
 
         public long spawnCount = 4;
 
-        private readonly Dictionary<long, Enemy> IdEnemys = new Dictionary<long, Enemy>();
+        private readonly Dictionary<long, Monster> IdEnemys = new Dictionary<long, Monster>();
 
         public void Awake()
         {
             Instance = this;
         }
 
-        public void AddAll(Enemy[] enemys)
+        public void AddAll(Monster[] enemys)
         {
-            foreach (Enemy tem in enemys)
+            foreach (Monster tem in enemys)
             {
                 if (IdEnemys.Keys.Contains(tem.Id)) return;
                 this.IdEnemys.Add(tem.Id, tem);
                 tem.Parent = this;
             }
         }
-        public void Add(Enemy booker)
+        public void Add(Monster booker)
         {
             this.IdEnemys.Add(booker.Id, booker);
             booker.Parent = this;
         }
 
-        public Enemy Get(long id)
+        public Monster Get(long id)
         {
-            this.IdEnemys.TryGetValue(id, out Enemy booker);
+            this.IdEnemys.TryGetValue(id, out Monster booker);
             return booker;
         }
-        public Enemy GetByUnitId(long id)
+        public Monster GetByUnitId(long id)
         {
-            foreach(Enemy tem in GetAll())
+            foreach(Monster tem in GetAll())
             {
                 if (tem.UnitId == id)
                 {
@@ -73,7 +73,7 @@ namespace ETModel
             }
         }
 
-        public Enemy[] GetAll()
+        public Monster[] GetAll()
         {
             return this.IdEnemys.Values.ToArray();
         }
@@ -86,7 +86,7 @@ namespace ETModel
             }
             base.Dispose();
 
-            foreach (Enemy booker in this.IdEnemys.Values)
+            foreach (Monster booker in this.IdEnemys.Values)
             {
                 booker.Dispose();
             }

@@ -117,9 +117,19 @@ namespace App
 
                         // 配置管理
                         Game.Scene.AddComponent<ConfigComponent>();
-						
-						// recast寻路组件
-						Game.Scene.AddComponent<PathfindingComponent>();
+
+                        #region ///20190621
+                        Game.Scene.AddComponent<NumericWatcherComponent>();     //创建数值组件NumericWatcherComponent
+                        Game.Scene.AddComponent<AoiGridComponent>();            //创建 AOI 组件
+                        Game.Scene.AddComponent<EnterComponent>();              //创建  AOI 进入组件
+                        Game.Scene.AddComponent<LeafComponent>();               //创建  AOI 离开组件
+
+
+                        #endregion
+
+
+                        // recast寻路组件
+                        Game.Scene.AddComponent<PathfindingComponent>();
 						Game.Scene.AddComponent<PlayerComponent>();
 						Game.Scene.AddComponent<UnitComponent>();
 
@@ -128,16 +138,10 @@ namespace App
 
                         Console.WriteLine(" 内网： " + innerConfig.Address + " 外网： " + outerConfig.Address);
 
-                        #region ///20190621
-                        Game.Scene.AddComponent<AoiGridComponent>();            //创建 AOI 组件
-                        Game.Scene.AddComponent<NumericWatcherComponent>();     //创建数值组件NumericWatcherComponent
-				
-
-                        #endregion
 
                         #region ///20190613
-                        Game.Scene.AddComponent<EnemyUnitComponent>();
-                        Game.Scene.AddComponent<EnemyComponent>();
+                        Game.Scene.AddComponent<MonsterUnitComponent>();
+                        Game.Scene.AddComponent<MonsterComponent>();
                         //Game.Scene.AddComponent<NpcerUnitComponent>();
                         //Game.Scene.AddComponent<NpcerComponent>();
                         Game.Scene.AddComponent<UserComponent>();

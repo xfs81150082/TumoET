@@ -107,10 +107,10 @@ namespace ETModel
         }
 
     }
-    public partial class M2C_RemoveEnemyUnits : pb::IMessage
+    public partial class M2C_AddUnits : pb::IMessage
     {
-        private static readonly pb::MessageParser<M2C_RemoveEnemyUnits> _parser = new pb::MessageParser<M2C_RemoveEnemyUnits>(() => (M2C_RemoveEnemyUnits)MessagePool.Instance.Fetch(typeof(M2C_RemoveEnemyUnits)));
-        public static pb::MessageParser<M2C_RemoveEnemyUnits> Parser { get { return _parser; } }
+        private static readonly pb::MessageParser<M2C_AddUnits> _parser = new pb::MessageParser<M2C_AddUnits>(() => (M2C_AddUnits)MessagePool.Instance.Fetch(typeof(M2C_AddUnits)));
+        public static pb::MessageParser<M2C_AddUnits> Parser { get { return _parser; } }
 
         private int rpcId_;
         public int RpcId
@@ -129,6 +129,16 @@ namespace ETModel
             set
             {
                 actorId_ = value;
+            }
+        }
+
+        private int unitType_;
+        public int UnitType
+        {
+            get { return unitType_; }
+            set
+            {
+                unitType_ = value;
             }
         }
 
@@ -154,6 +164,11 @@ namespace ETModel
                 output.WriteRawTag(232, 5);
                 output.WriteInt64(ActorId);
             }
+            if (UnitType != 0)
+            {
+                output.WriteRawTag(240, 5);
+                output.WriteInt32(UnitType);
+            }
         }
 
         public int CalculateSize()
@@ -167,6 +182,10 @@ namespace ETModel
             {
                 size += 2 + pb::CodedOutputStream.ComputeInt64Size(ActorId);
             }
+            if (UnitType != 0)
+            {
+                size += 2 + pb::CodedOutputStream.ComputeInt32Size(UnitType);
+            }
             size += units_.CalculateSize(_repeated_units_codec);
             return size;
         }
@@ -177,6 +196,7 @@ namespace ETModel
             units_.Clear();
             rpcId_ = 0;
             actorId_ = 0;
+            unitType_ = 0;
             uint tag;
             while ((tag = input.ReadTag()) != 0)
             {
@@ -198,6 +218,134 @@ namespace ETModel
                     case 744:
                         {
                             ActorId = input.ReadInt64();
+                            break;
+                        }
+                    case 752:
+                        {
+                            UnitType = input.ReadInt32();
+                            break;
+                        }
+                }
+            }
+        }
+
+    }
+    public partial class M2C_RemoveUnits : pb::IMessage
+    {
+        private static readonly pb::MessageParser<M2C_RemoveUnits> _parser = new pb::MessageParser<M2C_RemoveUnits>(() => (M2C_RemoveUnits)MessagePool.Instance.Fetch(typeof(M2C_RemoveUnits)));
+        public static pb::MessageParser<M2C_RemoveUnits> Parser { get { return _parser; } }
+
+        private int rpcId_;
+        public int RpcId
+        {
+            get { return rpcId_; }
+            set
+            {
+                rpcId_ = value;
+            }
+        }
+
+        private long actorId_;
+        public long ActorId
+        {
+            get { return actorId_; }
+            set
+            {
+                actorId_ = value;
+            }
+        }
+
+        private int unitType_;
+        public int UnitType
+        {
+            get { return unitType_; }
+            set
+            {
+                unitType_ = value;
+            }
+        }
+
+        private static readonly pb::FieldCodec<global::ETModel.UnitInfo> _repeated_units_codec
+            = pb::FieldCodec.ForMessage(10, global::ETModel.UnitInfo.Parser);
+        private pbc::RepeatedField<global::ETModel.UnitInfo> units_ = new pbc::RepeatedField<global::ETModel.UnitInfo>();
+        public pbc::RepeatedField<global::ETModel.UnitInfo> Units
+        {
+            get { return units_; }
+            set { units_ = value; }
+        }
+
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            units_.WriteTo(output, _repeated_units_codec);
+            if (RpcId != 0)
+            {
+                output.WriteRawTag(208, 5);
+                output.WriteInt32(RpcId);
+            }
+            if (ActorId != 0L)
+            {
+                output.WriteRawTag(232, 5);
+                output.WriteInt64(ActorId);
+            }
+            if (UnitType != 0)
+            {
+                output.WriteRawTag(240, 5);
+                output.WriteInt32(UnitType);
+            }
+        }
+
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (RpcId != 0)
+            {
+                size += 2 + pb::CodedOutputStream.ComputeInt32Size(RpcId);
+            }
+            if (ActorId != 0L)
+            {
+                size += 2 + pb::CodedOutputStream.ComputeInt64Size(ActorId);
+            }
+            if (UnitType != 0)
+            {
+                size += 2 + pb::CodedOutputStream.ComputeInt32Size(UnitType);
+            }
+            size += units_.CalculateSize(_repeated_units_codec);
+            return size;
+        }
+
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            for (int i = 0; i < units_.Count; i++) { MessagePool.Instance.Recycle(units_[i]); }
+            units_.Clear();
+            rpcId_ = 0;
+            actorId_ = 0;
+            unitType_ = 0;
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 10:
+                        {
+                            units_.AddEntriesFrom(input, _repeated_units_codec);
+                            break;
+                        }
+                    case 720:
+                        {
+                            RpcId = input.ReadInt32();
+                            break;
+                        }
+                    case 744:
+                        {
+                            ActorId = input.ReadInt64();
+                            break;
+                        }
+                    case 752:
+                        {
+                            UnitType = input.ReadInt32();
                             break;
                         }
                 }
@@ -927,6 +1075,136 @@ namespace ETModel
 
     }
 
+    public partial class M2C_AddUnit : pb::IMessage
+    {
+        private static readonly pb::MessageParser<M2C_AddUnit> _parser = new pb::MessageParser<M2C_AddUnit>(() => (M2C_AddUnit)MessagePool.Instance.Fetch(typeof(M2C_AddUnit)));
+        public static pb::MessageParser<M2C_AddUnit> Parser { get { return _parser; } }
+
+        private int rpcId_;
+        public int RpcId
+        {
+            get { return rpcId_; }
+            set
+            {
+                rpcId_ = value;
+            }
+        }
+
+        private long actorId_;
+        public long ActorId
+        {
+            get { return actorId_; }
+            set
+            {
+                actorId_ = value;
+            }
+        }
+
+        private string message_ = "";
+        public string Message
+        {
+            get { return message_; }
+            set
+            {
+                message_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
+        }
+
+        private string request_ = "";
+        public string Request
+        {
+            get { return request_; }
+            set
+            {
+                request_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
+        }
+
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (Request.Length != 0)
+            {
+                output.WriteRawTag(10);
+                output.WriteString(Request);
+            }
+            if (RpcId != 0)
+            {
+                output.WriteRawTag(208, 5);
+                output.WriteInt32(RpcId);
+            }
+            if (ActorId != 0)
+            {
+                output.WriteRawTag(232, 5);
+                output.WriteInt64(ActorId);
+            }
+            if (Message.Length != 0)
+            {
+                output.WriteRawTag(242, 5);
+                output.WriteString(Message);
+            }
+        }
+
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (RpcId != 0)
+            {
+                size += 2 + pb::CodedOutputStream.ComputeInt32Size(RpcId);
+            }
+            if (ActorId != 0)
+            {
+                size += 2 + pb::CodedOutputStream.ComputeInt64Size(ActorId);
+            }
+            if (Message.Length != 0)
+            {
+                size += 2 + pb::CodedOutputStream.ComputeStringSize(Message);
+            }
+            if (Request.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeStringSize(Request);
+            }
+            return size;
+        }
+
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            request_ = "";
+            rpcId_ = 0;
+            actorId_ = 0;
+            message_ = "";
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 10:
+                        {
+                            Request = input.ReadString();
+                            break;
+                        }
+                    case 720:
+                        {
+                            RpcId = input.ReadInt32();
+                            break;
+                        }
+                    case 744:
+                        {
+                            ActorId = input.ReadInt64();
+                            break;
+                        }
+                    case 754:
+                        {
+                            Message = input.ReadString();
+                            break;
+                        }
+                }
+            }
+        }
+
+    }
     public partial class M2C_RemoveUnit : pb::IMessage
     {
         private static readonly pb::MessageParser<M2C_RemoveUnit> _parser = new pb::MessageParser<M2C_RemoveUnit>(() => (M2C_RemoveUnit)MessagePool.Instance.Fetch(typeof(M2C_RemoveUnit)));

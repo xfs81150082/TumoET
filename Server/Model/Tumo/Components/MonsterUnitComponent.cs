@@ -9,7 +9,7 @@ using System.Net;
 
 namespace ETModel
 {   
-    public class EnemyUnitComponent : Component
+    public class MonsterUnitComponent : Component
     {
         [BsonElement]
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
@@ -79,6 +79,10 @@ namespace ETModel
                 units.Add(Get(id));
             }
             return units.ToArray();
+        }
+        public long[] GetIdsAll()
+        {
+            return this.idUnits.Keys.ToArray();
         }
 
     }

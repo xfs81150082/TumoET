@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using ETModel;
 using PF;
@@ -54,9 +55,12 @@ namespace ETHotfix
                 ///生产玩家本人的单元实例
                 SpawnMyPlayerUnit(unit);
 
+                AddMonsters(Game.Scene.GetComponent<MonsterUnitComponent>().GetIdsAll(), unit);
+
+
                 //BroadcastPlayerUnit();
 
-                BroadcastEnemyUnit(unit);
+                //BroadcastEnemyUnit(unit);
 
             }
             catch (Exception e)
@@ -120,7 +124,13 @@ namespace ETHotfix
                 ///TOTO......
 
         }
-             
+
+        void AddMonsters(long[] unitIds ,Unit unit)
+        {
+            /// 广播创建的unit
+            M2M_AddUnits m2M_AddUnits = new M2M_AddUnits() { UnitType = (int)UnitType.Monster, UnitIds = unitIds.ToHashSet(),PlayerUnitId = unit.Id };
+            MapSessionHelper.Session().Send(m2M_AddUnits);
+        }
 
     }
 }

@@ -3,15 +3,19 @@ namespace ETModel
     public static partial class InnerOpcode
     {
         ///20190613
-        public const ushort M2M_CreateEnemyUnit = 8118;
-        public const ushort M2MM_CreateEnemyUnit = 8119;
-        public const ushort M2M_CreateNpcerUnit = 8120;
-        public const ushort M2MM_CreateNpcerUnit = 8121;
-        public const ushort M2M_GetPlayerUnit = 8122;
-        public const ushort M2M_GetEnemyUnit = 8124;
-        public const ushort M2M_GetNpcerUnit = 8126;
-        public const ushort M2M_RemoveUnit = 8128;
-        public const ushort M2M_AddUnit = 8130;
+        public const ushort M2M_CreateUnit = 8118;
+
+        public const ushort M2M_AddUnits = 8126;
+        public const ushort M2M_RemoveUnits = 8128;
+
+
+        //public const ushort M2MM_CreateEnemyUnit = 8119;
+        //public const ushort M2M_CreateNpcerUnit = 8120;
+        //public const ushort M2MM_CreateNpcerUnit = 8121;
+        public const ushort M2M_GetPlayerUnit = 8132;
+        public const ushort M2M_GetEnemyUnit = 8134;
+        public const ushort M2M_GetNpcerUnit = 8136;
+
 
 
 
