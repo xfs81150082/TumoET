@@ -15,7 +15,7 @@ namespace ETHotfix
         {
             GetEnemyFromBD();
 
-            SetEnemyToMap();
+            SetEnemyToMap().Coroutine(); ;
 
             Console.WriteLine(" EnemyComponentStartSystem-20: " + " BD服务器 小怪数据；map服务器 实例小怪： " + Game.Scene.GetComponent<EnemyComponent>().Count);
         }
@@ -44,17 +44,16 @@ namespace ETHotfix
         /// <summary>
         /// 再向 Map 服务器 初始化小怪实例
         /// </summary>
-        void SetEnemyToMap()
+        async ETVoid SetEnemyToMap()
         {
             if (Game.Scene.GetComponent<EnemyComponent>().Count > 0)
             {
                 /// 再向 Map 服务器 初始化小怪实例
-                IPEndPoint mapAddress = StartConfigComponent.Instance.MapConfigs[0].GetComponent<InnerConfig>().IPEndPoint;
-                Session mapSession = Game.Scene.GetComponent<NetInnerComponent>().Get(mapAddress);
-
                 foreach (Enemy tem in Game.Scene.GetComponent<EnemyComponent>().GetAll())
                 {
-                    mapSession.Send(new M2M_CreateEnemyUnit() { EnemyId = tem.Id });
+                    M2MM_CreateEnemyUnit responseUnit = (M2MM_CreateEnemyUnit)await MapSessionHelper.Session().Call(new M2M_CreateEnemyUnit() { EnemyId = tem.Id });
+
+                    tem.UnitId = responseUnit.UnitId;
                 }
             }
         }

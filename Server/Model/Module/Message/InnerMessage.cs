@@ -13,8 +13,30 @@ namespace ETModel
 
         public long EnemyId { get; set; }
 
+        public long UnitId { get; set; }
+
         public long Count { get; set; }
     }
+
+    [Message(InnerOpcode.M2MM_CreateEnemyUnit)]
+    public partial class M2MM_CreateEnemyUnit : IResponse
+    {
+        public int RpcId { get; set; }
+
+        public int Error { get; set; }
+
+        public string Message { get; set; }
+
+        // 自己的unit id
+        // 自己的unit id
+        public long UnitId { get; set; }
+
+        // 所有的unit
+        // 所有的unit
+        public List<UnitInfo> Units = new List<UnitInfo>();
+
+    }
+
 
     [Message(InnerOpcode.M2M_GetEnemyUnit)]
     public partial class M2M_GetEnemyUnit : IRequest
@@ -42,7 +64,19 @@ namespace ETModel
         public long playerUnitId { get; set; }
     }
 
+    [Message(InnerOpcode.M2M_RemoveUnit)]
+    public partial class M2M_RemoveUnit : IRequest
+    {
+        public int RpcId { get; set; }
 
+        public long PlayerUnitId { get; set; }
+
+        public int UnitType { get; set; }
+
+        public long UnitId { get; set; }
+
+        public long RolerId { get; set; }
+    }
 
     #endregion
 
@@ -390,9 +424,11 @@ namespace ETModel
 	{
 		public int RpcId { get; set; }
 
-		public long PlayerId { get; set; }
+        public long PlayerId { get; set; }
 
-		public long GateSessionId { get; set; }
+        public long UnitId { get; set; }
+
+        public long GateSessionId { get; set; }
 
 	}
 

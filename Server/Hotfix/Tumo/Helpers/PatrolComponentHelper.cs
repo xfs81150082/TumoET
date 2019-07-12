@@ -12,7 +12,7 @@ namespace ETHotfix
         /// 发送巡逻目标点坐标 消息
         /// </summary>
         /// <param name="self"></param>
-        public static void SendPatrolMap(PatrolComponent self)
+        public static void SendPatrolPosition(PatrolComponent self)
         {
             /// 休息时间到 开始发送巡逻目标点坐标 消息
             self.patrolMap = self.GetPatrolMap();
@@ -60,35 +60,7 @@ namespace ETHotfix
             }
             return endVec;
         }
-
-        /// <summary>
-        /// 回到出生地
-        /// </summary>
-        /// <param name="self"></param>
-        public static void SendPatrolSpawnMap(this PatrolComponent self)
-        {
-            /// 休息时间到 开始发送巡逻目标点坐标 消息
-            self.patrolMap = GetPatrolSpawnMap(self);
-            self.goalPoint = self.patrolPoint;
-            ActorLocationSender actorLocationSender = Game.Scene.GetComponent<ActorLocationSenderComponent>().Get(self.GetParent<Unit>().Id);
-            actorLocationSender.Send(self.patrolMap);
-        }
-
-        static Patrol_Map GetPatrolSpawnMap(this PatrolComponent self)
-        {
-            self.patrolPoint = self.spawnPosition;
-            Patrol_Map patrol_Map = new Patrol_Map() { Id = self.GetParent<Unit>().Id, X = self.patrolPoint.x, Y = self.patrolPoint.y, Z = self.patrolPoint.z };
-            return patrol_Map;
-        }
-
-        static void IsDeath(PatrolComponent self)
-        {
-            float dis = SqrDistanceHelper.Distance(self.GetParent<Unit>().Position, self.spawnPosition);
-            if (dis < 0.01f)
-            {
-                self.GetParent<Unit>().GetComponent<AttackComponent>().isDeath = true;
-            }
-        }
+           
 
     }
 }

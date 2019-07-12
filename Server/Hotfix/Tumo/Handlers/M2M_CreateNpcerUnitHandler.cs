@@ -36,7 +36,7 @@ namespace ETHotfix
                 unit.AddComponent<SqrDistanceComponent>();
                 unit.AddComponent<NumericComponent>();
                 unit.AddComponent<AttackComponent>();
-                unit.AddComponent<RecoverComponent>();
+                unit.AddComponent<LifeComponent>();
                 unit.AddComponent<PatrolComponent>();
                 unit.AddComponent<SeeComponent>();
                 unit.AddComponent<AoiUnitComponent>();

@@ -16,7 +16,9 @@ namespace ETModel
     [Message(OuterOpcode.Attack_Map)]
     public partial class Attack_Map : IActorLocationMessage { }
 
-
+    [Message(OuterOpcode.M2C_RemoveUnit)]
+    public partial class M2C_RemoveUnit : IActorMessage { }
+       
 
     #endregion
 
@@ -84,6 +86,7 @@ namespace ETModel
         public const ushort SqrDistance_Map = 592;
         public const ushort See_Map = 594;
         public const ushort Attack_Map = 596;
+        public const ushort M2C_RemoveUnit = 598;
 
 
 

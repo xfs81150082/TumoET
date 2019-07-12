@@ -49,6 +49,11 @@ namespace ETModel
             unit?.Dispose();
         }
 
+        void RemoveUnit(long id)
+        {
+
+        }
+
         public void RemoveNoDispose(long id)
         {
             this.idUnits.Remove(id);

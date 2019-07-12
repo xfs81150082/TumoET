@@ -23,8 +23,10 @@ namespace ETModel
 	public sealed class Unit: Entity
 	{
 		public UnitType UnitType { get; private set; }
-		
-		public Vector3 Position { get; set; }
+
+        public long RolerId { get; set; }
+
+        public Vector3 Position { get; set; }
 		
 		public void Awake(UnitType unitType)
 		{

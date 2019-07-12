@@ -15,7 +15,7 @@ namespace ETHotfix
 
             if (self.target == null)
             {
-                if (self.GetParent<Unit>().GetComponent<SqrDistanceComponent>().neastDistance < self.canSeeDistance)
+                if (self.GetParent<Unit>().GetComponent<SqrDistanceComponent>().neastDistance < self.GetParent<Unit>().GetComponent<LifeComponent>().enterWarringSqr)
                 {
                     self.target = self.GetParent<Unit>().GetComponent<SqrDistanceComponent>().neastUnit;
                 }
@@ -24,7 +24,7 @@ namespace ETHotfix
             {
                 self.targetDistance = SqrDistanceHelper.Distance(self.GetParent<Unit>().Position, self.target.Position);
 
-                if (self.targetDistance > self.canSeeDistance)
+                if (self.targetDistance > self.GetParent<Unit>().GetComponent<LifeComponent>().enterWarringSqr)
                 {
                     self.target = null;
                 }
@@ -45,14 +45,9 @@ namespace ETHotfix
                     if (self.targetDistance < 4f) return;
 
                     // 每间隔 resTime（100） MS 发送一次目标点坐标 消息
-                    self.seeMap = self.GetSeeMap();
-                    if (self.seeMap != null)
-                    {
-                        ActorLocationSender actorLocationSender = Game.Scene.GetComponent<ActorLocationSenderComponent>().Get((self.Parent as Unit).Id);
-                        actorLocationSender.Send(self.seeMap);
+                    self.SendSeePosition();
 
-                        self.startNull = false;
-                    }
+                    self.startNull = false;
                 }
             }
         }

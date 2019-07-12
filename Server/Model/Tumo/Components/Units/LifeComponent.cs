@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 namespace ETModel
 {
-    public class RecoverComponent : Component
+    public class LifeComponent : Component
     {
+        public bool isDeath = false;
+        public bool isWarring = false;
+        public bool isSettlement = false;
+        public float enterWarringSqr = 225.0f;
+
         public bool hpNull = false;
         public long hptimer = 0;
         public long reshpTime = 4;

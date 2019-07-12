@@ -31,7 +31,7 @@ namespace ETHotfix
                 ///休息时间到 开始发送巡逻目标点坐标 消息
                 if ((timeNow - self.startTime) > self.idleResTime)
                 {
-                    PatrolComponentHelper.SendPatrolMap(self);
+                    PatrolComponentHelper.SendPatrolPosition(self);
                     self.startNull = false;
                     self.isIdle = false;
                 }                

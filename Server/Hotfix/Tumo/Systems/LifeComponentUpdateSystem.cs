@@ -6,9 +6,9 @@ using System.Text;
 namespace ETHotfix
 {
     [ObjectSystem]
-    public class RecoverComponentUpdateSystem : UpdateSystem<RecoverComponent>
+    public class LifeComponentUpdateSystem : UpdateSystem<LifeComponent>
     {
-        public override void Update(RecoverComponent self)
+        public override void Update(LifeComponent self)
         {
             self.UpdateProperty();
         }

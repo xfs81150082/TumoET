@@ -32,7 +32,7 @@ namespace ETModel
 
         public Vector3 patrolPoint;
         public Patrol_Map patrolMap { get; set; }
-        public long speed = 4;
+        public long speed = 1;
 
         public void Awake()
         {

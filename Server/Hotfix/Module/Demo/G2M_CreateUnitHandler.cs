@@ -19,12 +19,18 @@ namespace ETHotfix
 			M2G_CreateUnit response = new M2G_CreateUnit();
             try
             {
+                if (message.UnitId == 0)
+                {
+                    message.UnitId = IdGenerater.GenerateId();
+                }
                 Player player = Game.Scene.GetComponent<PlayerComponent>().Get(message.PlayerId);
-                Unit unit = ComponentFactory.CreateWithId<Unit>(player.Id);
+                Unit unit = ComponentFactory.CreateWithId<Unit>(message.UnitId);
                 unit.AddComponent<MoveComponent>();
                 unit.AddComponent<UnitPathComponent>();
                 unit.Position = new Vector3(-40, 0, -10);
                 unit.Position = new Vector3(player.spawnPosition.x, 0, player.spawnPosition.z);
+                unit.RolerId = player.Id;
+
                 await unit.AddComponent<MailBoxComponent>().AddLocation();
                 unit.AddComponent<UnitGateComponent, long>(message.GateSessionId);
                 Game.Scene.GetComponent<UnitComponent>().Add(unit);
@@ -40,7 +46,7 @@ namespace ETHotfix
                 unit.AddComponent<SqrDistanceComponent>();
                 unit.AddComponent<NumericComponent>();
                 unit.AddComponent<AttackComponent>();
-                unit.AddComponent<RecoverComponent>();
+                unit.AddComponent<LifeComponent>();
                 unit.AddComponent<RayUnitComponent>();
 
                 SetNumeric(unit ,player);
@@ -66,6 +72,8 @@ namespace ETHotfix
 
             num.Set(NumericType.HpAdd, 400);
             num.Set(NumericType.MaxHpAdd, 400);
+
+            unit.GetComponent<MoveComponent>().Speed = 4.0f;
 
             Console.WriteLine(" M2M_CreateEnemyUnitHandler-Id-57: " + unit.Id + " MaxHp: " + num[NumericType.MaxHp] + " MaxHpBase: " + num[NumericType.MaxHpBase] + " MaxHpAdd: " + num[NumericType.MaxHpAdd]);
         }

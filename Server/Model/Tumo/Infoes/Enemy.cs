@@ -18,6 +18,8 @@ namespace ETModel
     {
         public string map { get; set; }
 
+        public long UnitId { get; set; }
+
         public Vector3 spawnPosition;
         
         public Enemy() { }

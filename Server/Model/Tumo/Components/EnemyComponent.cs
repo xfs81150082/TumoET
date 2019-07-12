@@ -48,6 +48,17 @@ namespace ETModel
             this.IdEnemys.TryGetValue(id, out Enemy booker);
             return booker;
         }
+        public Enemy GetByUnitId(long id)
+        {
+            foreach(Enemy tem in GetAll())
+            {
+                if (tem.UnitId == id)
+                {
+                    return tem;
+                }
+            }
+            return null;
+        }
 
         public void Remove(long id)
         {

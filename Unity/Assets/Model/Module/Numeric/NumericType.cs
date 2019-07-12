@@ -53,11 +53,23 @@
         SkillFinalAdd = Skill * 10 + 4,
         SkillFinalPct = Skill * 10 + 5,
 
-
-
         Exp = 2000,
+        ExpBase = Exp * 10 + 1,
+        ExpAdd = Exp * 10 + 2,
+        ExpPct = Exp * 10 + 3,
+        ExpFinalAdd = Exp * 10 + 4,
+        ExpFinalPct = Exp * 10 + 5,
+
         Level = 2001,
+        LevelBase = Level * 10 + 1,
+        LevelAdd = Level * 10 + 2,
+
         Coin = 2002,
+        CoinBase = Coin * 10 + 1,
+        CoinAdd = Coin * 10 + 2,
+        CoinPct = Coin * 10 + 3,
+        CoinFinalAdd = Coin * 10 + 4,
+        CoinFinalPct = Coin * 10 + 5,
 
 
     }

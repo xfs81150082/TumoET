@@ -927,6 +927,137 @@ namespace ETModel
 
     }
 
+    public partial class M2C_RemoveUnit : pb::IMessage
+    {
+        private static readonly pb::MessageParser<M2C_RemoveUnit> _parser = new pb::MessageParser<M2C_RemoveUnit>(() => (M2C_RemoveUnit)MessagePool.Instance.Fetch(typeof(M2C_RemoveUnit)));
+        public static pb::MessageParser<M2C_RemoveUnit> Parser { get { return _parser; } }
+
+        private int rpcId_;
+        public int RpcId
+        {
+            get { return rpcId_; }
+            set
+            {
+                rpcId_ = value;
+            }
+        }
+
+        private long actorId_;
+        public long ActorId
+        {
+            get { return actorId_; }
+            set
+            {
+                actorId_ = value;
+            }
+        }
+
+        private string message_ = "";
+        public string Message
+        {
+            get { return message_; }
+            set
+            {
+                message_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
+        }
+
+        private string request_ = "";
+        public string Request
+        {
+            get { return request_; }
+            set
+            {
+                request_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+            }
+        }
+
+        public void WriteTo(pb::CodedOutputStream output)
+        {
+            if (Request.Length != 0)
+            {
+                output.WriteRawTag(10);
+                output.WriteString(Request);
+            }
+            if (RpcId != 0)
+            {
+                output.WriteRawTag(208, 5);
+                output.WriteInt32(RpcId);
+            }
+            if (ActorId != 0)
+            {
+                output.WriteRawTag(232, 5);
+                output.WriteInt64(ActorId);
+            }
+            if (Message.Length != 0)
+            {
+                output.WriteRawTag(242, 5);
+                output.WriteString(Message);
+            }
+        }
+
+        public int CalculateSize()
+        {
+            int size = 0;
+            if (RpcId != 0)
+            {
+                size += 2 + pb::CodedOutputStream.ComputeInt32Size(RpcId);
+            }
+            if (ActorId != 0)
+            {
+                size += 2 + pb::CodedOutputStream.ComputeInt64Size(ActorId);
+            }
+            if (Message.Length != 0)
+            {
+                size += 2 + pb::CodedOutputStream.ComputeStringSize(Message);
+            }
+            if (Request.Length != 0)
+            {
+                size += 1 + pb::CodedOutputStream.ComputeStringSize(Request);
+            }
+            return size;
+        }
+
+        public void MergeFrom(pb::CodedInputStream input)
+        {
+            request_ = "";
+            rpcId_ = 0;
+            actorId_ = 0;
+            message_ = "";
+            uint tag;
+            while ((tag = input.ReadTag()) != 0)
+            {
+                switch (tag)
+                {
+                    default:
+                        input.SkipLastField();
+                        break;
+                    case 10:
+                        {
+                            Request = input.ReadString();
+                            break;
+                        }
+                    case 720:
+                        {
+                            RpcId = input.ReadInt32();
+                            break;
+                        }
+                    case 744:
+                        {
+                            ActorId = input.ReadInt64();
+                            break;
+                        }
+                    case 754:
+                        {
+                            Message = input.ReadString();
+                            break;
+                        }
+                }
+            }
+        }
+
+    }
+
 
     #endregion
 
