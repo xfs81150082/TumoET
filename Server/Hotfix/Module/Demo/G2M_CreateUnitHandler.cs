@@ -10,12 +10,21 @@ namespace ETHotfix
 	[MessageHandler(AppType.Map)]
 	public class G2M_CreateUnitHandler : AMRpcHandler<G2M_CreateUnit, M2G_CreateUnit>
 	{
-		protected override void Run(Session session, G2M_CreateUnit message, Action<M2G_CreateUnit> reply)
-		{
-			RunAsync(session, message, reply).Coroutine();
-		}
-		
-		protected async ETVoid RunAsync(Session session, G2M_CreateUnit message, Action<M2G_CreateUnit> reply)
+        protected override void Run(Session session, G2M_CreateUnit message, Action<M2G_CreateUnit> reply)
+        {
+            switch (message.UnitType)
+            {
+                case 0:
+                    CreatePlayerRunAsync(session, message, reply).Coroutine();
+                    break;
+                case 1:
+                    CreateMonsterRunAsync(session, message, reply).Coroutine();
+                    break;
+            }
+        }
+
+        #region
+        protected async ETVoid CreatePlayerRunAsync(Session session, G2M_CreateUnit message, Action<M2G_CreateUnit> reply)
 		{
 			M2G_CreateUnit response = new M2G_CreateUnit();
             try
@@ -24,7 +33,7 @@ namespace ETHotfix
                 {
                     message.UnitId = IdGenerater.GenerateId();
                 }
-                Player player = Game.Scene.GetComponent<PlayerComponent>().Get(message.PlayerId);
+                Player player = Game.Scene.GetComponent<PlayerComponent>().Get(message.RolerId);
                 Unit unit = ComponentFactory.CreateWithId<Unit>(message.UnitId);
                 unit.AddComponent<MoveComponent>();
                 unit.AddComponent<UnitPathComponent>();
@@ -52,15 +61,9 @@ namespace ETHotfix
 
                 SetNumeric(unit ,player);
 
-                ///生产玩家本人的单元实例
-                SpawnMyPlayerUnit(unit);
-
+                ///给客户端 添加 玩家和小怪 单元实例
+                AddPlayers(Game.Scene.GetComponent<UnitComponent>().GetIdsAll(), unit);
                 AddMonsters(Game.Scene.GetComponent<MonsterUnitComponent>().GetIdsAll(), unit);
-
-
-                //BroadcastPlayerUnit();
-
-                //BroadcastEnemyUnit(unit);
 
             }
             catch (Exception e)
@@ -82,47 +85,11 @@ namespace ETHotfix
             Console.WriteLine(" M2M_CreateEnemyUnitHandler-Id-57: " + unit.Id + " MaxHp: " + num[NumericType.MaxHp] + " MaxHpBase: " + num[NumericType.MaxHpBase] + " MaxHpAdd: " + num[NumericType.MaxHpAdd]);
         }
 
-        void SpawnMyPlayerUnit(Unit unit)
-        {
-            /// 创建 本人的 unit
-            M2C_CreateUnits createUnits = new M2C_CreateUnits();
-            UnitInfo unitInfo = new UnitInfo();
-            unitInfo.X = unit.Position.x;
-            unitInfo.Y = unit.Position.y;
-            unitInfo.Z = unit.Position.z;
-            unitInfo.UnitId = unit.Id;
-            createUnits.Units.Add(unitInfo);          
-            MessageHelper.Broadcast(createUnits);
-        }
-
-        void BroadcastPlayerUnit()
-        {
+        void AddPlayers(long[] unitIds, Unit unit)
+        {        
             /// 广播创建的unit
-            M2C_CreateUnits createUnits = new M2C_CreateUnits();
-            Unit[] units = Game.Scene.GetComponent<UnitComponent>().GetAll();
-            foreach (Unit u in units)
-            {
-                UnitInfo unitInfo = new UnitInfo();
-                unitInfo.X = u.Position.x;
-                unitInfo.Y = u.Position.y;
-                unitInfo.Z = u.Position.z;
-                unitInfo.UnitId = u.Id;
-                createUnits.Units.Add(unitInfo);
-            }
-            MessageHelper.Broadcast(createUnits);
-        }
-
-        void BroadcastEnemyUnit(Unit unit)
-        {
-                ///20190613 通知map 广播刷新小怪 NPC Enemy unit                
-                Console.WriteLine(" G2M_CreateUnitHandler-51: " + "通知 map服务器 向客户端 刷新小怪");
-                IPEndPoint mapAddress = StartConfigComponent.Instance.MapConfigs[0].GetComponent<InnerConfig>().IPEndPoint;
-                Session mapSession = Game.Scene.GetComponent<NetInnerComponent>().Get(mapAddress);
-                mapSession.Send(new M2M_GetEnemyUnit() { playerUnitId = unit.Id });
-
-                Console.WriteLine(" G2M_CreateUnitHandler-51: " + "通知 map服务器 向客户端 刷新 NPC");
-                ///TOTO......
-
+            M2M_AddUnits m2M_AddUnits = new M2M_AddUnits() { UnitType = (int)UnitType.Player, UnitIds = unitIds.ToHashSet(), PlayerUnitId = unit.Id };
+            MapSessionHelper.Session().Send(m2M_AddUnits);
         }
 
         void AddMonsters(long[] unitIds ,Unit unit)
@@ -131,6 +98,61 @@ namespace ETHotfix
             M2M_AddUnits m2M_AddUnits = new M2M_AddUnits() { UnitType = (int)UnitType.Monster, UnitIds = unitIds.ToHashSet(),PlayerUnitId = unit.Id };
             MapSessionHelper.Session().Send(m2M_AddUnits);
         }
+
+        #endregion
+
+        #region
+        protected async ETVoid CreateMonsterRunAsync(Session session, G2M_CreateUnit message, Action<M2G_CreateUnit> reply)
+        {
+            try
+            {
+                if (message.UnitId == 0)
+                {
+                    message.UnitId = IdGenerater.GenerateId();
+                }
+                Monster monster = Game.Scene.GetComponent<MonsterComponent>().Get(message.RolerId);
+                if (monster == null) return;
+                Unit unit = ComponentFactory.CreateWithId<Unit>(message.UnitId);
+                unit.AddComponent<MoveComponent>();
+                unit.AddComponent<UnitPathComponent>();
+                unit.Position = new Vector3(monster.spawnPosition.x, 0, monster.spawnPosition.z);
+                unit.RolerId = monster.Id;
+
+                await unit.AddComponent<MailBoxComponent>().AddLocation();
+                Game.Scene.GetComponent<MonsterUnitComponent>().Add(unit);
+
+                ///20190702
+                Game.EventSystem.Awake<UnitType>(unit, UnitType.Monster);
+                unit.AddComponent<AoiUnitComponent>();
+                unit.AddComponent<SqrDistanceComponent>();
+                unit.AddComponent<NumericComponent>();
+                unit.AddComponent<AttackComponent>();
+                unit.AddComponent<LifeComponent>();
+                unit.AddComponent<PatrolComponent>();
+                unit.AddComponent<SeeComponent>();
+
+                SetNumeric(unit, monster);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        void SetNumeric(Unit unit, Monster enemy)
+        {
+            if (unit.GetComponent<NumericComponent>() == null) return;
+            NumericComponent num = unit.GetComponent<NumericComponent>();
+            NumericComponent numEnemy = enemy.GetComponent<NumericComponent>();
+
+            num[NumericType.MaxHpAdd] = numEnemy[NumericType.MaxHpAdd];
+
+            ///小怪当前速度
+            unit.GetComponent<MoveComponent>().Speed = 2.0f;
+
+        }
+               
+        #endregion
 
     }
 }

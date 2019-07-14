@@ -19,16 +19,16 @@ namespace ETHotfix
             {
                 case 0:
                     M2C_AddUnits m2C_AddUnits0 = new M2C_AddUnits() { UnitType = message.UnitType };
-                    foreach (long monsterId in message.UnitIds)
+                    foreach (long playerId in message.UnitIds)
                     {
-                        Unit monster = Game.Scene.GetComponent<UnitComponent>().Get(monsterId);
-                        if (monster != null)
+                        Unit player = Game.Scene.GetComponent<UnitComponent>().Get(playerId);
+                        if (player != null)
                         {
                             UnitInfo unitInfo = new UnitInfo();
-                            unitInfo.UnitId = monster.Id;
-                            unitInfo.X = monster.Position.x;
-                            unitInfo.Y = monster.Position.y;
-                            unitInfo.Z = monster.Position.z;
+                            unitInfo.UnitId = player.Id;
+                            unitInfo.X = player.Position.x;
+                            unitInfo.Y = player.Position.y;
+                            unitInfo.Z = player.Position.z;
                             m2C_AddUnits0.Units.Add(unitInfo);
                         }
                     }

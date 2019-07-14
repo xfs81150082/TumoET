@@ -52,7 +52,8 @@ namespace ETHotfix
                 /// 再向 Map 服务器 初始化小怪实例
                 foreach (Monster tem in Game.Scene.GetComponent<MonsterComponent>().GetAll())
                 {
-                    MapSessionHelper.Session().Send(new M2M_CreateUnit() {UnitType =(int)UnitType.Monster, RolerId = tem.Id });
+                    //MapSessionHelper.Session().Send(new M2M_CreateUnit() { UnitType = (int)UnitType.Monster, RolerId = tem.Id });
+                    MapSessionHelper.Session().Send(new G2M_CreateUnit() { UnitType = (int)UnitType.Monster, RolerId = tem.Id });
                 }
             }
             Console.WriteLine(" EnemyComponentStartSystem-58: " + " 向 map服务器 实例小怪： " + Game.Scene.GetComponent<MonsterComponent>().Count);

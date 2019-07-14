@@ -18,14 +18,12 @@ namespace ETHotfix
                 R2C_Login r2CLogin = (R2C_Login) await realmSession.Call(new C2R_Login() { Account = account, Password = password });
                 realmSession.Dispose();
 
-                Debug.Log(" LoginHelper-21-r2CLogin.Address.key: " + r2CLogin.Address +" / "+ r2CLogin.Key  );
+                Debug.Log(" LoginHelper-21-key/Address: " + r2CLogin.Key + " / " + r2CLogin.Address);
 
                 // 创建一个ETModel层的Session,并且保存到ETModel.SessionComponent中
                 ETModel.Session gateSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(r2CLogin.Address);
-                ETModel.Game.Scene.AddComponent<ETModel.SessionComponent>().Session = gateSession;
-				
-
-
+                ETModel.Game.Scene.AddComponent<ETModel.SessionComponent>().Session = gateSession;				
+                
                 // 创建一个ETHotfix层的Session, 并且保存到ETHotfix.SessionComponent中
                 Game.Scene.AddComponent<SessionComponent>().Session = ComponentFactory.Create<Session, ETModel.Session>(gateSession);
 				
@@ -35,8 +33,9 @@ namespace ETHotfix
 
                 // 创建Player
                 Player player = ETModel.ComponentFactory.CreateWithId<Player>(g2CLoginGate.PlayerId);
-                PlayerComponent playerComponent = ETModel.Game.Scene.GetComponent<PlayerComponent>();
-                playerComponent.MyPlayer = player;
+                //PlayerComponent playerComponent = ETModel.Game.Scene.GetComponent<PlayerComponent>();
+                //playerComponent.MyPlayer = player;
+                ETModel.Game.Scene.GetComponent<PlayerComponent>().MyPlayer = player;
 
                 Game.EventSystem.Run(EventIdType.LoginFinish);
 

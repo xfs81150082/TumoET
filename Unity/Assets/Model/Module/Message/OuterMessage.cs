@@ -1804,12 +1804,27 @@ namespace ETModel
             }
         }
 
+        private long playerId_;
+        public long PlayerId
+        {
+            get { return playerId_; }
+            set
+            {
+                playerId_ = value;
+            }
+        }
+
         public void WriteTo(pb::CodedOutputStream output)
         {
             if (RpcId != 0)
             {
                 output.WriteRawTag(208, 5);
                 output.WriteInt32(RpcId);
+            }
+            if (PlayerId != 0)
+            {
+                output.WriteRawTag(232, 5);
+                output.WriteInt64(PlayerId);
             }
         }
 
@@ -1820,12 +1835,17 @@ namespace ETModel
             {
                 size += 2 + pb::CodedOutputStream.ComputeInt32Size(RpcId);
             }
+            if (PlayerId != 0)
+            {
+                size += 2 + pb::CodedOutputStream.ComputeInt64Size(PlayerId);
+            }
             return size;
         }
 
         public void MergeFrom(pb::CodedInputStream input)
         {
             rpcId_ = 0;
+            playerId_ = 0;
             uint tag;
             while ((tag = input.ReadTag()) != 0)
             {
@@ -1839,10 +1859,14 @@ namespace ETModel
                             RpcId = input.ReadInt32();
                             break;
                         }
+                    case 744:
+                        {
+                            PlayerId = input.ReadInt64();
+                            break;
+                        }
                 }
             }
         }
-
     }
 
     public partial class G2C_EnterMap : pb::IMessage

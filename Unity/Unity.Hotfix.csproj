@@ -98,7 +98,6 @@
     <Compile Include="Assets\Hotfix\Module\Demo\G2C_TestHotfixHandler.cs" />
     <Compile Include="Assets\Hotfix\Module\Demo\Helper\LoginHelper.cs" />
     <Compile Include="Assets\Hotfix\Module\Demo\Helper\MapHelper.cs" />
-    <Compile Include="Assets\Hotfix\Module\Demo\M2C_CreateUnitsHandler.cs" />
     <Compile Include="Assets\Hotfix\Module\Demo\M2C_PathfindingResultHandler.cs" />
     <Compile Include="Assets\Hotfix\Module\Demo\OperaComponent.cs" />
     <Compile Include="Assets\Hotfix\Module\Demo\TestHotfixSubscribMonoEvent_LogString.cs" />
@@ -126,7 +125,6 @@
     <Compile Include="Assets\Hotfix\Module\UI\UIComponent.cs" />
     <Compile Include="Assets\Hotfix\Module\UI\UIType.cs" />
     <Compile Include="Assets\Hotfix\Tumo\M2C_AddUnitHandler.cs" />
-    <Compile Include="Assets\Hotfix\Tumo\M2C_GetEnemyUnitsHandler.cs" />
     <Compile Include="Assets\Hotfix\Tumo\M2C_RemoveUnitHandler.cs" />
     <Compile Include="Assets\Hotfix\Tumo\RaycastHitComponent.cs" />
     <None Include="Assets\Hotfix\Unity.Hotfix.asmdef" />

@@ -34,8 +34,8 @@ namespace ETHotfix
                         G2R_GetLoginKey g2RGetLoginKey = (G2R_GetLoginKey)await gateSession.Call(new R2G_GetLoginKey() { Account = message.Account });
                         string outerAddress = config.GetComponent<OuterConfig>().Address2;
 
-                        response.Address = outerAddress;
                         response.Key = g2RGetLoginKey.Key;
+                        response.Address = outerAddress;
                         reply(response);
                     }
                     else

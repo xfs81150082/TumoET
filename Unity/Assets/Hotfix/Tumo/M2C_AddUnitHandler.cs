@@ -13,7 +13,7 @@ namespace ETHotfix
     {
         protected override void Run(ETModel.Session session, M2C_AddUnits message)
         {
-            Debug.Log(" M2C_AddUnitHandler-16-Id/unittype:  " + message.UnitType + " / " + message.Units.count);
+            Debug.Log(" M2C_AddUnitHandler-16-Id/unittype/Units:  " + session.Id + " / " + message.UnitType + " / " + message.Units.count);
 
             int unittype =message.UnitType;
             switch (unittype)
@@ -26,11 +26,19 @@ namespace ETHotfix
                         {
                             continue;
                         }
-                        Unit unit0 = EnemyUnitFactory.Create(unitInfo.UnitId);
+                        Unit unit0 = UnitFactory.Create(unitInfo.UnitId);
                         unit0.Position = new Vector3(unitInfo.X, unitInfo.Y, unitInfo.Z);
 
+                        ///20190621//将参数unit 传给组件CameraComponent awake方法
+                        ETModel.Game.EventSystem.Awake<Unit>(ETModel.Game.Scene.GetComponent<CameraComponent>(), unit0);
+
+                        ///20190619
                         Debug.Log(" M2C_AddUnitHandler-Id-32: " + unitInfo.UnitId + "/" + unit0.Id);
+                        Debug.Log(" M2C_AddUnitHandler-PlayerComponent.Instance.MyPlayer.UnitId: " + PlayerComponent.Instance.MyPlayer.UnitId);
                     }
+                    ///20190703
+                    Game.Scene.AddComponent<RaycastHitComponent>();
+
                     break;
                 case 1:
                     EnemyUnitComponent enemyunitComponent = ETModel.Game.Scene.GetComponent<EnemyUnitComponent>();

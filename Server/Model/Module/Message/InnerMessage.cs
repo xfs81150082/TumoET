@@ -394,9 +394,13 @@ namespace ETModel
 	[Message(InnerOpcode.G2M_CreateUnit)]
 	public partial class G2M_CreateUnit: IRequest
 	{
-		public int RpcId { get; set; }
+        public int RpcId { get; set; }
 
-        public long PlayerId { get; set; }
+        public int UnitType { get; set; }
+
+        //public long PlayerId { get; set; }
+
+        public long RolerId { get; set; }
 
         public long UnitId { get; set; }
 

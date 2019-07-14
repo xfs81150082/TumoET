@@ -58,10 +58,15 @@ namespace ETModel
 			}
 		}
 
-		public Unit[] GetAll()
-		{
-			return this.idUnits.Values.ToArray();
-		}
+        public long[] GetIdsAll()
+        {
+            return this.idUnits.Keys.ToArray();
+        }
+
+        public Unit[] GetAll()
+        {
+            return this.idUnits.Values.ToArray();
+        }
 
         public Unit[] GetAllByIds(long[] unitIds)
         {

@@ -21,11 +21,13 @@ namespace ETHotfix
                 {
                     await sceneChangeComponent.ChangeSceneAsync(SceneType.Map);
                 }
-				
-                G2C_EnterMap g2CEnterMap = await ETModel.SessionComponent.Instance.Session.Call(new C2G_EnterMap()) as G2C_EnterMap;
-                PlayerComponent.Instance.MyPlayer.UnitId = g2CEnterMap.UnitId;
 
-                Debug.Log(" MapHelper-PlayerComponent.Instance.MyPlayer.UnitId: " + PlayerComponent.Instance.MyPlayer.UnitId);
+                Player player = ETModel.Game.Scene.GetComponent<PlayerComponent>().MyPlayer;
+                G2C_EnterMap g2CEnterMap = await ETModel.SessionComponent.Instance.Session.Call(new C2G_EnterMap() { PlayerId = player.Id }) as G2C_EnterMap;
+                //PlayerComponent.Instance.MyPlayer.UnitId = g2CEnterMap.UnitId;
+                player.UnitId = g2CEnterMap.UnitId;
+
+                Debug.Log(" MapHelper-player.Id/player.UnitId: " + player.Id + " / " + player.UnitId);
 
                 Game.Scene.AddComponent<OperaComponent>();
 				
