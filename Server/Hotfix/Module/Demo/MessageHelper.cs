@@ -24,9 +24,22 @@ namespace ETHotfix
 				actorMessageSender.Send(message);
 			}
 		}
+       
+        /// <summary>
+        /// 后来增加群发 , 发给指定的客户端群
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="playerUnitId"></param>
+        public static void Broadcast(IActorMessage message, long[] playerUnitIds)
+        {
+            foreach(long pi in playerUnitIds)
+            {
+                Broadcast(message, pi);
+            }
+        }
 
         /// <summary>
-        /// 后来增加 , 发给指定的客户端
+        /// 后来增加单发 , 发给指定的客户端
         /// </summary>
         /// <param name="message"></param>
         /// <param name="playerUnitId"></param>

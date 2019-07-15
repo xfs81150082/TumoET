@@ -18,16 +18,11 @@ namespace ETHotfix
         {
             if (Game.Scene.GetComponent<AoiGridComponent>().GetGridId(self) != self.gridId)
             {
-                //if (self.GetParent<Unit>().GetComponent<AttackComponent>() != null && self.GetParent<Unit>().GetComponent<AttackComponent>().isDeath)
-                //{
-                //    return;
-                //}
-
                 ///移动后 根据坐标 更换地图固定格子 注册注销 unitId
                 Game.Scene.GetComponent<AoiGridComponent>().UpdateAoiUnitInfo(self);
-
             }
-        }
+
+        }    
         
 
     }

@@ -22,9 +22,9 @@ namespace ETModel
 
         public AoiUnitComponent()
         {
-            playerIds = new AoiUintInfo { MovesSet = new HashSet<long>(), OldMovesSet = new HashSet<long>() };
-            enemyIds = new AoiUintInfo { MovesSet = new HashSet<long>(), OldMovesSet = new HashSet<long>() };
-            npcerIds = new AoiUintInfo { MovesSet = new HashSet<long>(), OldMovesSet = new HashSet<long>() };
+            playerIds = new AoiUintInfo { MovesSet = new HashSet<long>(), OldMovesSet = new HashSet<long>(), Enters = new HashSet<long>(), Leaves = new HashSet<long>() };
+            enemyIds = new AoiUintInfo { MovesSet = new HashSet<long>(), OldMovesSet = new HashSet<long>(), Enters = new HashSet<long>(), Leaves = new HashSet<long>() };
+            npcerIds = new AoiUintInfo { MovesSet = new HashSet<long>(), OldMovesSet = new HashSet<long>(), Enters = new HashSet<long>(), Leaves = new HashSet<long>() };
         }      
 
         public override void Dispose()

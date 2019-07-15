@@ -60,6 +60,7 @@ namespace ETHotfix
                 ///20190702 玩家
                 Game.EventSystem.Awake<UnitType>(unit, UnitType.Player);
                 unit.AddComponent<AoiUnitComponent>();
+                unit.AddComponent<AoiPlayerComponent>();    //玩家独有
                 unit.AddComponent<SqrDistanceComponent>();
                 unit.AddComponent<NumericComponent>();
                 unit.AddComponent<AttackComponent>();
@@ -69,9 +70,10 @@ namespace ETHotfix
                 SetNumeric(unit ,player);
 
                 ///给客户端 添加 玩家和小怪 单元实例
-                AddPlayers(Game.Scene.GetComponent<UnitComponent>().GetIdsAll(), unit);
-                AddMonsters(Game.Scene.GetComponent<MonsterUnitComponent>().GetIdsAll(), unit);
+                //AddPlayers(Game.Scene.GetComponent<UnitComponent>().GetIdsAll(), new long[1] { unit.Id});
+                //AddMonsters(Game.Scene.GetComponent<MonsterUnitComponent>().GetIdsAll(), new long[1] { unit.Id });
 
+                Console.WriteLine(" G2M_CreateUnitHandler-75-UnitComponent: " + Game.Scene.GetComponent<UnitComponent>().Count);
             }
             catch (Exception e)
             {
@@ -97,10 +99,10 @@ namespace ETHotfix
         /// </summary>
         /// <param name="unitIds"></param>
         /// <param name="unit"></param>
-        void AddPlayers(long[] unitIds, Unit unit)
+        void AddPlayers(long[] unitIds, long[] playerUnitIds)
         {        
             /// 广播创建的unit
-            M2M_AddUnits m2M_AddUnits = new M2M_AddUnits() { UnitType = (int)UnitType.Player, UnitIds = unitIds.ToHashSet(), PlayerUnitId = unit.Id };
+            M2M_AddUnits m2M_AddUnits = new M2M_AddUnits() { UnitType = (int)UnitType.Player, UnitIds = unitIds.ToHashSet(), PlayerUnitIds = playerUnitIds.ToHashSet() };
             MapSessionHelper.Session().Send(m2M_AddUnits);
         }
 
@@ -109,10 +111,10 @@ namespace ETHotfix
         /// </summary>
         /// <param name="unitIds"></param>
         /// <param name="unit"></param>
-        void AddMonsters(long[] unitIds ,Unit unit)
+        void AddMonsters(long[] unitIds , long[] playerUnitIds)
         {
             /// 广播创建的unit
-            M2M_AddUnits m2M_AddUnits = new M2M_AddUnits() { UnitType = (int)UnitType.Monster, UnitIds = unitIds.ToHashSet(),PlayerUnitId = unit.Id };
+            M2M_AddUnits m2M_AddUnits = new M2M_AddUnits() { UnitType = (int)UnitType.Monster, UnitIds = unitIds.ToHashSet(), PlayerUnitIds = playerUnitIds.ToHashSet() };
             MapSessionHelper.Session().Send(m2M_AddUnits);
         }
 

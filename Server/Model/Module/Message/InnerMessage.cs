@@ -35,6 +35,7 @@ namespace ETModel
 
         public int UnitType { get; set; }
 
+        public HashSet<long> PlayerUnitIds { get; set; } = new HashSet<long>();
         public HashSet<long> UnitIds { get; set; } = new HashSet<long>();
     }
 
@@ -47,6 +48,7 @@ namespace ETModel
 
         public int UnitType { get; set; }
 
+        public HashSet<long> PlayerUnitIds { get; set; } = new HashSet<long>();
         public HashSet<long> UnitIds { get; set; } = new HashSet<long>();
     }
 

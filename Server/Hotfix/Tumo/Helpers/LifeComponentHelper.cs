@@ -170,7 +170,7 @@ namespace ETHotfix
 
                     Console.WriteLine(" DeathSettlement-171-isSettlement: " + self.isSettlement);
 
-                    SendUnitIdToRemoveUnit(selfUnit);
+                    //SendUnitIdToRemoveUnit(selfUnit);
 
                 }
             }

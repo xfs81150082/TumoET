@@ -12,7 +12,7 @@ namespace ETHotfix
     {
         protected override void Run(ETModel.Session session, M2M_AddUnits message)
         {
-            Console.WriteLine(" M2C_AddUnitHandler-14-Id/unittype:  " + message.UnitType + " / " + message.UnitIds.Count + " / " + message.PlayerUnitId);
+            Console.WriteLine(" M2C_AddUnitHandler-15-unittype/uis/pis:  " + (UnitType)message.UnitType + " / " + message.UnitIds.Count + " / " + message.PlayerUnitIds.Count);
 
             int unittype = message.UnitType;
             switch (unittype)
@@ -32,9 +32,8 @@ namespace ETHotfix
                             m2C_AddUnits0.Units.Add(unitInfo);
                         }
                     }
-                    MessageHelper.Broadcast(m2C_AddUnits0, message.PlayerUnitId);
+                    MessageHelper.Broadcast(m2C_AddUnits0, message.PlayerUnitIds.ToArray());
 
-                    Console.WriteLine(" M2M_RemoveUnitHandler-37-sessionId/unitId/unittype： " + session.Id + " / " + message.UnitIds.First());
                     Console.WriteLine(" M2C_AddUnitHandler-Id-38: " + (int)message.UnitType);
                     break;
                 case 1:
@@ -52,9 +51,8 @@ namespace ETHotfix
                             m2C_AddUnits1.Units.Add(unitInfo);
                         }
                     }
-                    MessageHelper.Broadcast(m2C_AddUnits1 ,message.PlayerUnitId);
+                    MessageHelper.Broadcast(m2C_AddUnits1 ,message.PlayerUnitIds.ToArray());
 
-                    Console.WriteLine(" M2M_RemoveUnitHandler-57-sessionId/unitId/unittype： " + session.Id + " / " + message.UnitIds.First());
                     Console.WriteLine(" M2C_AddUnitHandler-Id-58: " + (int)message.UnitType);
                     break;
                 case 2:

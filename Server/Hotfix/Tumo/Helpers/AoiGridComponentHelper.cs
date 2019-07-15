@@ -102,11 +102,19 @@ namespace ETHotfix
             aoiUnit.npcerIds.Enters = aoiUnit.npcerIds.MovesSet.Except(aoiUnit.npcerIds.OldMovesSet).ToHashSet();
             aoiUnit.npcerIds.Leaves = aoiUnit.npcerIds.OldMovesSet.Except(aoiUnit.npcerIds.MovesSet).ToHashSet();
 
+            //if (aoiUnit.GetParent<Unit>().UnitType == UnitType.Player)
+            //{
+            //    self.AddMonsters(aoiUnit.enemyIds.Enters.ToArray(), new long[1] { aoiUnit.GetParent<Unit>().Id });
+            //    self.AddPlayers(aoiUnit.playerIds.Enters.ToArray(), new long[1] { aoiUnit.GetParent<Unit>().Id });
+            //}
+
             ///将进入自己视野的人 加进来；将自己加入别的人视野
             self.UpdateEnters(aoiUnit);
 
             ///将离开自己视野的人 删除掉；同时将自己从别人的视野里删除
             self.UpdateLeaves(aoiUnit);
+
+
         }
 
         /// <summary>
@@ -254,6 +262,34 @@ namespace ETHotfix
         }
 
         #endregion
+
+        #region
+        /// <summary>
+        /// 给客户端 添加 玩家 单元实例
+        /// </summary>
+        /// <param name="unitIds"></param>
+        /// <param name="unit"></param>
+        public static void AddPlayers(this AoiGridComponent self, long[] unitIds, long[] playerUnitIds)
+        {
+            /// 广播创建的unit
+            M2M_AddUnits m2M_AddUnits = new M2M_AddUnits() { UnitType = (int)UnitType.Player, UnitIds = unitIds.ToHashSet(), PlayerUnitIds = playerUnitIds.ToHashSet() };
+            MapSessionHelper.Session().Send(m2M_AddUnits);
+        }
+
+        /// <summary>
+        /// 给客户端 添加 小怪 单元实例
+        /// </summary>
+        /// <param name="unitIds"></param>
+        /// <param name="unit"></param>
+        public static void AddMonsters(this AoiGridComponent self, long[] unitIds, long[] playerUnitIds)
+        {
+            /// 广播创建的unit
+            M2M_AddUnits m2M_AddUnits = new M2M_AddUnits() { UnitType = (int)UnitType.Monster, UnitIds = unitIds.ToHashSet(), PlayerUnitIds = playerUnitIds.ToHashSet() };
+            MapSessionHelper.Session().Send(m2M_AddUnits);
+        }
+
+        #endregion
+
 
     }
 }

@@ -10,13 +10,12 @@ namespace ETHotfix
     {
         protected override void Run(ETModel.Session session, M2C_RemoveUnits message)
         {
-            Debug.Log(" M2C_RemoveUnitHandler-13-Id/unittype:  " + message.UnitType + " / " + message.Units.count);
-
             int unittype = message.UnitType;
             switch (unittype)
             {
                 case 0:
                     UnitComponent unitComponent = ETModel.Game.Scene.GetComponent<UnitComponent>();
+                    int oldcount0 = unitComponent.Count;
                     foreach (UnitInfo unitInfo in message.Units)
                     {
                         if (unitComponent.Get(unitInfo.UnitId) == null)
@@ -31,13 +30,13 @@ namespace ETHotfix
                         {
                             unitComponent.Remove(unit0.Id);
                             GameObject.Destroy(unitGo0, 1.0f);
-
-                            Debug.Log(" M2C_RemoveUnitHandler-35-Id/unittype:  " + unit0.Id + " / " + unittype);
                         }
                     }
+                    Debug.Log(" M2C_AddUnitHandler-35-Player: " + unittype + " : " + oldcount0 + " - " + message.Units.Count + " = " + unitComponent.Count);
                     break;
                 case 1:
                     EnemyUnitComponent enemyunitComponent = ETModel.Game.Scene.GetComponent<EnemyUnitComponent>();
+                    int oldcount1 = enemyunitComponent.Count;
                     foreach (UnitInfo unitInfo in message.Units)
                     {
                         if (enemyunitComponent.Get(unitInfo.UnitId) == null)
@@ -52,10 +51,9 @@ namespace ETHotfix
                         {
                             enemyunitComponent.Remove(unit1.Id);
                             GameObject.Destroy(unitGo1, 1.0f);
-
-                            Debug.Log(" M2C_RemoveUnitHandler-56-Id/unittype:  " + unit1.Id + " / " + unittype);
                         }
                     }
+                    Debug.Log(" M2C_AddUnitHandler-56-Monster: " + unittype + " : " + oldcount1 + " - " + message.Units.Count + " = " + enemyunitComponent.Count);
                     break;
                 case 2:
                     break;
