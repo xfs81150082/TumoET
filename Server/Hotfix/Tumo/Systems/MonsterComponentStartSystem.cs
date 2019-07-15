@@ -9,14 +9,14 @@ using UnityEngine;
 namespace ETHotfix
 {
     [ObjectSystem]
-    public class EnemyComponentStartSystem : StartSystem<MonsterComponent>
+    public class MonsterComponentStartSystem : StartSystem<MonsterComponent>
     {      
         public override void Start(MonsterComponent self)
         {
             GetEnemyFromBD();
 
             ///向 map 服务器 实例小怪
-            SetToMap(); 
+            SetToMap(Game.Scene.GetComponent<MonsterComponent>().GetAll()).Coroutine(); 
 
             Console.WriteLine(" EnemyComponentStartSystem-20: " + " BD服务器 小怪数据；map服务器 实例小怪： " + Game.Scene.GetComponent<MonsterComponent>().Count);
         }
@@ -44,16 +44,19 @@ namespace ETHotfix
         /// <summary>
         /// 再向 Map 服务器 初始化小怪实例
         /// </summary>
-        void SetToMap()
+        async ETVoid SetToMap(Monster[] monsters)
         {
             /// 再向 Map 服务器 初始化小怪实例
-            if (Game.Scene.GetComponent<MonsterComponent>().Count > 0)
+            if (monsters.Length > 0)
             {
                 /// 再向 Map 服务器 初始化小怪实例
-                foreach (Monster tem in Game.Scene.GetComponent<MonsterComponent>().GetAll())
+                foreach (Monster tem in monsters)
                 {
                     //MapSessionHelper.Session().Send(new M2M_CreateUnit() { UnitType = (int)UnitType.Monster, RolerId = tem.Id });
-                    MapSessionHelper.Session().Send(new G2M_CreateUnit() { UnitType = (int)UnitType.Monster, RolerId = tem.Id });
+                    //MapSessionHelper.Session().Send(new G2M_CreateUnit() { UnitType = (int)UnitType.Monster, RolerId = tem.Id });
+                    M2G_CreateUnit response = (M2G_CreateUnit)await MapSessionHelper.Session().Call(new G2M_CreateUnit() { UnitType = (int)UnitType.Monster, RolerId = tem.Id });
+
+                    tem.UnitId = response.UnitId;
                 }
             }
             Console.WriteLine(" EnemyComponentStartSystem-58: " + " 向 map服务器 实例小怪： " + Game.Scene.GetComponent<MonsterComponent>().Count);

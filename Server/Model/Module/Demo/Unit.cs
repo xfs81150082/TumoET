@@ -23,7 +23,7 @@ namespace ETModel
 	{
 		public UnitType UnitType { get; private set; }
 
-        public long RolerId { get; set; }
+        //public long RolerId { get; set; }
 
         public Vector3 Position { get; set; }
 		

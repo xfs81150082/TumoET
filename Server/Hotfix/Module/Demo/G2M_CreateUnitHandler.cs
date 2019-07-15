@@ -24,6 +24,13 @@ namespace ETHotfix
         }
 
         #region
+        /// <summary>
+        /// 在玩家登录游戏时，接受登录Handler发来的消息，在map服务器上创建战斗Unit
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="message"></param>
+        /// <param name="reply"></param>
+        /// <returns></returns>
         protected async ETVoid CreatePlayerRunAsync(Session session, G2M_CreateUnit message, Action<M2G_CreateUnit> reply)
 		{
 			M2G_CreateUnit response = new M2G_CreateUnit();
@@ -39,7 +46,7 @@ namespace ETHotfix
                 unit.AddComponent<UnitPathComponent>();
                 unit.Position = new Vector3(-40, 0, -10);
                 unit.Position = new Vector3(player.spawnPosition.x, 0, player.spawnPosition.z);
-                unit.RolerId = player.Id;
+                //unit.RolerId = player.Id;
 
                 await unit.AddComponent<MailBoxComponent>().AddLocation();
                 unit.AddComponent<UnitGateComponent, long>(message.GateSessionId);
@@ -85,6 +92,11 @@ namespace ETHotfix
             Console.WriteLine(" M2M_CreateEnemyUnitHandler-Id-57: " + unit.Id + " MaxHp: " + num[NumericType.MaxHp] + " MaxHpBase: " + num[NumericType.MaxHpBase] + " MaxHpAdd: " + num[NumericType.MaxHpAdd]);
         }
 
+        /// <summary>
+        /// 给客户端 添加 玩家 单元实例
+        /// </summary>
+        /// <param name="unitIds"></param>
+        /// <param name="unit"></param>
         void AddPlayers(long[] unitIds, Unit unit)
         {        
             /// 广播创建的unit
@@ -92,6 +104,11 @@ namespace ETHotfix
             MapSessionHelper.Session().Send(m2M_AddUnits);
         }
 
+        /// <summary>
+        /// 给客户端 添加 小怪 单元实例
+        /// </summary>
+        /// <param name="unitIds"></param>
+        /// <param name="unit"></param>
         void AddMonsters(long[] unitIds ,Unit unit)
         {
             /// 广播创建的unit
@@ -104,6 +121,7 @@ namespace ETHotfix
         #region
         protected async ETVoid CreateMonsterRunAsync(Session session, G2M_CreateUnit message, Action<M2G_CreateUnit> reply)
         {
+            M2G_CreateUnit response = new M2G_CreateUnit();
             try
             {
                 if (message.UnitId == 0)
@@ -116,10 +134,13 @@ namespace ETHotfix
                 unit.AddComponent<MoveComponent>();
                 unit.AddComponent<UnitPathComponent>();
                 unit.Position = new Vector3(monster.spawnPosition.x, 0, monster.spawnPosition.z);
-                unit.RolerId = monster.Id;
+                //unit.RolerId = monster.Id;
 
                 await unit.AddComponent<MailBoxComponent>().AddLocation();
                 Game.Scene.GetComponent<MonsterUnitComponent>().Add(unit);
+
+                response.UnitId = unit.Id;
+                reply(response);
 
                 ///20190702
                 Game.EventSystem.Awake<UnitType>(unit, UnitType.Monster);

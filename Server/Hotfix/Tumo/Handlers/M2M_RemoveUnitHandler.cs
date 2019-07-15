@@ -21,18 +21,8 @@ namespace ETHotfix
                 case UnitType.Player:
                     break;
                 case UnitType.Monster:
-                    //Unit monster = Game.Scene.GetComponent<MonsterUnitComponent>().Get(message.UnitId);
-
                     M2C_RemoveUnits m2C_RemoveUnits = new M2C_RemoveUnits() { UnitType = message.UnitType };
                     m2C_RemoveUnits.Units.Add(new UnitInfo() { UnitId = message.UnitIds.First() });
-
-                    //UnitInfo unitInfo = new UnitInfo();
-                    //unitInfo.UnitId = message.UnitId;
-                    //unitInfo.X = monster.Position.x;
-                    //unitInfo.Y = monster.Position.y;
-                    //unitInfo.Z = monster.Position.z;
-                    //m2C_RemoveUnits.Units.Add(unitInfo);
-
                     MessageHelper.Broadcast(m2C_RemoveUnits);
 
                     Console.WriteLine(" M2M_RemoveUnitHandler-25-sessionId/unitId/unittype： " + session.Id + " / " + message.UnitIds.First() + " / " + (UnitType)message.UnitType);
