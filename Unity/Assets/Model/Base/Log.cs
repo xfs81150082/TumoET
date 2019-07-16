@@ -11,7 +11,8 @@ namespace ETModel
 		
 		public static void Debug(string msg)
 		{
-			UnityEngine.Debug.Log(msg);
+            ///20190715 不发系统提示信息，太乱了；以后自己添加打印
+			//UnityEngine.Debug.Log(msg);
 		}
 		
 		public static void Info(string msg)

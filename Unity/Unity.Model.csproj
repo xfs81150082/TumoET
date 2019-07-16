@@ -510,6 +510,7 @@
     <Compile Include="Assets\Model\Tumo\Components\CameraComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Components\EnemyComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Components\EnemyUnitComponent.cs" />
+    <Compile Include="Assets\Model\Tumo\Infoes\AoiGridGizmos.cs" />
     <Compile Include="Assets\Model\Tumo\Infoes\Enemy.cs" />
     <Compile Include="Assets\Model\Tumo\Infoes\EnemyFactory.cs" />
     <Compile Include="Assets\Model\Tumo\Infoes\EnemyUnitFactory.cs" />

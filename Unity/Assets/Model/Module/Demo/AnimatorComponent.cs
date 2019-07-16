@@ -52,10 +52,20 @@ namespace ETModel
 				return;
 			}
 			this.Animator = animator;
-			foreach (AnimationClip animationClip in animator.runtimeAnimatorController.animationClips)
-			{
-				this.animationClips[animationClip.name] = animationClip;
-			}
+            foreach (AnimationClip animationClip in animator.runtimeAnimatorController.animationClips)
+            {
+                ///20190715 报空指针 修改增加 if 条件
+                //if (animationClip == null)
+                //{
+                //    continue;
+                //}
+                //if (this.animationClips[animationClip.name] == null)
+                //{
+                //    continue;
+                //}
+
+                this.animationClips[animationClip.name] = animationClip;
+            }
 			foreach (AnimatorControllerParameter animatorControllerParameter in animator.parameters)
 			{
 				this.Parameter.Add(animatorControllerParameter.name);
@@ -91,6 +101,9 @@ namespace ETModel
 
 		public bool HasParameter(string parameter)
 		{
+            ///20190715
+            if (Parameter == null) return false;
+
 			return this.Parameter.Contains(parameter);
 		}
 
@@ -114,7 +127,10 @@ namespace ETModel
 
 		public void Play(MotionType motionType, float motionSpeed = 1f)
 		{
-			if (!this.HasParameter(motionType.ToString()))
+            ///20190715
+            if (Parameter == null) return;
+
+            if (!this.HasParameter(motionType.ToString()))
 			{
 				return;
 			}
@@ -166,7 +182,10 @@ namespace ETModel
 
 		public void SetBoolValue(string name, bool state)
 		{
-			if (!this.HasParameter(name))
+            ///20190715
+            if (Parameter == null) return;
+
+            if (!this.HasParameter(name))
 			{
 				return;
 			}
@@ -176,7 +195,10 @@ namespace ETModel
 
 		public void SetFloatValue(string name, float state)
 		{
-			if (!this.HasParameter(name))
+            ///20190715
+            if (Parameter == null) return;
+
+            if (!this.HasParameter(name))
 			{
 				return;
 			}
@@ -186,7 +208,10 @@ namespace ETModel
 
 		public void SetIntValue(string name, int value)
 		{
-			if (!this.HasParameter(name))
+            ///20190715
+            if (Parameter == null) return;
+
+            if (!this.HasParameter(name))
 			{
 				return;
 			}
@@ -196,7 +221,10 @@ namespace ETModel
 
 		public void SetTrigger(string name)
 		{
-			if (!this.HasParameter(name))
+            ///20190715
+            if (Parameter == null) return;
+
+            if (!this.HasParameter(name))
 			{
 				return;
 			}
