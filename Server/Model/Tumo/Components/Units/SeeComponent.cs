@@ -9,7 +9,6 @@ namespace ETModel
     {
         public bool isSee = false;                                           //是否在追击敌人
         public Unit target;                                                  //选定的目标，追击或攻击的目标必定是选定的目标
-        //public float canSeeDistance = 225.0f;
         public float targetDistance { get; set; } = float.PositiveInfinity;
 
         public bool startNull = false;

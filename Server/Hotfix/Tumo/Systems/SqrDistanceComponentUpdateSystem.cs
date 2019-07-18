@@ -18,9 +18,9 @@ namespace ETHotfix
 
         void SetIsWarring(SqrDistanceComponent self)
         {
-            if (self.neastDistance < self.GetParent<Unit>().GetComponent<LifeComponent>().enterWarringSqr)
+            if (self.neastDistance < self.GetParent<Unit>().GetComponent<NumericComponent>().enterWarringSqr)
             {
-                self.GetParent<Unit>().GetComponent<LifeComponent>().isWarring = true;
+                self.GetParent<Unit>().GetComponent<NumericComponent>().isWarring = true;
 
                 //self.GetParent<Unit>().GetComponent<AttackComponent>().isAttacking = true;
 
@@ -31,7 +31,7 @@ namespace ETHotfix
             }
             else
             {
-                self.GetParent<Unit>().GetComponent<LifeComponent>().isWarring = false;
+                self.GetParent<Unit>().GetComponent<NumericComponent>().isWarring = false;
 
                 //self.GetParent<Unit>().GetComponent<AttackComponent>().isAttacking = false;
 

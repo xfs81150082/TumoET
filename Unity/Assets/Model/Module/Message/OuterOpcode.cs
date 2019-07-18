@@ -23,6 +23,14 @@ namespace ETModel
     [Message(OuterOpcode.M2C_RemoveUnit)]
     public partial class M2C_RemoveUnit : IActorMessage { }
 
+    [Message(OuterOpcode.C2G_PingRequest)]
+    public partial class C2G_PingRequest : IRequest { }
+
+    [Message(OuterOpcode.G2C_PingResponse)]
+    public partial class G2C_PingResponse : IResponse  {  }
+
+
+
 
     #endregion
 
@@ -93,6 +101,9 @@ namespace ETModel
         public const ushort Attack_Map = 596;
         public const ushort M2C_AddUnit = 598;
         public const ushort M2C_RemoveUnit = 599;
+
+        public const ushort C2G_PingRequest = 626;
+        public const ushort G2C_PingResponse = 627;
 
 
 

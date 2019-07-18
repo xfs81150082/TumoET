@@ -46,7 +46,6 @@ namespace ETHotfix
                 unit.AddComponent<UnitPathComponent>();
                 unit.Position = new Vector3(-40, 0, -10);
                 unit.Position = new Vector3(player.spawnPosition.x, 0, player.spawnPosition.z);
-                //unit.RolerId = player.Id;
 
                 await unit.AddComponent<MailBoxComponent>().AddLocation();
                 unit.AddComponent<UnitGateComponent, long>(message.GateSessionId);
@@ -64,7 +63,6 @@ namespace ETHotfix
                 unit.AddComponent<SqrDistanceComponent>();
                 unit.AddComponent<NumericComponent>();
                 unit.AddComponent<AttackComponent>();
-                unit.AddComponent<LifeComponent>();
                 unit.AddComponent<RayUnitComponent>();
 
                 SetNumeric(unit ,player);
@@ -103,7 +101,7 @@ namespace ETHotfix
         {        
             /// 广播创建的unit
             M2M_AddUnits m2M_AddUnits = new M2M_AddUnits() { UnitType = (int)UnitType.Player, UnitIds = unitIds.ToHashSet(), PlayerUnitIds = playerUnitIds.ToHashSet() };
-            MapSessionHelper.Session().Send(m2M_AddUnits);
+            SessionHelper.MapSession().Send(m2M_AddUnits);
         }
 
         /// <summary>
@@ -115,7 +113,7 @@ namespace ETHotfix
         {
             /// 广播创建的unit
             M2M_AddUnits m2M_AddUnits = new M2M_AddUnits() { UnitType = (int)UnitType.Monster, UnitIds = unitIds.ToHashSet(), PlayerUnitIds = playerUnitIds.ToHashSet() };
-            MapSessionHelper.Session().Send(m2M_AddUnits);
+            SessionHelper.MapSession().Send(m2M_AddUnits);
         }
 
         #endregion
@@ -136,7 +134,6 @@ namespace ETHotfix
                 unit.AddComponent<MoveComponent>();
                 unit.AddComponent<UnitPathComponent>();
                 unit.Position = new Vector3(monster.spawnPosition.x, 0, monster.spawnPosition.z);
-                //unit.RolerId = monster.Id;
 
                 await unit.AddComponent<MailBoxComponent>().AddLocation();
                 Game.Scene.GetComponent<MonsterUnitComponent>().Add(unit);
@@ -150,7 +147,6 @@ namespace ETHotfix
                 unit.AddComponent<SqrDistanceComponent>();
                 unit.AddComponent<NumericComponent>();
                 unit.AddComponent<AttackComponent>();
-                unit.AddComponent<LifeComponent>();
                 unit.AddComponent<PatrolComponent>();
                 unit.AddComponent<SeeComponent>();
 

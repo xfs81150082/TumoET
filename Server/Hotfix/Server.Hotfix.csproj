@@ -32,5 +32,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Module\Http\" />
+    <Folder Include="Tumo\Handlers\War\" />
   </ItemGroup>
 </Project>

@@ -13,6 +13,8 @@ namespace ETHotfix
 			{
 				long key = RandomHelper.RandInt64();
 				Game.Scene.GetComponent<GateSessionKeyComponent>().Add(key, message.Account);
+
+
 				response.Key = key;
 				reply(response);
 			}

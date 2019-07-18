@@ -107,13 +107,14 @@ namespace ETHotfix
             if (aoiPlayer != null)
             {
                 aoiPlayer.UpdateAddRemove();
-            } 
-            
+            }
+
             ///将进入自己视野的人 加进来；将自己加入别的人视野
-            self.UpdateEnters(aoiUnit);
+            aoiUnit.UpdateEnters();
 
             ///将离开自己视野的人 删除掉；同时将自己从别人的视野里删除
-            self.UpdateLeaves(aoiUnit);         
+            aoiUnit.UpdateLeaves();
+
         }
 
         /// <summary>
@@ -185,120 +186,7 @@ namespace ETHotfix
             }
         }
 
-        /// <summary>
-        /// 将进入自己视野的人 加进来；将自己加入别的人视野
-        /// </summary>
-        static void UpdateEnters(this AoiGridComponent self, AoiUnitComponent aoiUnit)
-        {
-            foreach (long tem in aoiUnit.playerIds.Enters)
-            {
-                ///通知 刚进入小怪视野的玩家（多个） 加入这个小怪的Id（1个） 
-                AoiPlayerComponent temAoiPlayer1 = Game.Scene.GetComponent<UnitComponent>().Get(tem).GetComponent<AoiPlayerComponent>();
-                AoiUnitComponent temAoiUnit1 = Game.Scene.GetComponent<UnitComponent>().Get(tem).GetComponent<AoiUnitComponent>();
-                UnitType unitType = aoiUnit.GetParent<Unit>().UnitType;
-                switch (unitType)
-                {
-                    case UnitType.Player:
-                        temAoiUnit1.playerIds.Enters.Add(aoiUnit.GetParent<Unit>().Id);
-                        temAoiUnit1.playerIds.MovesSet.Add(aoiUnit.GetParent<Unit>().Id);
-
-                        //ToTo 通知tem客户端(多个)  加入此玩家（1个）
-                        temAoiPlayer1.AddPlayers(new long[1] { aoiUnit.GetParent<Unit>().Id }, new long[1] { tem });
-
-                        Console.WriteLine(" AoiGrid-208-玩家-Id：" + aoiUnit.GetParent<Unit>().Id + "(" + aoiUnit.gridId + ") 进入 PlayerId：" + tem + "(" + temAoiUnit1.gridId + ") 的视野。");
-                        Console.WriteLine(" AoiGrid-209-玩家-Id：" + tem + "(" + temAoiUnit1.gridId + ") 看到玩家：" + temAoiUnit1.playerIds.MovesSet.Count);
-                        break;
-                    case UnitType.Monster:
-                        temAoiUnit1.enemyIds.Enters.Add(aoiUnit.GetParent<Unit>().Id);
-                        temAoiUnit1.enemyIds.MovesSet.Add(aoiUnit.GetParent<Unit>().Id);
-                        
-                        //ToTo 通知tem客户端(多个)  加入此小怪（1个）
-                        temAoiPlayer1.AddMonsters(new long[1] { aoiUnit.GetParent<Unit>().Id }, new long[1] { tem });
-
-                        Console.WriteLine(" AoiGrid-218-小怪-Id：" + aoiUnit.GetParent<Unit>().Id + "(" + aoiUnit.gridId + ") 进入 PlayerId：" + tem + "(" + temAoiUnit1.gridId + ") 的视野。");
-                        Console.WriteLine(" AoiGrid-219-玩家-Id：" + tem + "(" + temAoiUnit1.gridId + ") 看到小怪：" + temAoiUnit1.enemyIds.MovesSet.Count);
-                        break;
-                }
-            }
-
-            foreach (long tem in aoiUnit.enemyIds.Enters)
-            {
-                ///通知 刚进入本人视野的小怪（多个） 加入本人的Id（1个） 
-                AoiUnitComponent temAoiUnit0 = Game.Scene.GetComponent<MonsterUnitComponent>().Get(tem).GetComponent<AoiUnitComponent>();
-                UnitType unitType = aoiUnit.GetParent<Unit>().UnitType;
-                switch (unitType)
-                {
-                    case UnitType.Player:
-                        temAoiUnit0.playerIds.Enters.Add(aoiUnit.GetParent<Unit>().Id);
-                        temAoiUnit0.playerIds.MovesSet.Add(aoiUnit.GetParent<Unit>().Id);
-                        break;
-                    case UnitType.Monster:
-                        temAoiUnit0.enemyIds.Enters.Add(aoiUnit.GetParent<Unit>().Id);
-                        temAoiUnit0.enemyIds.MovesSet.Add(aoiUnit.GetParent<Unit>().Id);
-                        break;
-                }
-            }        
-                   
-        }
-
-        /// <summary>
-        /// 将离开自己视野的人 删除掉；同时将自己从别人的视野里删除
-        /// </summary>
-        static void UpdateLeaves(this AoiGridComponent self, AoiUnitComponent aoiUnit)
-        {
-            foreach (long tem in aoiUnit.playerIds.Leaves)
-            {
-                ///通知 刚进入小怪视野的玩家（多个） 加入这个小怪的Id（1个） 
-                AoiPlayerComponent temAoiPlayer1 = Game.Scene.GetComponent<UnitComponent>().Get(tem).GetComponent<AoiPlayerComponent>();
-                AoiUnitComponent temAoiUnit1 = Game.Scene.GetComponent<UnitComponent>().Get(tem).GetComponent<AoiUnitComponent>();
-                UnitType unitType = aoiUnit.GetParent<Unit>().UnitType;
-                switch (unitType)
-                {
-                    case UnitType.Player:
-                        temAoiUnit1.playerIds.MovesSet.Remove(aoiUnit.GetParent<Unit>().Id);
-                        temAoiUnit1.playerIds.Leaves.Add(aoiUnit.GetParent<Unit>().Id);
-
-                        ///ToTo 通知tem客户端(多个) 删除此玩家（1个）
-                        temAoiPlayer1.RemovePlayers(new long[1] { aoiUnit.GetParent<Unit>().Id }, new long[1] { tem });
-
-                        Console.WriteLine(" AoiGrid-264-玩家-Id：" + aoiUnit.GetParent<Unit>().Id + " 离开 PlayerId：" + tem + "(" + temAoiUnit1.gridId + ") 的视野。");
-                        Console.WriteLine(" AoiGrid-265-玩家-Id：" + tem + "(" + temAoiUnit1.gridId + ") 看到玩家：" + temAoiUnit1.playerIds.MovesSet.Count);
-                        break;
-                    case UnitType.Monster:
-                        temAoiUnit1.enemyIds.MovesSet.Remove(aoiUnit.GetParent<Unit>().Id);
-                        temAoiUnit1.enemyIds.Leaves.Add(aoiUnit.GetParent<Unit>().Id);
-
-                        ///ToTo 通知tem客户端(多个) 删除此小怪（1个）
-                        temAoiPlayer1.RemoveMonsters(new long[1] { aoiUnit.GetParent<Unit>().Id }, new long[1] { tem });
-
-                        Console.WriteLine(" AoiGrid-274-小怪-Id：" + aoiUnit.GetParent<Unit>().Id + " 离开 PlayerId：" + tem + "(" + temAoiUnit1.gridId + ") 的视野。");
-                        Console.WriteLine(" AoiGrid-275-玩家-Id：" + tem + "(" + temAoiUnit1.gridId + ") 看到小怪：" + temAoiUnit1.enemyIds.MovesSet.Count);
-                        break;
-                }
-            }
-
-            foreach (long tem in aoiUnit.enemyIds.Enters)
-            {
-                ///通知 刚进入本人视野的小怪（多个） 加入本人的Id（1个） 
-                AoiUnitComponent temAoiUnit0 = Game.Scene.GetComponent<MonsterUnitComponent>().Get(tem).GetComponent<AoiUnitComponent>();
-                UnitType unitType = aoiUnit.GetParent<Unit>().UnitType;
-                switch (unitType)
-                {
-                    case UnitType.Player:
-                        temAoiUnit0.playerIds.MovesSet.Remove(aoiUnit.GetParent<Unit>().Id);
-                        temAoiUnit0.playerIds.Leaves.Add(aoiUnit.GetParent<Unit>().Id);
-                        break;
-                    case UnitType.Monster:
-                        temAoiUnit0.enemyIds.MovesSet.Remove(aoiUnit.GetParent<Unit>().Id);
-                        temAoiUnit0.enemyIds.Leaves.Add(aoiUnit.GetParent<Unit>().Id);
-                        break;
-                }
-            }
-            
-        }
-
         #endregion
-
 
     }
 }

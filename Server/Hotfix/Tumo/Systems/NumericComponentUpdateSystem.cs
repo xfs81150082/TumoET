@@ -6,12 +6,13 @@ using System.Text;
 namespace ETHotfix
 {
     [ObjectSystem]
-    public class LifeComponentUpdateSystem : UpdateSystem<LifeComponent>
+    public class NumericComponentUpdateSystem : UpdateSystem<NumericComponent>
     {
-        public override void Update(LifeComponent self)
+        public override void Update(NumericComponent self)
         {
             self.UpdateProperty();
         }
+
 
     }
 }

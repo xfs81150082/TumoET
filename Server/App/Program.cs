@@ -119,10 +119,17 @@ namespace App
                         Game.Scene.AddComponent<ConfigComponent>();
 
                         #region ///20190621
+                        // 调用方法
+                        //Game.Scene.AddComponent<PingComponent, long, long, Action<long>>(5000, 6, OnExit);
+
+                        // 调用匿名方法
+                        Game.Scene.AddComponent<BongComponent, long, long, Action<long>>(5000, 10, sessionId => {
+                            Game.Scene.GetComponent<NetOuterComponent>().Remove(sessionId);
+                            Game.Scene.GetComponent<NetInnerComponent>().Remove(sessionId);
+                        });
+
                         Game.Scene.AddComponent<NumericWatcherComponent>();     //创建数值组件NumericWatcherComponent
                         Game.Scene.AddComponent<AoiGridComponent>();            //创建 AOI 组件
-                        Game.Scene.AddComponent<EnterComponent>();              //创建  AOI 进入组件
-                        Game.Scene.AddComponent<LeafComponent>();               //创建  AOI 离开组件
 
 
                         #endregion
@@ -142,9 +149,9 @@ namespace App
                         #region ///20190613
                         Game.Scene.AddComponent<MonsterUnitComponent>();
                         Game.Scene.AddComponent<MonsterComponent>();
-                        //Game.Scene.AddComponent<NpcerUnitComponent>();
-                        //Game.Scene.AddComponent<NpcerComponent>();
                         Game.Scene.AddComponent<UserComponent>();
+
+                        Game.Scene.AddComponent<TestComponent>();
 
 
                         #endregion

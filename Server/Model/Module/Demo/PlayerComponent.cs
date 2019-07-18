@@ -38,6 +38,19 @@ namespace ETModel
             this.idPlayers.TryGetValue(id, out Player gamer);
             return gamer;
         }
+
+        public Player GetByUnitId(long unitId)
+        {
+            foreach(Player tem in GetAll())
+            {
+                if(tem.UnitId == unitId)
+                {
+                    return tem;
+                }
+            }
+            return null;
+        }
+
         public Player[] GetByUserId(long userid)
         {
             List<Player> players = new List<Player>();

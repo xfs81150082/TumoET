@@ -510,10 +510,13 @@
     <Compile Include="Assets\Model\Tumo\Components\CameraComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Components\EnemyComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Components\EnemyUnitComponent.cs" />
+    <Compile Include="Assets\Model\Tumo\Components\PingComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Infoes\AoiGridGizmos.cs" />
     <Compile Include="Assets\Model\Tumo\Infoes\Enemy.cs" />
     <Compile Include="Assets\Model\Tumo\Infoes\EnemyFactory.cs" />
     <Compile Include="Assets\Model\Tumo\Infoes\EnemyUnitFactory.cs" />
+    <Compile Include="Assets\Model\Tumo\Message\TumoMessage.cs" />
+    <Compile Include="Assets\Model\Tumo\Message\TumoOpcode.cs" />
     <None Include="Assets\Model\Module\Pathfinding\AstarPathfindingProject\ExampleScenes\Materials\DiffuseAlwaysVisible.shader" />
     <None Include="Assets\Model\Module\Pathfinding\AstarPathfindingProject\ExampleScenes\_Example Scenes.txt" />
     <None Include="Assets\Model\Module\Pathfinding\AstarPathfindingProject\Readme_upgrading.txt" />

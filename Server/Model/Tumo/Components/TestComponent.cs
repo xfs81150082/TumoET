@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ETModel
 {
-    public class CrazyAttackComponent : Component
+    public class TestComponent : Component
     {
     }
 }

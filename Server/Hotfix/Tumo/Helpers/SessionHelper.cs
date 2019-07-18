@@ -6,9 +6,9 @@ using System.Text;
 
 namespace ETHotfix
 {
-    public static class MapSessionHelper
+    public static class SessionHelper
     {
-        public static Session Session()
+        public static Session MapSession()
         {
             /// 得到 Map 服务器 Session
             IPEndPoint mapAddress = StartConfigComponent.Instance.MapConfigs[0].GetComponent<InnerConfig>().IPEndPoint;

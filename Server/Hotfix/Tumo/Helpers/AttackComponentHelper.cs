@@ -14,7 +14,7 @@ namespace ETHotfix
         /// <param name="self"></param>
         public static void TakeAttack(this AttackComponent self)
         {
-            if (self.GetParent<Unit>().GetComponent<LifeComponent>().isDeath) return;
+            if (self.GetParent<Unit>().GetComponent<NumericComponent>().isDeath) return;
 
             GetAttackTarget(self);
 
@@ -90,8 +90,8 @@ namespace ETHotfix
             Unit my = self.GetParent<Unit>();
             Unit target = self.target;
             if (self.target == null) return;
-            if (self.GetParent<Unit>().GetComponent<LifeComponent>().isDeath) return;
-            if (self.target.GetComponent<LifeComponent>().isDeath) return;
+            if (self.GetParent<Unit>().GetComponent<NumericComponent>().isDeath) return;
+            if (self.target.GetComponent<NumericComponent>().isDeath) return;
 
             AttackComponent attack = target.GetComponent<AttackComponent>();
             if (!attack.attackers.Contains(my.Id))

@@ -26,7 +26,13 @@ namespace ETHotfix
                 
                 // 创建一个ETHotfix层的Session, 并且保存到ETHotfix.SessionComponent中
                 Game.Scene.AddComponent<SessionComponent>().Session = ComponentFactory.Create<Session, ETModel.Session>(gateSession);
-				
+
+                ///20190716 ETModel增加心跳包
+                gateSession.AddComponent<ETModel.PingComponent, long, Action>(5000, () => {
+                    Debug.Log("掉线了");
+                });
+
+
                 G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await SessionComponent.Instance.Session.Call(new C2G_LoginGate() { Key = r2CLogin.Key });
 
                 Log.Info("登陆gate成功!");

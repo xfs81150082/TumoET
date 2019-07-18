@@ -19,8 +19,6 @@ namespace ETModel
     {
         public static MonsterComponent Instance { get; private set; }
 
-        public long spawnCount = 4;
-
         private readonly Dictionary<long, Monster> IdEnemys = new Dictionary<long, Monster>();
 
         public void Awake()

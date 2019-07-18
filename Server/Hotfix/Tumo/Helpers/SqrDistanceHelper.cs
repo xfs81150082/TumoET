@@ -61,13 +61,13 @@ namespace ETHotfix
 
         public static Unit NeastUnit(Unit unit, Unit[] units)
         {
-            if (unit.GetComponent<LifeComponent>().isDeath) return null;
+            if (unit.GetComponent<NumericComponent>().isDeath) return null;
 
             Unit obj = null;
             float dis = float.PositiveInfinity;
             foreach (Unit tem in units)
             {
-                if (tem.GetComponent<LifeComponent>().isDeath) break;
+                if (tem.GetComponent<NumericComponent>().isDeath) break;
                
                 if (tem != null)
                 {

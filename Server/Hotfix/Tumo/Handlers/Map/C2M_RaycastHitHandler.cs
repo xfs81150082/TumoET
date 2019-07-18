@@ -10,16 +10,12 @@ namespace ETHotfix
     {
         protected override async ETTask Run(Unit unit, C2M_RaycastHitActorRequest message, Action<M2C_RaycastHitActorResponse> reply)
         {
-
             Unit mesUnit = Game.Scene.GetComponent<MonsterUnitComponent>().Get(long.Parse(message.Info));
             if(mesUnit == null)
             {
                 mesUnit = Game.Scene.GetComponent<UnitComponent>().Get(long.Parse(message.Info));
             }
             unit.GetComponent<RayUnitComponent>().target = mesUnit;
-
-            //Console.WriteLine(" C2M_RaycastHitHandler-21-Id: " + unit.Id + " unit.InstanceId: " + unit.InstanceId + " actor: " + message.ActorId + " info: " + message.Info);
-            //Console.WriteLine(" C2M_RaycastHitHandler-22-Id: " + unit.Id + " target.Id: " + unit.GetComponent<RayUnitComponent>().target.Id + " info: " + message.Info);
             
             reply(new M2C_RaycastHitActorResponse() { Info = " Server Response：选择目标成功" });
             await ETTask.CompletedTask;

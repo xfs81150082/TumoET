@@ -21,11 +21,6 @@ namespace ETModel
         {
             try
             {
-                /// 先向 BD 服务器 初始化小怪数据
-                //IPEndPoint mapAddress = StartConfigComponent.Instance.MapConfigs[0].GetComponent<InnerConfig>().IPEndPoint;
-                //Session mapSession = Game.Scene.GetComponent<NetInnerComponent>().Get(mapAddress);
-                //mapSession.Send(new M2M_CreateEnemyUnit() { Count = 4 });
-
                 ///生产 Enemy 数据 Info
                 GetEnemys(4);
 
@@ -44,11 +39,8 @@ namespace ETModel
 
                 ///20190702
                 enemy.AddComponent<NumericComponent>();
-                enemy.AddComponent<LifeCDComponent>();
-                enemy.spawnPosition = new Vector3(-30 + 20 * i, 0, 30);
+                enemy.spawnPosition = new Vector3(-30 + 10 * i, 0, 30);
 
-                enemy.GetComponent<LifeCDComponent>().lifeCD = 4;
-                enemy.GetComponent<LifeCDComponent>().unitType = UnitType.Monster;
 
                 SetNumeric(enemy, new object());
 

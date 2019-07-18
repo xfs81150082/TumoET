@@ -13,12 +13,11 @@ namespace ETHotfix
     {      
         public override void Start(MonsterComponent self)
         {
+            ///先向 BD 服务器 初始化小怪数据
             GetEnemyFromBD();
 
             ///向 map 服务器 实例小怪
-            SetToMap(Game.Scene.GetComponent<MonsterComponent>().GetAll()).Coroutine(); 
-
-            Console.WriteLine(" EnemyComponentStartSystem-20: " + " BD服务器 小怪数据；map服务器 实例小怪： " + Game.Scene.GetComponent<MonsterComponent>().Count);
+            CreateMonsterToMap(Game.Scene.GetComponent<MonsterComponent>().GetAll()).Coroutine();
         }
 
         /// <summary>
@@ -28,12 +27,14 @@ namespace ETHotfix
         {
             try
             {
-                /// 先向 BD 服务器 初始化小怪数据
-                ///ToTo
+                /// 先向 BD 服务器 初始化小怪数据 ///ToTo               
                 MonsterInfo enemyInfo = ComponentFactory.Create<MonsterInfo>();
 
                 /// 然后向 Gate 服务器 小怪数据放入字典                
                 Game.Scene.GetComponent<MonsterComponent>().AddAll(enemyInfo.enemys.Values.ToArray());
+
+                Console.WriteLine(" MonsterComponentStartSystem-36: " + " BD服务器，小怪数量： " + Game.Scene.GetComponent<MonsterComponent>().Count);
+                Console.WriteLine(" MonsterComponentStartSystem-37: " + " map服务器，实例小怪数量： " + Game.Scene.GetComponent<MonsterUnitComponent>().Count);
             }
             catch (Exception e)
             {
@@ -44,7 +45,7 @@ namespace ETHotfix
         /// <summary>
         /// 再向 Map 服务器 初始化小怪实例
         /// </summary>
-        async ETVoid SetToMap(Monster[] monsters)
+        async ETVoid CreateMonsterToMap(Monster[] monsters)
         {
             /// 再向 Map 服务器 初始化小怪实例
             if (monsters.Length > 0)
@@ -52,14 +53,12 @@ namespace ETHotfix
                 /// 再向 Map 服务器 初始化小怪实例
                 foreach (Monster tem in monsters)
                 {
-                    //MapSessionHelper.Session().Send(new M2M_CreateUnit() { UnitType = (int)UnitType.Monster, RolerId = tem.Id });
-                    //MapSessionHelper.Session().Send(new G2M_CreateUnit() { UnitType = (int)UnitType.Monster, RolerId = tem.Id });
-                    M2G_CreateUnit response = (M2G_CreateUnit)await MapSessionHelper.Session().Call(new G2M_CreateUnit() { UnitType = (int)UnitType.Monster, RolerId = tem.Id });
-
+                    M2G_CreateUnit response = (M2G_CreateUnit)await SessionHelper.MapSession().Call(new G2M_CreateUnit() { UnitType = (int)UnitType.Monster, RolerId = tem.Id });
                     tem.UnitId = response.UnitId;
                 }
             }
-            Console.WriteLine(" EnemyComponentStartSystem-58: " + " 向 map服务器 实例小怪： " + Game.Scene.GetComponent<MonsterComponent>().Count);
+            Console.WriteLine(" MonsterComponentStartSystem-60: " + " BD服务器，小怪数量： " + Game.Scene.GetComponent<MonsterComponent>().Count);
+            Console.WriteLine(" MonsterComponentStartSystem-61: " + " map服务器，实例小怪数量： " + Game.Scene.GetComponent<MonsterUnitComponent>().Count);
         }
 
 

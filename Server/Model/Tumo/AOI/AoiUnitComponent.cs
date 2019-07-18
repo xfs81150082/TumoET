@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 namespace ETModel
-{ 
+{
     /// <summary>
     /// 挂在 Unit 个体上
     /// </summary>

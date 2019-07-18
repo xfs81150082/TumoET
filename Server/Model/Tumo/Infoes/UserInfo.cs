@@ -24,17 +24,9 @@ namespace ETModel
         {
             try
             {
-                /// 先向 BD 服务器 初始化小怪数据
-                //IPEndPoint mapAddress = StartConfigComponent.Instance.MapConfigs[0].GetComponent<InnerConfig>().IPEndPoint;
-                //Session mapSession = Game.Scene.GetComponent<NetInnerComponent>().Get(mapAddress);
-                //mapSession.Send(new M2M_CreateEnemyUnit() { Count = 4 });
-
-
                 ///生产Users数据Info///生产Player数据Info                
                 GetUsers();
 
-                //Console.WriteLine(" UserInfo-36-users: " + users.Count);
-                //Console.WriteLine(" UserInfo-37-players: " + players.Count);
             }
             catch (Exception e)
             {
@@ -45,7 +37,7 @@ namespace ETModel
         void GetUsers()
         {
             User user1 = ComponentFactory.CreateWithId<User>(101);
-            user1.Count = 2;
+            user1.Count = 1;
             users.Add(user1.Id, user1);
 
             User user2 = ComponentFactory.CreateWithId<User>(102);
@@ -73,14 +65,10 @@ namespace ETModel
                 Player player = ComponentFactory.CreateWithId<Player>(IdGenerater.GenerateId());
                 player.UserId = user.Id;
                 player.Account = user.Account;
+                player.spawnPosition = new Vector3(-40, 0, -10);
 
                 player.AddComponent<NumericComponent>();
-                player.AddComponent<LifeCDComponent>();
-
                 player.GetComponent<NumericComponent>().Set(NumericType.MaxHpAdd, 20);
-                player.GetComponent<LifeCDComponent>().lifeCD = 2;
-                player.GetComponent<LifeCDComponent>().unitType = UnitType.Player;
-                player.spawnPosition = new Vector3(-40, 0, -10);
 
                 players.Add(player.Id, player);
             }
