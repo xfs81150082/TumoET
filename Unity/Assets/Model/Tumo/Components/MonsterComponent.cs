@@ -7,20 +7,20 @@ using UnityEngine;
 namespace ETModel
 {
     [ObjectSystem]
-    public class EnemyComponentAwakeSystem : AwakeSystem<EnemyComponent>
+    public class MonsterComponentAwakeSystem : AwakeSystem<MonsterComponent>
     {
-        public override void Awake(EnemyComponent self)
+        public override void Awake(MonsterComponent self)
         {
             self.Awake();
         }
     }
 
-    public class EnemyComponent : Component
+    public class MonsterComponent : Component
     {
-        public static EnemyComponent Instance { get; private set; }
+        public static MonsterComponent Instance { get; private set; }
 
-        private Enemy booker;
-        public Enemy Enemy
+        private Monster booker;
+        public Monster Enemy
         {
             get
             {
@@ -32,7 +32,7 @@ namespace ETModel
                 this.booker.Parent = this;
             }
         }
-        private readonly Dictionary<long, Enemy> IdBookers = new Dictionary<long, Enemy>();
+        private readonly Dictionary<long, Monster> IdBookers = new Dictionary<long, Monster>();
 
         public void Awake()
         {
@@ -41,15 +41,15 @@ namespace ETModel
 
    
 
-        public void Add(Enemy booker)
+        public void Add(Monster booker)
         {
             this.IdBookers.Add(booker.Id, booker);
             booker.Parent = this;
         }
 
-        public Enemy Get(long id)
+        public Monster Get(long id)
         {
-            Enemy booker;
+            Monster booker;
             this.IdBookers.TryGetValue(id, out booker);
             return booker;
         }
@@ -72,7 +72,7 @@ namespace ETModel
             }
         }
 
-        public Enemy[] GetAll()
+        public Monster[] GetAll()
         {
             return this.IdBookers.Values.ToArray();
         }
@@ -90,7 +90,7 @@ namespace ETModel
             }
             base.Dispose();
 
-            foreach (Enemy booker in this.IdBookers.Values)
+            foreach (Monster booker in this.IdBookers.Values)
             {
                 booker.Dispose();
             }

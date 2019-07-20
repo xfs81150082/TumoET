@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ETModel
 {
-    public static class EnemyUnitFactory
+    public static class MonsterUnitFactory
     {
         public static Unit Create(long id)
         {
@@ -12,7 +12,7 @@ namespace ETModel
             GameObject bundleGameObject = (GameObject)resourcesComponent.GetAsset("Unit.unity3d", "Unit");
             GameObject prefab = bundleGameObject.Get<GameObject>("Skeleton");
 
-            EnemyUnitComponent unitComponent = Game.Scene.GetComponent<EnemyUnitComponent>();
+            MonsterUnitComponent unitComponent = Game.Scene.GetComponent<MonsterUnitComponent>();
 
             GameObject go = UnityEngine.Object.Instantiate(prefab);
             Unit unit = ComponentFactory.CreateWithId<Unit, GameObject>(id, go);

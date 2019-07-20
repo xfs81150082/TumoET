@@ -35,7 +35,7 @@ namespace ETHotfix
                     Debug.Log(" M2C_AddUnitHandler-35-Player: " + unittype + " : " + oldcount0 + " - " + message.Units.Count + " = " + unitComponent.Count);
                     break;
                 case 1:
-                    EnemyUnitComponent enemyunitComponent = ETModel.Game.Scene.GetComponent<EnemyUnitComponent>();
+                    MonsterUnitComponent enemyunitComponent = ETModel.Game.Scene.GetComponent<MonsterUnitComponent>();
                     int oldcount1 = enemyunitComponent.Count;
                     foreach (UnitInfo unitInfo in message.Units)
                     {

@@ -13,7 +13,7 @@ namespace ETHotfix
             ///20190630
             if (unit == null)
             {
-                unit = ETModel.Game.Scene.GetComponent<EnemyUnitComponent>().Get(message.Id);
+                unit = ETModel.Game.Scene.GetComponent<MonsterUnitComponent>().Get(message.Id);
             }
             if (unit == null) return;
 

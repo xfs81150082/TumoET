@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ETModel
 {  
-    public sealed class Enemy : Entity
+    public sealed class Monster : Entity
     {
         public long UnitId { get; set; }
 

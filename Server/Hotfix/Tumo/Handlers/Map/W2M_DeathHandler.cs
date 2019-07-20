@@ -23,7 +23,9 @@ namespace ETHotfix
                 switch (unit.UnitType)
                 {
                     case UnitType.Player:
-                        Game.Scene.GetComponent<UnitComponent>().Remove(unit.Id);
+                        //Game.Scene.GetComponent<UnitComponent>().Remove(unit.Id);
+                        ///仅重新给个坐标点，但不删除
+
                         break;
                     case UnitType.Monster:
                         Game.Scene.GetComponent<MonsterUnitComponent>().Remove(unit.Id);

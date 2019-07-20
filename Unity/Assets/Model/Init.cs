@@ -38,8 +38,8 @@ namespace ETModel
 				Game.Scene.AddComponent<UIComponent>();
 
                 #region ///20190613
-                Game.Scene.AddComponent<EnemyComponent>();
-                Game.Scene.AddComponent<EnemyUnitComponent>();
+                Game.Scene.AddComponent<MonsterComponent>();
+                Game.Scene.AddComponent<MonsterUnitComponent>();
 
 
 

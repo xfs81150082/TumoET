@@ -5,17 +5,17 @@ using System.Linq;
 namespace ETModel
 {
     [ObjectSystem]
-    public class EnemyUnitComponentAwakeSystem : AwakeSystem<EnemyUnitComponent>
+    public class MonsterUnitComponentAwakeSystem : AwakeSystem<MonsterUnitComponent>
     {
-        public override void Awake(EnemyUnitComponent self)
+        public override void Awake(MonsterUnitComponent self)
         {
             self.Awake();
         }
     }
 
-    public class EnemyUnitComponent : Component
+    public class MonsterUnitComponent : Component
     {
-        public static EnemyUnitComponent Instance { get; private set; }
+        public static MonsterUnitComponent Instance { get; private set; }
 
         public Unit MyUnit;
 

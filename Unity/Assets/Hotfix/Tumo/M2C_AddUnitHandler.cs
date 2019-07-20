@@ -39,7 +39,7 @@ namespace ETHotfix
                     Debug.Log(" M2C_AddUnitHandler-39-Player: " + unittype + " : " + oldcount0 + " + " + message.Units.Count + " = " + unitComponent.Count);
                     break;
                 case 1:
-                    EnemyUnitComponent enemyunitComponent = ETModel.Game.Scene.GetComponent<EnemyUnitComponent>();
+                    MonsterUnitComponent enemyunitComponent = ETModel.Game.Scene.GetComponent<MonsterUnitComponent>();
                     int oldcount1 = enemyunitComponent.Count;
                     foreach (UnitInfo unitInfo in message.Units)
                     {
@@ -47,7 +47,7 @@ namespace ETHotfix
                         {
                             continue;
                         }
-                        Unit unit1 = EnemyUnitFactory.Create(unitInfo.UnitId);
+                        Unit unit1 = MonsterUnitFactory.Create(unitInfo.UnitId);
                         unit1.Position = new Vector3(unitInfo.X, unitInfo.Y, unitInfo.Z);
                     }
                     Debug.Log(" M2C_AddUnitHandler-53-Monster: " + unittype + " : " + oldcount1 + " + " + message.Units.Count + " = " + enemyunitComponent.Count);
