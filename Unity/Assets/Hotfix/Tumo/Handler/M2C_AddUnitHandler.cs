@@ -34,7 +34,7 @@ namespace ETHotfix
                             ETModel.Game.EventSystem.Awake<Unit>(ETModel.Game.Scene.GetComponent<CameraComponent>(), unit0);
                             ///20190703
                             Game.Scene.AddComponent<RaycastHitComponent>();
-                            Game.Scene.AddComponent<TranslateMoveComponent>();
+                            Game.Scene.AddComponent<StateMoveComponent>();
 
                             Debug.Log(" M2C_AddUnitHandler-39: " + unit0.Id);
                         }

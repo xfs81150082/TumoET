@@ -9,25 +9,25 @@ using UnityEngine;
 namespace ETHotfix
 {
     [ObjectSystem]
-    public class TranslateMoveComponentAwakeSystem : AwakeSystem<TranslateMoveComponent>
+    public class StateMoveComponentAwakeSystem : AwakeSystem<StateMoveComponent>
     {
-        public override void Awake(TranslateMoveComponent self)
+        public override void Awake(StateMoveComponent self)
         {
             self.Awake();
         }
     }
 
-    public class TranslateMoveComponent : Component
+    public class StateMoveComponent : Component
     {
         public float wsForword = 0.0f;
         public float adTrun = 0.0f;
         public float moveSpeed = 5.0f;
         public float roteSpeed = 5.0f;
-        private readonly Frame_KeyCodeMap keyCode_TranslateMap = new Frame_KeyCodeMap();
 
         public Vector3 ClickPoint;
         public int mapMask;
-        private readonly Frame_ClickMap frameClickMap = new Frame_ClickMap();
+
+        private readonly Move_Map move_Map = new Move_Map();
 
         public void Awake()
         {

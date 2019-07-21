@@ -2,22 +2,41 @@
 using System.Collections.Generic;
 using System.Text;
 using ETModel;
+using UnityEngine;
 
 namespace ETHotfix
 {
     [ActorMessageHandler(AppType.Map)]
-    public class Move_MapHandler : AMActorLocationHandler<Unit, Frame_KeyCodeMap>
+    public class Move_MapHandler : AMActorLocationHandler<Unit, Move_Map>
     {
-        protected override void Run(Unit player, Frame_KeyCodeMap message)
+        protected override void Run(Unit player, Move_Map message)
         {
-            Console.WriteLine(" KeyType_WSADMapHandler: " + message.KeyType + " / " + player.Id + " / " + message.Id + " / " + message.WS + " / " + message.AD);
+            switch (message.KeyType)
+            {
+                case 0:
+                    UnitClickMove(player, message);
+                    break;
+                case 1:
+                    UnitKeyCodeMove(player, message);
+                    break;
+            }
+            UnitTrun(player, message);
         }
 
-        void UnitMove(Unit unit, Frame_KeyCodeMap message)
+        void UnitClickMove(Unit unit, Move_Map message)
         {
+            Console.WriteLine(" Move_MapHandler: " + (KeyType)message.KeyType + " / " + unit.Id + " / " + message.Id + " / " + message.X + " / " + message.Y + " / " + message.Z);
+
+            Vector3 target = new Vector3(message.X, message.Y, message.Z);
+            unit.GetComponent<UnitPathComponent>().MoveTo(target).Coroutine();
 
         }
-        void UnitTrun(Unit unit, Frame_KeyCodeMap message)
+        void UnitKeyCodeMove(Unit unit, Move_Map message)
+        {
+            Console.WriteLine(" Move_MapHandler: " + (KeyType)message.KeyType + " / " + unit.Id + " / " + message.Id + " / " + message.WS + " / " + message.AD);
+
+        }
+        void UnitTrun(Unit unit, Move_Map message)
         {
 
         }
