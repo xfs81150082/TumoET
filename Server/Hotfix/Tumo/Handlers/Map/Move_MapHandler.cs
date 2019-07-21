@@ -6,7 +6,7 @@ using ETModel;
 namespace ETHotfix
 {
     [ActorMessageHandler(AppType.Map)]
-    public class KeyType_WSADMapHandler : AMActorLocationHandler<Unit, KeyCode_TranslateMap>
+    public class Move_MapHandler : AMActorLocationHandler<Unit, KeyCode_TranslateMap>
     {
         protected override void Run(Unit player, KeyCode_TranslateMap message)
         {
