@@ -63,7 +63,7 @@ namespace ETModel
 
                     Ping = ((_receiveTimer - _sendTimer) / 2) < 0 ? 0 : (_receiveTimer - _sendTimer) / 2;
 
-                    Debug.Log(" 计算延时-rpcid: " + _request.RpcId + " / " + Ping);
+                    //Debug.Log(" 计算延时-rpcid: " + _request.RpcId + " / " + Ping);
                 }
                 catch (Exception e)
                 {

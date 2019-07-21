@@ -29,7 +29,8 @@ namespace ETHotfix
 
                 Debug.Log(" MapHelper-player.Id/player.UnitId: " + player.Id + " / " + player.UnitId);
 
-                Game.Scene.AddComponent<OperaComponent>();
+                ///20190721 取消合并到Move里了
+                //Game.Scene.AddComponent<OperaComponent>();
 				
                 Game.EventSystem.Run(EventIdType.EnterMapFinish);
             }

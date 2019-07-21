@@ -515,6 +515,7 @@
     <Compile Include="Assets\Model\Tumo\Infoes\Monster.cs" />
     <Compile Include="Assets\Model\Tumo\Infoes\MonsterFactory.cs" />
     <Compile Include="Assets\Model\Tumo\Infoes\MonsterUnitFactory.cs" />
+    <Compile Include="Assets\Model\Tumo\Message\TumoEnum.cs" />
     <Compile Include="Assets\Model\Tumo\Message\TumoMessage.cs" />
     <Compile Include="Assets\Model\Tumo\Message\TumoOpcode.cs" />
     <None Include="Assets\Model\Module\Pathfinding\AstarPathfindingProject\ExampleScenes\Materials\DiffuseAlwaysVisible.shader" />

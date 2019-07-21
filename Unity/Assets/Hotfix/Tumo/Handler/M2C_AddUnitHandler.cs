@@ -34,9 +34,12 @@ namespace ETHotfix
                             ETModel.Game.EventSystem.Awake<Unit>(ETModel.Game.Scene.GetComponent<CameraComponent>(), unit0);
                             ///20190703
                             Game.Scene.AddComponent<RaycastHitComponent>();
+                            Game.Scene.AddComponent<TranslateMoveComponent>();
+
+                            Debug.Log(" M2C_AddUnitHandler-39: " + unit0.Id);
                         }
                     }
-                    Debug.Log(" M2C_AddUnitHandler-39-Player: " + unittype + " : " + oldcount0 + " + " + message.Units.Count + " = " + unitComponent.Count);
+                    Debug.Log(" M2C_AddUnitHandler-42-Player: " + unittype + " : " + oldcount0 + " + " + message.Units.Count + " = " + unitComponent.Count);
                     break;
                 case 1:
                     MonsterUnitComponent enemyunitComponent = ETModel.Game.Scene.GetComponent<MonsterUnitComponent>();
