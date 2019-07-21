@@ -18,7 +18,7 @@ namespace ETHotfix
         
         private readonly Frame_ClickMap frameClickMap = new Frame_ClickMap();
         
-        private readonly KeyCode_TranslateMap keyCode_TranslateMap = new KeyCode_TranslateMap();
+        private readonly Frame_KeyCodeMap keyCode_TranslateMap = new Frame_KeyCodeMap();
 
         void TranslateMove(TranslateMoveComponent self)
         {

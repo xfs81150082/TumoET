@@ -499,10 +499,10 @@ namespace ETModel
         }
     }
 
-    public partial class KeyCode_TranslateMap : pb::IMessage
+    public partial class Frame_KeyCodeMap : pb::IMessage
     {
-        private static readonly pb::MessageParser<KeyCode_TranslateMap> _parser = new pb::MessageParser<KeyCode_TranslateMap>(() => (KeyCode_TranslateMap)MessagePool.Instance.Fetch(typeof(KeyCode_TranslateMap)));
-        public static pb::MessageParser<KeyCode_TranslateMap> Parser { get { return _parser; } }
+        private static readonly pb::MessageParser<Frame_KeyCodeMap> _parser = new pb::MessageParser<Frame_KeyCodeMap>(() => (Frame_KeyCodeMap)MessagePool.Instance.Fetch(typeof(Frame_KeyCodeMap)));
+        public static pb::MessageParser<Frame_KeyCodeMap> Parser { get { return _parser; } }
 
         private int rpcId_;
         public int RpcId

@@ -23,7 +23,7 @@ namespace ETHotfix
         public float adTrun = 0.0f;
         public float moveSpeed = 5.0f;
         public float roteSpeed = 5.0f;
-        private readonly KeyCode_TranslateMap keyCode_TranslateMap = new KeyCode_TranslateMap();
+        private readonly Frame_KeyCodeMap keyCode_TranslateMap = new Frame_KeyCodeMap();
 
         public Vector3 ClickPoint;
         public int mapMask;
