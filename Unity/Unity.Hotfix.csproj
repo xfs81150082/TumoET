@@ -127,6 +127,7 @@
     <Compile Include="Assets\Hotfix\Tumo\Component\RaycastHitComponent.cs" />
     <Compile Include="Assets\Hotfix\Tumo\Component\StateMoveComponent.cs" />
     <Compile Include="Assets\Hotfix\Tumo\Handler\M2C_AddUnitHandler.cs" />
+    <Compile Include="Assets\Hotfix\Tumo\Handler\M2C_MoveKeyCodeHandler.cs" />
     <Compile Include="Assets\Hotfix\Tumo\Handler\M2C_RemoveUnitHandler.cs" />
     <Compile Include="Assets\Hotfix\Tumo\System\StateMoveComponentUpdateSystem.cs" />
     <None Include="Assets\Hotfix\Unity.Hotfix.asmdef" />

@@ -47,8 +47,7 @@ namespace ETHotfix
                 Vector3 v3 = path[i];
                 await self.Entity.GetComponent<MoveComponent>().MoveToAsync(v3, self.CancellationTokenSource.Token);
             }
-        }
-        
+        }        
 
         // 从index找接下来3个点，广播
         public static void BroadcastPath(this UnitPathComponent self, List<Vector3> path, int index, int offset)
@@ -74,5 +73,7 @@ namespace ETHotfix
             }
             MessageHelper.Broadcast(m2CPathfindingResult);
         }
+
+
     }
 }

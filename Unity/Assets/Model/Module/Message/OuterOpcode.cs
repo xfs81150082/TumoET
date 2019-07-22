@@ -8,27 +8,32 @@ namespace ETModel
     public partial class M2C_AddUnits : IActorMessage { }
     [Message(OuterOpcode.M2C_RemoveUnits)]
     public partial class M2C_RemoveUnits : IActorMessage { }
-
-    [Message(OuterOpcode.Patrol_Map)]
-    public partial class Patrol_Map : IActorLocationMessage { }
-    [Message(OuterOpcode.SqrDistance_Map)]
-    public partial class SqrDistance_Map : IActorLocationMessage { }
-    [Message(OuterOpcode.See_Map)]
-    public partial class See_Map : IActorLocationMessage { }
-    [Message(OuterOpcode.Attack_Map)]
-    public partial class Attack_Map : IActorLocationMessage { }
-
     [Message(OuterOpcode.M2C_AddUnit)]
     public partial class M2C_AddUnit : IActorMessage { }
     [Message(OuterOpcode.M2C_RemoveUnit)]
     public partial class M2C_RemoveUnit : IActorMessage { }
+    [Message(OuterOpcode.W2M_DeathActorRequest)]
+    public partial class W2M_DeathActorRequest : IActorLocationRequest { }
+    [Message(OuterOpcode.M2W_DeathActorResponse)]
+    public partial class M2W_DeathActorResponse : IActorLocationResponse { }
 
     [Message(OuterOpcode.C2G_PingRequest)]
     public partial class C2G_PingRequest : IRequest { }
-
     [Message(OuterOpcode.G2C_PingResponse)]
     public partial class G2C_PingResponse : IResponse  {  }
 
+    [Message(OuterOpcode.SqrDistance_Map)]
+    public partial class SqrDistance_Map : IActorLocationMessage { }
+    [Message(OuterOpcode.Patrol_Map)]
+    public partial class Patrol_Map : IActorLocationMessage { }
+    [Message(OuterOpcode.See_Map)]
+    public partial class See_Map : IActorLocationMessage { }
+    [Message(OuterOpcode.Attack_Map)]
+    public partial class Attack_Map : IActorLocationMessage { }
+    [Message(OuterOpcode.Move_Map)]
+    public partial class Move_Map : IActorLocationMessage { }
+    [Message(OuterOpcode.Move_KeyCodeMap)]
+    public partial class Move_KeyCodeMap : IActorMessage { }
 
 
 
@@ -91,21 +96,25 @@ namespace ETModel
     public static partial class OuterOpcode
     {
         #region ///20190613
-        public const ushort M2C_GetEnemyUnits = 588;
-        public const ushort M2C_AddUnits = 587;
-        public const ushort M2C_RemoveUnits = 589;
+        public const ushort M2C_GetEnemyUnits = 1401;
+        public const ushort M2C_AddUnits = 1403;
+        public const ushort M2C_RemoveUnits = 1404;
+        public const ushort M2C_AddUnit = 1405;
+        public const ushort M2C_RemoveUnit = 1406;
+        public const ushort W2M_DeathActorRequest = 1407;
+        public const ushort M2W_DeathActorResponse = 1408;
 
-        public const ushort Patrol_Map = 590;
-        public const ushort SqrDistance_Map = 592;
-        public const ushort See_Map = 594;
-        public const ushort Attack_Map = 596;
-        public const ushort M2C_AddUnit = 598;
-        public const ushort M2C_RemoveUnit = 599;
+        public const ushort C2G_PingRequest = 1421;
+        public const ushort G2C_PingResponse = 1422;
 
-        public const ushort C2G_PingRequest = 626;
-        public const ushort G2C_PingResponse = 627;
-
-
+        public const ushort SqrDistance_Map = 1431;
+        public const ushort Patrol_Map = 1433;
+        public const ushort See_Map = 1434;
+        public const ushort Attack_Map = 1435;
+        public const ushort Move_Map = 1436;
+        public const ushort Move_KeyCodeMap = 1437;
+             
+        
 
         #endregion
 

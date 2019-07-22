@@ -24,8 +24,8 @@ namespace ETModel
             while (true)
             {
                 try
-                {
-                    Console.WriteLine("在线人数 ：" + _sessionTimes.Count.ToString());
+                {                   
+                    Console.WriteLine("在线人数 ：" + _sessionTimes.Count.ToString() + " / " + Game.Scene.GetComponent<NetOuterComponent>().Count);
 
                     await timerComponent.WaitAsync(waitTime);
 

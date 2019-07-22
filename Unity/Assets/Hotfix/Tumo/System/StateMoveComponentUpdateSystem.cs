@@ -33,7 +33,7 @@ namespace ETHotfix
 
                 ETModel.SessionComponent.Instance.Session.Send(move_Map);
 
-                Debug.Log(" Move_MapHandler-39: " + (KeyType)move_Map.KeyType + " / " + move_Map.Id + " / " + self.wsForword + " / " + self.adTrun);
+                //Debug.Log(" StateMoveComponentUpdateSystem-36: " + (KeyType)move_Map.KeyType + " / " + move_Map.Id + " / " + self.wsForword + " / " + self.adTrun);
             }
             else
             {
@@ -50,7 +50,7 @@ namespace ETHotfix
                         move_Map.Z = self.ClickPoint.z;
                         ETModel.SessionComponent.Instance.Session.Send(move_Map);
 
-                        Debug.Log(" Move_MapHandler-56: " + (KeyType)move_Map.KeyType + " / " + move_Map.Id + " / " + move_Map.X + " / " + move_Map.Y + " / " + move_Map.Z);
+                        Debug.Log(" StateMoveComponentUpdateSystem-53: " + (KeyType)move_Map.KeyType + " / " + move_Map.Id + " / " + move_Map.X + " / " + move_Map.Y + " / " + move_Map.Z);
                     }
                 }
             }

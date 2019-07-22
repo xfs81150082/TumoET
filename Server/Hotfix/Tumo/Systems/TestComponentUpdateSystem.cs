@@ -11,6 +11,16 @@ namespace ETHotfix
         public override void Update(TestComponent self)
         {
             //ETVoidAsync().Coroutine();
+            SendClient();
+        }
+
+        void SendClient()
+        {
+            //Console.WriteLine(" TestComponentUpdateSystem-20-unitIds: " + TimeHelper.ClientNow());
+
+            //long[] unitIds = Game.Scene.GetComponent<MonsterUnitComponent>().GetIdsAll();
+
+            MessageHelper.Broadcast(new Move_KeyCodeMap());
         }
 
         async ETVoid ETVoidAsync()
