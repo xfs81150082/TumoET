@@ -13,7 +13,7 @@ namespace ETHotfix
     {
         public override void Update(StateMoveComponent self)
         {
-            TranslateMove(self);
+            //TranslateMove(self);
         }
 
         private readonly Move_Map move_Map = new Move_Map();

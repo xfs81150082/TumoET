@@ -27,16 +27,24 @@ namespace ETHotfix
                         }
                         Unit unit0 = UnitFactory.Create(unitInfo.UnitId);
                         unit0.Position = new Vector3(unitInfo.X, unitInfo.Y, unitInfo.Z);
+                        unit0.AddComponent<AnimatorComponent>();
+                        unit0.AddComponent<MoveComponent>();
+                        unit0.AddComponent<TurnComponent>();
+                        unit0.AddComponent<UnitPathComponent>();
+                        unit0.AddComponent<TmAnimatorComponent>();
 
                         if (unitInfo.UnitId == PlayerComponent.Instance.MyPlayer.UnitId)
                         {
                             ///20190621//将参数unit 传给组件CameraComponent awake方法
                             ETModel.Game.EventSystem.Awake<Unit>(ETModel.Game.Scene.GetComponent<CameraComponent>(), unit0);
+                            unit0.AddComponent<CharacterControllerComponent>();
+                            unit0.GetComponent<CharacterControllerComponent>().isCanControl = true;
+
+
                             ///20190703
                             Game.Scene.AddComponent<RaycastHitComponent>();
-                            Game.Scene.AddComponent<StateMoveComponent>();
 
-                            Debug.Log(" M2C_AddUnitHandler-39: " + unit0.Id);
+                            Debug.Log(" M2C_AddUnitHandler-47: " + unit0.Id);
                         }
                     }
                     Debug.Log(" M2C_AddUnitHandler-42-Player: " + unittype + " : " + oldcount0 + " + " + message.Units.Count + " = " + unitComponent.Count);

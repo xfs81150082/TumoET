@@ -508,9 +508,13 @@
     <Compile Include="Assets\Model\Other\MotionType.cs" />
     <Compile Include="Assets\Model\Other\ReferenceCollector.cs" />
     <Compile Include="Assets\Model\Tumo\Components\CameraComponent.cs" />
+    <Compile Include="Assets\Model\Tumo\Components\CharacterControllerComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Components\MonsterComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Components\MonsterUnitComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Components\PingComponent.cs" />
+    <Compile Include="Assets\Model\Tumo\Components\TmAnimatorComponent.cs" />
+    <Compile Include="Assets\Model\Tumo\Helpers\AnimatorHelper.cs" />
+    <Compile Include="Assets\Model\Tumo\Helpers\CharacterControllerHelper.cs" />
     <Compile Include="Assets\Model\Tumo\Infoes\AoiGridGizmos.cs" />
     <Compile Include="Assets\Model\Tumo\Infoes\Monster.cs" />
     <Compile Include="Assets\Model\Tumo\Infoes\MonsterFactory.cs" />

@@ -342,7 +342,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4781799842951158}
   - component: {fileID: 95876942513160466}
-  - component: {fileID: 8731544079995432412}
+  - component: {fileID: 2233971514453965040}
   m_Layer: 10
   m_Name: Skeleton
   m_TagString: Untagged
@@ -377,7 +377,7 @@ Animator:
   m_GameObject: {fileID: 1248987324363926}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: f57ee821486cd7b488adf1063a8dd207, type: 3}
-  m_Controller: {fileID: 9100000, guid: 595f7cae6f82a6146b20ca287fe7c859, type: 2}
+  m_Controller: {fileID: 9100000, guid: fb2273136a439e24ba25b0871adfbe41, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -386,19 +386,23 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!136 &8731544079995432412
-CapsuleCollider:
+--- !u!143 &2233971514453965040
+CharacterController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1248987324363926}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.03
+  serializedVersion: 2
   m_Height: 0.1
-  m_Direction: 1
+  m_Radius: 0.03
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.05, z: 0}
 --- !u!1 &1261353649905318
 GameObject:
