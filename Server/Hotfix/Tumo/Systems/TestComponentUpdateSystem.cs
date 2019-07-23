@@ -11,7 +11,7 @@ namespace ETHotfix
         public override void Update(TestComponent self)
         {
             //ETVoidAsync().Coroutine();
-            SendClient();
+            //SendClient();
         }
 
         void SendClient()

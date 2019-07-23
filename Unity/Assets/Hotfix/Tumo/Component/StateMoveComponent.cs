@@ -19,6 +19,10 @@ namespace ETHotfix
 
     public class StateMoveComponent : Component
     {
+        public float startTime = 0;
+        public bool isStart = false;
+        public float resTime = 1.0f;
+
         public float wsForword = 0.0f;
         public float adTrun = 0.0f;
         public float moveSpeed = 5.0f;

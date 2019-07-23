@@ -20,20 +20,35 @@ namespace ETHotfix
 
         void TranslateMove(StateMoveComponent self)
         {
+            if (self.isStart)
+            {
+                self.startTime += Time.deltaTime;
+            }
+            if (self.startTime > self.resTime)
+            {
+                self.startTime = 0;
+                self.isStart = false;
+            }
+
             self.wsForword = Input.GetAxis("Vertical") * self.moveSpeed;
             self.adTrun = Input.GetAxis("Horizontal") * self.roteSpeed;
 
             if (Math.Abs(self.wsForword) > 0.05f || Math.Abs(self.adTrun) > 0.05f)
             {
-                move_Map.KeyType = (int)KeyType.KeyCode;
-                move_Map.Id = ETModel.Game.Scene.GetComponent<PlayerComponent>().MyPlayer.UnitId;
+                if (self.startTime == 0)
+                {
+                    move_Map.KeyType = (int)KeyType.KeyCode;
+                    move_Map.Id = ETModel.Game.Scene.GetComponent<PlayerComponent>().MyPlayer.UnitId;
 
-                move_Map.WS = self.wsForword;
-                move_Map.AD = self.adTrun;
+                    move_Map.V = self.wsForword;
+                    move_Map.H = self.adTrun;
 
-                ETModel.SessionComponent.Instance.Session.Send(move_Map);
+                    ETModel.SessionComponent.Instance.Session.Send(move_Map);
 
-                //Debug.Log(" StateMoveComponentUpdateSystem-36: " + (KeyType)move_Map.KeyType + " / " + move_Map.Id + " / " + self.wsForword + " / " + self.adTrun);
+                    self.isStart = true;
+
+                    Debug.Log(" StateMove-50: " + TimeHelper.ClientNow()+ " : " + (KeyType)move_Map.KeyType + " / " + move_Map.Id + " / " + move_Map.V + " / " + move_Map.H);
+                }
             }
             else
             {

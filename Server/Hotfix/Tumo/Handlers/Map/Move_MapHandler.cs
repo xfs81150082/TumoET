@@ -21,7 +21,6 @@ namespace ETHotfix
                     UnitKeyCodeMove(player, message);
                     break;
             }
-            UnitTrun(player, message);
         }
 
         void UnitClickMove(Unit unit, Move_Map message)
@@ -38,21 +37,22 @@ namespace ETHotfix
             {
                 AoiUnitComponent aoiUnit = unit.GetComponent<AoiUnitComponent>();
 
-                float offsetZ = message.WS / 60;
+                float offsetZ = message.V;
                 Vector3 unitPos = unit.Position;
                 unit.Position = new Vector3(unitPos.x, unitPos.y, unitPos.z + offsetZ);
 
                 Move_KeyCodeMap move_KeyCodeMap = new Move_KeyCodeMap();
                 move_KeyCodeMap.Id = unit.Id;
+                move_KeyCodeMap.KeyType = message.KeyType;
                 move_KeyCodeMap.X = message.X;
                 move_KeyCodeMap.Y = message.Y;
                 move_KeyCodeMap.Z = message.Z;
-                move_KeyCodeMap.WS = message.WS;
-                move_KeyCodeMap.AD = message.AD;
+                move_KeyCodeMap.V = message.V;
+                move_KeyCodeMap.H = message.H;
 
                 MessageHelper.Broadcast(move_KeyCodeMap, aoiUnit.playerIds.MovesSet.ToArray());
 
-                //Console.WriteLine(" Move_MapHandler: " + (KeyType)message.KeyType + " / " + unit.Id + " / " + message.Id + " / " + unit.Position.x + " / " + unit.Position.y + " / " + unit.Position.z);
+                Console.WriteLine(" Move_MapHandler: " + (KeyType)message.KeyType + " / " + unit.Id + " / " + message.Id + " / " + message.V + " / " + message.H );
             }
         }
 
