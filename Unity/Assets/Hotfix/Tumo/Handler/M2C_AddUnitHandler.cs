@@ -37,9 +37,8 @@ namespace ETHotfix
                         {
                             ///20190621//将参数unit 传给组件CameraComponent awake方法
                             ETModel.Game.EventSystem.Awake<Unit>(ETModel.Game.Scene.GetComponent<CameraComponent>(), unit0);
-                            unit0.AddComponent<CharacterControllerComponent>();
-                            unit0.GetComponent<CharacterControllerComponent>().isCanControl = true;
-
+                            unit0.AddComponent<TranslateComponent>();
+                            unit0.GetComponent<TranslateComponent>().isCanControl = true;
 
                             ///20190703
                             Game.Scene.AddComponent<RaycastHitComponent>();
@@ -66,7 +65,6 @@ namespace ETHotfix
                 case 2:
                     break;
             }
-
         }
 
 

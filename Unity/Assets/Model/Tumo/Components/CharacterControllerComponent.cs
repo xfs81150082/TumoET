@@ -14,8 +14,6 @@ namespace ETModel
         {
             self.KeyMove();
         }
-
-
     }
 
     [ObjectSystem]

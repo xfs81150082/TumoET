@@ -513,8 +513,10 @@
     <Compile Include="Assets\Model\Tumo\Components\MonsterUnitComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Components\PingComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Components\TmAnimatorComponent.cs" />
+    <Compile Include="Assets\Model\Tumo\Components\TranslateComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Helpers\AnimatorHelper.cs" />
     <Compile Include="Assets\Model\Tumo\Helpers\CharacterControllerHelper.cs" />
+    <Compile Include="Assets\Model\Tumo\Helpers\TranslateComponentHelper.cs" />
     <Compile Include="Assets\Model\Tumo\Infoes\AoiGridGizmos.cs" />
     <Compile Include="Assets\Model\Tumo\Infoes\Monster.cs" />
     <Compile Include="Assets\Model\Tumo\Infoes\MonsterFactory.cs" />
