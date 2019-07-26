@@ -125,11 +125,9 @@
     <Compile Include="Assets\Hotfix\Module\UI\UIComponent.cs" />
     <Compile Include="Assets\Hotfix\Module\UI\UIType.cs" />
     <Compile Include="Assets\Hotfix\Tumo\Component\RaycastHitComponent.cs" />
-    <Compile Include="Assets\Hotfix\Tumo\Component\StateMoveComponent.cs" />
     <Compile Include="Assets\Hotfix\Tumo\Handler\M2C_AddUnitHandler.cs" />
     <Compile Include="Assets\Hotfix\Tumo\Handler\M2C_MoveKeyCodeHandler.cs" />
     <Compile Include="Assets\Hotfix\Tumo\Handler\M2C_RemoveUnitHandler.cs" />
-    <Compile Include="Assets\Hotfix\Tumo\System\StateMoveComponentUpdateSystem.cs" />
     <None Include="Assets\Hotfix\Unity.Hotfix.asmdef" />
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

@@ -23,9 +23,11 @@ namespace ETModel
 	{
 		public UnitType UnitType { get; private set; }
 
-        public Vector3 Position { get; set; }
-		
-		public void Awake(UnitType unitType)
+        public Vector3 Position = Vector3.zero;
+
+        public Vector3 eulerAngles = Vector3.zero;
+
+        public void Awake(UnitType unitType)
 		{
 			this.UnitType = unitType;
 		}

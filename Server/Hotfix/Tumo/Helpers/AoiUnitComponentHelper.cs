@@ -1,6 +1,7 @@
 ﻿using ETModel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ETHotfix
@@ -173,6 +174,25 @@ namespace ETHotfix
 
                     break;
             }
+        }
+
+        /// <summary>
+        /// 向客户端 广播 状态同步坐标和朝向
+        /// </summary>
+        /// <param name="self"></param>
+        public static void MoveStateBroadcastToClient(this AoiUnitComponent self)
+        {
+            Move_KeyCodeMap move_KeyCodeMap = new Move_KeyCodeMap();
+
+            move_KeyCodeMap.KeyType = (int)KeyType.KeyCode;
+
+            move_KeyCodeMap.Id = self.GetParent<Unit>().Id;
+            move_KeyCodeMap.X = self.GetParent<Unit>().Position.x;
+            move_KeyCodeMap.Y = self.GetParent<Unit>().Position.y;
+            move_KeyCodeMap.Z = self.GetParent<Unit>().Position.z;
+            move_KeyCodeMap.AY = self.GetParent<Unit>().eulerAngles.y;
+
+            MessageHelper.Broadcast(move_KeyCodeMap, self.playerIds.MovesSet.ToArray());
         }
 
     }

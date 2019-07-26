@@ -42,6 +42,7 @@ namespace ETHotfix
 
                 ///20180703
                 //Game.Scene.AddComponent<RaycastHitComponent>();
+                
 
             }
 			catch (Exception e)

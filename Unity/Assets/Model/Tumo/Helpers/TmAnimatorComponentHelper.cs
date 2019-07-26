@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace ETModel
 {
-    public static class AnimatorHelper
+    public static class TmAnimatorComponentHelper
     {
         public static void AnimSet(this TmAnimatorComponent self, float v)
         {

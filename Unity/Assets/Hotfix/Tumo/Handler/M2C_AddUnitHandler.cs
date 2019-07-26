@@ -32,6 +32,8 @@ namespace ETHotfix
                         unit0.AddComponent<TurnComponent>();
                         unit0.AddComponent<UnitPathComponent>();
                         unit0.AddComponent<TmAnimatorComponent>();
+                        unit0.AddComponent<ClientMoveComponent>();
+                        unit0.AddComponent<StateMoveComponent>();
 
                         if (unitInfo.UnitId == PlayerComponent.Instance.MyPlayer.UnitId)
                         {

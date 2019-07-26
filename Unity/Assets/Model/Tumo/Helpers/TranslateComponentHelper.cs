@@ -11,11 +11,11 @@ namespace ETModel
         {
             self.Init();                               /// self 初始化
 
-            self.ContorlMove();                        /// 控制 向角色正前方移动和角色原地旋转
+            //self.ContorlMove();                        /// 控制 向角色正前方移动和角色原地旋转
 
-            self.ControlJump();                        /// 控制 跳跃
+            //self.ControlJump();                        /// 控制 跳跃
 
-            self.animator.AnimSet(self.v);             /// 控制 动画
+            //self.animator.AnimSet(self.v);             /// 控制 动画
 
             self.SetMapMove();                         /// 控制 状态同步
         }
@@ -95,7 +95,7 @@ namespace ETModel
             }
 
             if (self.IsJump)
-            {               
+            {
                 if (self.IsJumpUp)      //还在上升期
                 {
                     self.GetParent<Unit>().GameObject.transform.Translate(new Vector3(0, self.actuallySpeed * Time.deltaTime, 0));
@@ -111,13 +111,13 @@ namespace ETModel
 
                 if (self.IsJumpDown)       //朝下
                 {
-                    self.GetParent<Unit>().GameObject.transform.Translate(new Vector3(0, -self.actuallySpeed * Time.deltaTime, 0));  
+                    self.GetParent<Unit>().GameObject.transform.Translate(new Vector3(0, -self.actuallySpeed * Time.deltaTime, 0));
                     self.actuallySpeed += self.gravity;            //加速下落 Position的Y 轴一直在减少
 
                     if (self.GetParent<Unit>().GameObject.transform.position.y <= self.dy)
                     {
                         Vector3 currentPosition = self.GetParent<Unit>().GameObject.transform.position;
-                        self.GetParent<Unit>().GameObject.transform.position = new Vector3(currentPosition.x, 0 , currentPosition.z);
+                        self.GetParent<Unit>().GameObject.transform.position = new Vector3(currentPosition.x, 0, currentPosition.z);
                         self.IsJumpDown = false;
                         self.IsJump = false;
                         self.actuallySpeed = self.jumpSpeed;
@@ -143,7 +143,7 @@ namespace ETModel
             return Physics.Raycast(go.GetComponent<Transform>().position, -Vector3.up, 0.2f);
         }
 
-        static void SetMapMove(this TranslateComponent self)
+        public static void SetMapMove(this TranslateComponent self)
         {
             if (self.isStart)
             {
@@ -155,8 +155,27 @@ namespace ETModel
                 self.isStart = false;
             }
 
-            //self.v = self.v * self.moveSpeed;
-            //self.h = self.h * self.roteSpeed;
+            self.h = Input.GetAxis("Horizontal");    //获取水平方线   //默认 Horizontal a键 为 -1  d键为 1 
+            self.v = Input.GetAxis("Vertical");      //获取水平方线    //默认 Vertical s键 为 -1  w键为 1   
+
+            //Debug.Log(" TranslateComponentHelper-161: " + TimeHelper.ClientNow() + " : " + self.v + " / " + self.h);
+
+            if (self.isCanControl)
+            {
+                #region
+                //if (Mathf.Abs(EngineerJoyStick.hv2.x) > 10.0f || Mathf.Abs(EngineerJoyStick.hv2.y) > 10.0f)
+                //{
+                //    self.h = EngineerJoyStick.hv2.x / EngineerJoyStick.mRadius;
+                //    self.v = EngineerJoyStick.hv2.y / EngineerJoyStick.mRadius;
+                //}
+                //else
+                //{
+                //    self.h = Input.GetAxis("Horizontal");    //获取水平方线   //默认 Horizontal a键 为 -1  d键为 1 
+                //    self.v = Input.GetAxis("Vertical");      //获取水平方线    //默认 Vertical s键 为 -1  w键为 1   
+                //    //Debug.Log(" move.v: " + move.v );
+                //}
+                #endregion
+            }
 
             if (Math.Abs(self.v) > 0.05f || Math.Abs(self.h) > 0.05f)
             {
@@ -171,12 +190,27 @@ namespace ETModel
                     ETModel.SessionComponent.Instance.Session.Send(self.move_Map);
 
                     self.isStart = true;
+                    self.isZero = false;
 
-                    //Debug.Log(" CharacterControllerHelper-91: " + TimeHelper.ClientNow() + " : " + (KeyType)self.move_Map.KeyType + " / " + self.move_Map.Id + " / " + self.move_Map.V + " / " + self.move_Map.H);
+                    Debug.Log(" TranslateComponentHelper-199: " + TimeHelper.ClientNow() + " : " + (KeyType)self.move_Map.KeyType + " / " + self.move_Map.Id + " / " + self.move_Map.V + " / " + self.move_Map.H);
                 }
             }
             else
             {
+                if (!self.isZero)
+                {
+                    self.move_Map.KeyType = (int)KeyType.KeyCode;
+                    self.move_Map.Id = ETModel.Game.Scene.GetComponent<PlayerComponent>().MyPlayer.UnitId;
+
+                    self.move_Map.V = 0;
+                    self.move_Map.H = 0;
+
+                    ETModel.SessionComponent.Instance.Session.Send(self.move_Map);
+
+                    self.isZero = true;
+                }
+
+                ///点击移动
                 if (Input.GetMouseButtonDown(1))
                 {
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

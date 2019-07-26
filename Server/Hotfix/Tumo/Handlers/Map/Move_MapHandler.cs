@@ -18,7 +18,7 @@ namespace ETHotfix
                     UnitClickMove(player, message);
                     break;
                 case 1:
-                    UnitKeyCodeMove(player, message);
+                    ServerUnitKeyCodeMove(player, message);
                     break;
             }
         }
@@ -26,44 +26,26 @@ namespace ETHotfix
         void UnitClickMove(Unit unit, Move_Map message)
         {
             Console.WriteLine(" Move_MapHandler: " + (KeyType)message.KeyType + " / " + unit.Id + " / " + message.Id + " / " + message.X + " / " + message.Y + " / " + message.Z);
+            //unit.Position = new Vector3(message.X, message.Y, message.Z);
 
             Vector3 target = new Vector3(message.X, message.Y, message.Z);
             unit.GetComponent<UnitPathComponent>().MoveTo(target).Coroutine();
         }
 
-        void UnitKeyCodeMove(Unit unit, Move_Map message)
+        void ServerUnitKeyCodeMove(Unit unit, Move_Map message)
         {
-            if (unit.GetComponent<AoiUnitComponent>() != null)
+            unit.GetComponent<ServerMoveComponent>().v = message.V;
+            unit.GetComponent<ServerMoveComponent>().h = message.H;
+
+
+            if (Math.Abs(message.V) > 0.05f || Math.Abs(message.H) > 0.05f)
             {
-                AoiUnitComponent aoiUnit = unit.GetComponent<AoiUnitComponent>();
+                unit.GetComponent<AoiUnitComponent>().MoveStateBroadcastToClient();
 
-                float offsetZ = message.V;
-                Vector3 unitPos = unit.Position;
-                unit.Position = new Vector3(unitPos.x, unitPos.y, unitPos.z + offsetZ);
-
-                Move_KeyCodeMap move_KeyCodeMap = new Move_KeyCodeMap();
-                move_KeyCodeMap.Id = unit.Id;
-                move_KeyCodeMap.KeyType = message.KeyType;
-                move_KeyCodeMap.X = message.X;
-                move_KeyCodeMap.Y = message.Y;
-                move_KeyCodeMap.Z = message.Z;
-                move_KeyCodeMap.V = message.V;
-                move_KeyCodeMap.H = message.H;
-
-                MessageHelper.Broadcast(move_KeyCodeMap, aoiUnit.playerIds.MovesSet.ToArray());
-
-                Console.WriteLine(" Move_MapHandler: " + (KeyType)message.KeyType + " / " + unit.Id + " / " + message.Id + " / " + message.V + " / " + message.H );
+                Console.WriteLine(" Move_MapHandler-45-vh: " + KeyType.KeyCode + " / " + unit.Id + " : ( " + unit.Position.x + ", " + unit.Position.y + ", " + unit.Position.z+") ");
             }
-        }
-
-        void UnitTrun(Unit unit, Move_Map message)
-        {
-            //Console.WriteLine(" Move_MapHandler: " + (KeyType)message.KeyType + " / " + unit.Id + " / " + message.Id + " / " + message.WS + " / " + message.AD);
-
         }
 
 
     }
-
-
 }

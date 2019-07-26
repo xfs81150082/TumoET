@@ -64,7 +64,7 @@ namespace ETHotfix
                 unit.AddComponent<NumericComponent>();
                 unit.AddComponent<AttackComponent>();
                 unit.AddComponent<RayUnitComponent>();
-                unit.AddComponent<StateMoveComponent>();
+                unit.AddComponent<ServerMoveComponent>();
 
                 SetNumeric(unit ,player);
 

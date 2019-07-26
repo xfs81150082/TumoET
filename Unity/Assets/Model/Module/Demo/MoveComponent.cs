@@ -16,42 +16,77 @@ namespace ETModel
 	public class MoveComponent : Component
 	{
 		public Vector3 Target;
-
-		// 开启移动协程的时间
-		public long StartTime;
-
 		// 开启移动协程的Unit的位置
 		public Vector3 StartPos;
+		// 开启移动协程的时间
+		public long StartTime;
+        public long needTime;
+        public ETTaskCompletionSource moveTcs;
 
-		public long needTime;
-		
-		public ETTaskCompletionSource moveTcs;
 
+        public Vector3 To;
+        public Vector3 From;
+        public float t = float.MaxValue;
+        public float moveTime;
 
 		public void Update()
 		{
-			if (this.moveTcs == null)
-			{
-				return;
-			}
-			
-			Unit unit = this.GetParent<Unit>();
-			long timeNow = TimeHelper.Now();
+            MoveToAsync();
 
-			if (timeNow - this.StartTime >= this.needTime)
-			{
-				unit.Position = this.Target;
-				ETTaskCompletionSource tcs = this.moveTcs;
-				this.moveTcs = null;
-				tcs.SetResult();
-				return;
-			}
+            MoveTo();
+        }
+        #region MoveTo
 
-			float amount = (timeNow - this.StartTime) * 1f / this.needTime;
-			unit.Position = Vector3.Lerp(this.StartPos, this.Target, amount);
-		}
+        private void MoveTo()
+        {
+            if (this.t > this.moveTime)
+            {
+                return;
+            }
 
-		public ETTask MoveToAsync(Vector3 target, float speedValue, CancellationToken cancellationToken)
+            this.t += Time.deltaTime;
+
+            Vector3 vec = Vector3.Slerp(this.From, this.To, this.t / this.moveTime);
+            this.GetParent<Unit>().Position = vec;
+        }
+
+        /// <summary>
+        /// 改变Unit的位置
+        /// </summary>
+        public void MoveTo(Vector3 target, float moveTime = 0.1f)
+        {
+            this.To = this.GetParent<Unit>().Position;
+            this.From = target;
+            this.t = 0;
+            this.moveTime = moveTime;
+        }  
+        #endregion
+
+        #region MoveToAsync
+        void MoveToAsync()
+        {
+            if (this.moveTcs == null)
+            {
+                return;
+            }
+
+            Unit unit = this.GetParent<Unit>();
+            long timeNow = TimeHelper.Now();
+
+            if (timeNow - this.StartTime >= this.needTime)
+            {
+                unit.Position = this.Target;
+                ETTaskCompletionSource tcs = this.moveTcs;
+                this.moveTcs = null;
+                tcs.SetResult();
+                return;
+            }
+
+            float amount = (timeNow - this.StartTime) * 1f / this.needTime;
+            unit.Position = Vector3.Lerp(this.StartPos, this.Target, amount);
+        }
+
+        public ETTask MoveToAsync(Vector3 target, float speedValue, CancellationToken cancellationToken)
 		{
 			Unit unit = this.GetParent<Unit>();
 			
@@ -81,5 +116,7 @@ namespace ETModel
 			});
 			return this.moveTcs.Task;
 		}
-	}
+        #endregion
+
+    }
 }

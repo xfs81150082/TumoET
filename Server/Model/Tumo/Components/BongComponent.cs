@@ -55,8 +55,6 @@ namespace ETModel
 
         public void UndateSession(long id)
         {
-            Console.WriteLine(" id: " + id + " / " + TimeHelper.ClientNowSeconds());
-            Console.WriteLine(" id: " + id + " vaule: " + _sessionTimes[id] + " / " + TimeHelper.ClientNowSeconds());
             if (_sessionTimes.ContainsKey(id)) _sessionTimes[id] = TimeHelper.ClientNowSeconds();
         }
     }
