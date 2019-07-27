@@ -155,27 +155,8 @@ namespace ETModel
                 self.isStart = false;
             }
 
+            self.v = Input.GetAxis("Vertical");      //获取水平方线    //默认 Vertical s键 为 -1  w键为 1          
             self.h = Input.GetAxis("Horizontal");    //获取水平方线   //默认 Horizontal a键 为 -1  d键为 1 
-            self.v = Input.GetAxis("Vertical");      //获取水平方线    //默认 Vertical s键 为 -1  w键为 1   
-
-            //Debug.Log(" TranslateComponentHelper-161: " + TimeHelper.ClientNow() + " : " + self.v + " / " + self.h);
-
-            if (self.isCanControl)
-            {
-                #region
-                //if (Mathf.Abs(EngineerJoyStick.hv2.x) > 10.0f || Mathf.Abs(EngineerJoyStick.hv2.y) > 10.0f)
-                //{
-                //    self.h = EngineerJoyStick.hv2.x / EngineerJoyStick.mRadius;
-                //    self.v = EngineerJoyStick.hv2.y / EngineerJoyStick.mRadius;
-                //}
-                //else
-                //{
-                //    self.h = Input.GetAxis("Horizontal");    //获取水平方线   //默认 Horizontal a键 为 -1  d键为 1 
-                //    self.v = Input.GetAxis("Vertical");      //获取水平方线    //默认 Vertical s键 为 -1  w键为 1   
-                //    //Debug.Log(" move.v: " + move.v );
-                //}
-                #endregion
-            }
 
             if (Math.Abs(self.v) > 0.05f || Math.Abs(self.h) > 0.05f)
             {
@@ -183,31 +164,26 @@ namespace ETModel
                 {
                     self.move_Map.KeyType = (int)KeyType.KeyCode;
                     self.move_Map.Id = ETModel.Game.Scene.GetComponent<PlayerComponent>().MyPlayer.UnitId;
-
                     self.move_Map.V = self.v;
                     self.move_Map.H = self.h;
+
+                    //self.move_Map.X = self.GetParent<Unit>().Position.x;
+                    //self.move_Map.Y = self.GetParent<Unit>().Position.y;
+                    //self.move_Map.Z = self.GetParent<Unit>().Position.z;
+                    //self.move_Map.AY = self.GetParent<Unit>().GameObject.transform.eulerAngles.y;
 
                     ETModel.SessionComponent.Instance.Session.Send(self.move_Map);
 
                     self.isStart = true;
-                    self.isZero = false;
 
-                    Debug.Log(" TranslateComponentHelper-199: " + TimeHelper.ClientNow() + " : " + (KeyType)self.move_Map.KeyType + " / " + self.move_Map.Id + " / " + self.move_Map.V + " / " + self.move_Map.H);
+                    Debug.Log(" TranslateComponentHelper-178: " + (KeyType)self.move_Map.KeyType + " / "  + self.move_Map.Id + " :( " + self.move_Map.V + " / " + self.move_Map.H + ")");
                 }
             }
             else
             {
-                if (!self.isZero)
+                if (!self.isStart)
                 {
-                    self.move_Map.KeyType = (int)KeyType.KeyCode;
-                    self.move_Map.Id = ETModel.Game.Scene.GetComponent<PlayerComponent>().MyPlayer.UnitId;
-
-                    self.move_Map.V = 0;
-                    self.move_Map.H = 0;
-
-                    ETModel.SessionComponent.Instance.Session.Send(self.move_Map);
-
-                    self.isZero = true;
+                    self.isStart = true;
                 }
 
                 ///点击移动
@@ -224,7 +200,7 @@ namespace ETModel
                         self.move_Map.Z = self.ClickPoint.z;
                         ETModel.SessionComponent.Instance.Session.Send(self.move_Map);
 
-                        Debug.Log(" CharacterControllerHelper-116: " + (KeyType)self.move_Map.KeyType + " / " + self.move_Map.Id + " / " + self.move_Map.X + " / " + self.move_Map.Y + " / " + self.move_Map.Z);
+                        Debug.Log(" TranslateComponentHelper-197: " + (KeyType)self.move_Map.KeyType + " / " + self.move_Map.Id + " :( " + self.move_Map.X + ", " + self.move_Map.Y + ", " + self.move_Map.Z + ")");
                     }
                 }
             }

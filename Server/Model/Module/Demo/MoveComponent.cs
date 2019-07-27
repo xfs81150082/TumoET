@@ -17,23 +17,72 @@ namespace ETModel
         public long needTime;
 
         // 当前的移动速度
-        public float Speed = 5;
+        public float Speed = 5.0f;
+
+        /// <summary>
+        /// 异步 移动到 目标点
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async ETTask MoveToAsync(Vector3 target, CancellationToken cancellationToken)
+        {
+            Console.WriteLine(" MoveComponent-32-tx/tz: " + this.GetParent<Unit>().UnitType + " : " + " ( " + target.x + " , " + 0 + " , " + target.z + ")");
+            if (this.GetParent<Unit>().UnitType == UnitType.Player)
+            {
+                Console.WriteLine(" MoveComponent-32-tx/tz: " + this.GetParent<Unit>().UnitType + " : "+" ( " + target.x + " , " + 0 + " , " + target.z + ")");
+            }
+
+            // 新目标点离旧目标点太近，不设置新的
+            if ((target - this.Target).sqrMagnitude < 0.01f)
+            {
+                return;
+            }
+
+            // 距离当前位置太近
+            if ((this.GetParent<Unit>().Position - target).sqrMagnitude < 0.01f)
+            {
+                return;
+            }
+            
+            this.Target = target;
+
+            if (this.GetParent<Unit>().UnitType == UnitType.Player)
+            {
+                Console.WriteLine(" MoveComponent-51-tx/tz: " + " ( " + target.x + " , " + 0 + " , " + target.z + ")");
+            }
+
+            // 开启协程移动
+            await StartMove(cancellationToken);
+        }
         
         // 开启协程移动,每100毫秒移动一次，并且协程取消的时候会计算玩家真实移动
-        // 比方说玩家移动了2500毫秒,玩家有新的目标,这时旧的移动协程结束,将计算250毫秒移动的位置，而不是300毫秒移动的位置
+        // 比方说玩家移动了250毫秒,玩家有新的目标,这时旧的移动协程结束,将计算250毫秒移动的位置，而不是300毫秒移动的位置
         public async ETTask StartMove(CancellationToken cancellationToken)
         {
             Unit unit = this.GetParent<Unit>();
             this.StartPos = unit.Position;
             this.StartTime = TimeHelper.Now();
             float distance = (this.Target - this.StartPos).magnitude;
+
+            if (unit.UnitType == UnitType.Player)
+            {
+                Console.WriteLine(" MoveComponent-59-distance: " + distance);
+            }
+
             if (Math.Abs(distance) < 0.1f)
             {
                 return;
             }
+
             
             this.needTime = (long)(distance / this.Speed * 1000);
-            
+
+            if (unit.UnitType == UnitType.Player)
+            {
+                Console.WriteLine(" MoveComponent-69-needTime: " + this.needTime);
+            }
+
             TimerComponent timerComponent = Game.Scene.GetComponent<TimerComponent>();
             
             // 协程如果取消，将算出玩家的真实位置，赋值给玩家
@@ -65,27 +114,15 @@ namespace ETModel
 
                 float amount = (timeNow - this.StartTime) * 1f / this.needTime;
                 unit.Position = Vector3.Lerp(this.StartPos, this.Target, amount);
+
+
+                if (unit.UnitType == UnitType.Player)
+                {
+                    Console.WriteLine(" MoveComponent-103-posx/posz: " + unit.Id + " / ( " + unit.Position.x + " , " + 0 + " , " + unit.Position.z + ")");
+                }
             }
         }
         
-        public async ETTask MoveToAsync(Vector3 target, CancellationToken cancellationToken)
-        {
-            // 新目标点离旧目标点太近，不设置新的
-            if ((target - this.Target).sqrMagnitude < 0.01f)
-            {
-                return;
-            }
 
-            // 距离当前位置太近
-            if ((this.GetParent<Unit>().Position - target).sqrMagnitude < 0.01f)
-            {
-                return;
-            }
-            
-            this.Target = target;
-            
-            // 开启协程移动
-            await StartMove(cancellationToken);
-        }
     }
 }

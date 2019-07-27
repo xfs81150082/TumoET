@@ -7,6 +7,8 @@ namespace ETModel
 {
     public class UnitPathComponent: Component
     {
+        public float moveSpeed = 5.0f;
+
         public Vector3 Target;
 
         private ABPathWrap abPath;

@@ -34,16 +34,17 @@ namespace ETHotfix
 
         void ServerUnitKeyCodeMove(Unit unit, Move_Map message)
         {
-            unit.GetComponent<ServerMoveComponent>().v = message.V;
-            unit.GetComponent<ServerMoveComponent>().h = message.H;
+            unit.GetComponent<ServerMoveComponent>().Trun(message);
+            unit.GetComponent<ServerMoveComponent>().Move(message);
 
+            //unit.Position = new Vector3(message.X, 0, message.Z);
+            //unit.eulerAngles = new Vector3(0, message.AY, 0);
+            //unit.GetComponent<AoiUnitComponent>().MoveStateBroadcastToClient(message);
 
-            if (Math.Abs(message.V) > 0.05f || Math.Abs(message.H) > 0.05f)
-            {
-                unit.GetComponent<AoiUnitComponent>().MoveStateBroadcastToClient();
-
-                Console.WriteLine(" Move_MapHandler-45-vh: " + KeyType.KeyCode + " / " + unit.Id + " : ( " + unit.Position.x + ", " + unit.Position.y + ", " + unit.Position.z+") ");
-            }
+            Console.WriteLine(" Move_MapHandler-42-xyz: " + KeyType.KeyCode + " / " + unit.Id + " : ( " + message.V + " / " + message.H + ") ");
+     
+            //Console.WriteLine(" Move_MapHandler-42-xyz: " + KeyType.KeyCode + " / " + unit.Id + " : ( " + unit.Position.x + ", " + unit.Position.y + ", " + unit.Position.z + ") ");
+            //Console.WriteLine(" Move_MapHandler-43-ay: " + KeyType.KeyCode + " / " + unit.Id + " : ( " + unit.eulerAngles.x + ", " + unit.eulerAngles.y + ", " + unit.eulerAngles.z + ") ");
         }
 
 

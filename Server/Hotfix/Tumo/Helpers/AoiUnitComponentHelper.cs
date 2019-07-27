@@ -180,19 +180,20 @@ namespace ETHotfix
         /// 向客户端 广播 状态同步坐标和朝向
         /// </summary>
         /// <param name="self"></param>
-        public static void MoveStateBroadcastToClient(this AoiUnitComponent self)
+        public static void MoveStateBroadcastToClient(this AoiUnitComponent self , Move_Map move_Map)
         {
             Move_KeyCodeMap move_KeyCodeMap = new Move_KeyCodeMap();
+            HashSet<long> mapPlayers = new HashSet<long>(self.playerIds.MovesSet);
+            mapPlayers.Remove(move_Map.Id);
 
-            move_KeyCodeMap.KeyType = (int)KeyType.KeyCode;
+            move_KeyCodeMap.KeyType = move_Map.KeyType;
+            move_KeyCodeMap.Id = move_Map.Id;
+            move_KeyCodeMap.X = move_Map.X;
+            move_KeyCodeMap.Y = move_Map.Y;
+            move_KeyCodeMap.Z = move_Map.Z;
+            move_KeyCodeMap.AY = move_Map.AY;
 
-            move_KeyCodeMap.Id = self.GetParent<Unit>().Id;
-            move_KeyCodeMap.X = self.GetParent<Unit>().Position.x;
-            move_KeyCodeMap.Y = self.GetParent<Unit>().Position.y;
-            move_KeyCodeMap.Z = self.GetParent<Unit>().Position.z;
-            move_KeyCodeMap.AY = self.GetParent<Unit>().eulerAngles.y;
-
-            MessageHelper.Broadcast(move_KeyCodeMap, self.playerIds.MovesSet.ToArray());
+            MessageHelper.Broadcast(move_KeyCodeMap, mapPlayers.ToArray());
         }
 
     }
