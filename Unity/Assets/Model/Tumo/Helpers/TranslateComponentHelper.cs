@@ -162,21 +162,21 @@ namespace ETModel
             {
                 if (self.startTime == 0)
                 {
-                    self.move_Map.KeyType = (int)KeyType.KeyCode;
-                    self.move_Map.Id = ETModel.Game.Scene.GetComponent<PlayerComponent>().MyPlayer.UnitId;
-                    self.move_Map.V = self.v;
-                    self.move_Map.H = self.h;
+                    self.c2M_PathKeyboardResult.KeyType = (int)KeyType.KeyCode;
+                    self.c2M_PathKeyboardResult.Id = ETModel.Game.Scene.GetComponent<PlayerComponent>().MyPlayer.UnitId;
+                    self.c2M_PathKeyboardResult.V = self.v;
+                    self.c2M_PathKeyboardResult.H = self.h;
 
                     //self.move_Map.X = self.GetParent<Unit>().Position.x;
                     //self.move_Map.Y = self.GetParent<Unit>().Position.y;
                     //self.move_Map.Z = self.GetParent<Unit>().Position.z;
                     //self.move_Map.AY = self.GetParent<Unit>().GameObject.transform.eulerAngles.y;
 
-                    ETModel.SessionComponent.Instance.Session.Send(self.move_Map);
+                    ETModel.SessionComponent.Instance.Session.Send(self.c2M_PathKeyboardResult);
 
                     self.isStart = true;
 
-                    Debug.Log(" TranslateComponentHelper-178: " + (KeyType)self.move_Map.KeyType + " / "  + self.move_Map.Id + " :( " + self.move_Map.V + " / " + self.move_Map.H + ")");
+                    Debug.Log(" TranslateComponentHelper-178: " + (KeyType)self.c2M_PathKeyboardResult.KeyType + " / "  + self.c2M_PathKeyboardResult.Id + " :( " + self.c2M_PathKeyboardResult.V + " / " + self.c2M_PathKeyboardResult.H + ")");
                 }
             }
             else
@@ -194,13 +194,13 @@ namespace ETModel
                     if (Physics.Raycast(ray, out hit, 1000, self.mapMask))
                     {
                         self.ClickPoint = hit.point;
-                        self.move_Map.KeyType = (int)KeyType.Click;
-                        self.move_Map.X = self.ClickPoint.x;
-                        self.move_Map.Y = self.ClickPoint.y;
-                        self.move_Map.Z = self.ClickPoint.z;
-                        ETModel.SessionComponent.Instance.Session.Send(self.move_Map);
+                        self.c2M_PathKeyboardResult.KeyType = (int)KeyType.Click;
+                        self.c2M_PathKeyboardResult.X = self.ClickPoint.x;
+                        self.c2M_PathKeyboardResult.Y = self.ClickPoint.y;
+                        self.c2M_PathKeyboardResult.Z = self.ClickPoint.z;
+                        ETModel.SessionComponent.Instance.Session.Send(self.c2M_PathKeyboardResult);
 
-                        Debug.Log(" TranslateComponentHelper-197: " + (KeyType)self.move_Map.KeyType + " / " + self.move_Map.Id + " :( " + self.move_Map.X + ", " + self.move_Map.Y + ", " + self.move_Map.Z + ")");
+                        Debug.Log(" TranslateComponentHelper-197: " + (KeyType)self.c2M_PathKeyboardResult.KeyType + " / " + self.c2M_PathKeyboardResult.Id + " :( " + self.c2M_PathKeyboardResult.X + ", " + self.c2M_PathKeyboardResult.Y + ", " + self.c2M_PathKeyboardResult.Z + ")");
                     }
                 }
             }

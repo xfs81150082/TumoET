@@ -35,6 +35,10 @@ namespace ETModel
     [Message(OuterOpcode.Move_KeyCodeMap)]
     public partial class Move_KeyCodeMap : IActorMessage { }
 
+    [Message(OuterOpcode.C2M_KeyboardPathResult)]
+    public partial class C2M_KeyboardPathResult : IActorLocationMessage { }
+    [Message(OuterOpcode.M2C_ServerPathResult)]
+    public partial class M2C_ServerPathResult : IActorMessage { }
 
 
     #endregion
@@ -113,8 +117,11 @@ namespace ETModel
         public const ushort Attack_Map = 1435;
         public const ushort Move_Map = 1436;
         public const ushort Move_KeyCodeMap = 1437;
-             
-        
+
+        public const ushort C2M_KeyboardPathResult = 1439;
+        public const ushort M2C_ServerPathResult = 1441;
+
+
 
         #endregion
 

@@ -3,15 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using UnityEngine;
 
 namespace ETHotfix
 {
-    public static class ServerMoveComponentHelper
+    public static class KeyboardComponentHelper
     {
-        public static void Move(this ServerMoveComponent self, Move_Map move_Map)
+        public static void KeyboardVMove(this KeyboardPathComponent self, float V)
         {
-            if (Math.Abs(move_Map.V) > 0.05f)
+            if (Math.Abs(V) > 0.05f)
             {
                 if (!self.isStart1)
                 {
@@ -23,8 +24,8 @@ namespace ETHotfix
 
                 if (self.offsetTime1 > self.resTime)
                 {
-                    float dx = (float)Math.Cos(self.GetParent<Unit>().eulerAngles.y) * move_Map.V * self.moveSpeed /** self.resTime / 1000*/;
-                    float dz = (float)Math.Sin(self.GetParent<Unit>().eulerAngles.y) * move_Map.V * self.moveSpeed /** self.resTime / 1000*/;
+                    float dx = (float)Math.Cos(self.GetParent<Unit>().eulerAngles.y) * V * self.moveSpeed * self.resTime / 1000;
+                    float dz = (float)Math.Sin(self.GetParent<Unit>().eulerAngles.y) * V * self.moveSpeed * self.resTime / 1000;
 
                     float px = self.GetParent<Unit>().Position.x + dx;
                     float pz = self.GetParent<Unit>().Position.z + dz;
@@ -49,16 +50,11 @@ namespace ETHotfix
 
                     Vector3 target = new Vector3(px, 0, pz);
 
-                    Console.WriteLine(" ServerMoveComponentHelper-51-px/pz: " + self.GetParent<Unit>().Id + " : ( " + dx + " , " + dz + ")" + " / ( " + px + " , " + 0 + " , " + pz + ")");
-                    Console.WriteLine(" ServerMoveComponentHelper-52-posx/posz: " + self.GetParent<Unit>().Id + " : ( " + dx + " , " + dz + ")" + " / ( " + self.GetParent<Unit>().Position.x + " , " + 0 + " , " + self.GetParent<Unit>().Position.z + ")");
-
-                    self.GetParent<Unit>().GetComponent<UnitPathComponent>().MoveTo(target).Coroutine();
-
-                    //self.MoveToAsync(target).Coroutine();
+                    self.MoveTo(target).Coroutine();
 
                     self.isStart1 = false;
 
-                    Console.WriteLine(" ServerMoveComponentHelper-59-posx/posz: " + self.GetParent<Unit>().Id + " : ( " + dx + " , " + dz + ")" + " / ( " + self.GetParent<Unit>().Position.x + " , " + 0 + " , " + self.GetParent<Unit>().Position.z + ")");
+                    Console.WriteLine(" KeyboardComponent-56: " + self.GetParent<Unit>().UnitType + " : ( " + dx + " , " + dz + ")" + " / ( " + self.GetParent<Unit>().Position.x + " , " + 0 + " , " + self.GetParent<Unit>().Position.z + ")");
                 }
 
             }
@@ -68,14 +64,14 @@ namespace ETHotfix
                 {
                     self.isStart1 = false;
 
-                    Console.WriteLine(" ServerMoveComponent-92: " + self.isStart1 + " / " + self.startTime1);
+                    Console.WriteLine(" KeyboardComponent-92: " + self.isStart1 + " / " + self.startTime1);
                 }
             }
         }
 
-        public static void Trun(this ServerMoveComponent self, Move_Map move_Map)
+        public static void KeyboardHTrun(this KeyboardPathComponent self, float H)
         {
-            if (Math.Abs(move_Map.H) > 0.05f)
+            if (Math.Abs(H) > 0.05f)
             {
                 if (!self.isStart2)
                 {
@@ -87,7 +83,7 @@ namespace ETHotfix
 
                 if (self.offsetTime2 > self.resTime)
                 {
-                    float ay = self.GetParent<Unit>().eulerAngles.y + move_Map.H * self.roteSpeed;
+                    float ay = self.GetParent<Unit>().eulerAngles.y + H * self.roteSpeed * self.resTime / 1000;
 
                     if (ay > 360)
                     {
@@ -119,27 +115,38 @@ namespace ETHotfix
         }
 
         #region
+        public static async ETVoid MoveTo(this KeyboardPathComponent self, Vector3 target)
+        {
+            if ((self.Target - target).magnitude < 0.1f)
+            {
+                return;
+            }
+
+            self.Target = target;
+
+            self.CancellationTokenSource?.Cancel();
+            self.CancellationTokenSource = new CancellationTokenSource();
+            await self.MoveToAsync(self.Target);
+            self.CancellationTokenSource.Dispose();
+            self.CancellationTokenSource = null;
+        }
+
         /// <summary>
         /// 异步 移动到 目标点(一个点)
         /// </summary>
         /// <param name="target"></param>
         /// <returns></returns>
-        public static async ETTask MoveToAsync(this ServerMoveComponent self, Vector3 target)
+        public static async ETTask MoveToAsync(this KeyboardPathComponent self, Vector3 target)
         {
             /// 发送 目标点坐标 给客户端
-            //self.BroadcastPath(target);
-
-            Console.WriteLine(" ServerMoveComponentHelper-130-posx/posz: " + self.GetParent<Unit>().Id + " : ( "  + self.GetParent<Unit>().Position.x + " , " + 0 + " , " + self.GetParent<Unit>().Position.z + ")");
+            self.BroadcastPath(target);
 
             ///等待 服务器里 Unit 移动到 目标点坐标
-            //await self.Entity.GetComponent<MoveComponent>().MoveToAsync(target, self.CancellationTokenSource.Token);
-            await self.GetParent<Unit>().GetComponent<MoveComponent>().MoveToAsync(target, self.CancellationTokenSource.Token);
-
-            Console.WriteLine(" ServerMoveComponentHelper-135-posx/posz: " + self.GetParent<Unit>().Id + " : ( " + self.GetParent<Unit>().Position.x + " , " + 0 + " , " + self.GetParent<Unit>().Position.z + ")");
+            await self.Entity.GetComponent<MoveComponent>().MoveToAsync(target, self.CancellationTokenSource.Token);
         }
 
         ///广播 一个坐标点
-        public static void BroadcastPath(this ServerMoveComponent self, Vector3 target)
+        public static void BroadcastPath(this KeyboardPathComponent self, Vector3 target)
         {
             Unit unit = self.GetParent<Unit>();
             Vector3 unitPos = unit.Position;

@@ -48,6 +48,7 @@ namespace ETModel
         public Vector3 ClickPoint;
         public int mapMask;
         public readonly Move_Map move_Map = new Move_Map();
+        public readonly C2M_KeyboardPathResult c2M_PathKeyboardResult = new C2M_KeyboardPathResult();
 
         public void Awake()
         {
