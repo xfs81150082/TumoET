@@ -513,6 +513,7 @@
     <Compile Include="Assets\Model\Tumo\Components\MonsterComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Components\MonsterUnitComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Components\PingComponent.cs" />
+    <Compile Include="Assets\Model\Tumo\Components\ServerUnitPathComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Components\StateMoveComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Components\TmAnimatorComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Components\TranslateComponent.cs" />

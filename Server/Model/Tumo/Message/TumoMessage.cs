@@ -2775,8 +2775,18 @@ namespace ETModel
             }
         }
 
+        private float w_;
+        public float W
+        {
+            get { return w_; }
+            set
+            {
+                w_ = value;
+            }
+        }
+
         private static readonly pb::FieldCodec<float> _repeated_xs_codec
-            = pb::FieldCodec.ForFloat(42);
+            = pb::FieldCodec.ForFloat(142);
         private pbc::RepeatedField<float> xs_ = new pbc::RepeatedField<float>();
         public pbc::RepeatedField<float> Xs
         {
@@ -2785,7 +2795,7 @@ namespace ETModel
         }
 
         private static readonly pb::FieldCodec<float> _repeated_ys_codec
-            = pb::FieldCodec.ForFloat(50);
+            = pb::FieldCodec.ForFloat(150);
         private pbc::RepeatedField<float> ys_ = new pbc::RepeatedField<float>();
         public pbc::RepeatedField<float> Ys
         {
@@ -2794,7 +2804,7 @@ namespace ETModel
         }
 
         private static readonly pb::FieldCodec<float> _repeated_zs_codec
-            = pb::FieldCodec.ForFloat(58);
+            = pb::FieldCodec.ForFloat(158);
         private pbc::RepeatedField<float> zs_ = new pbc::RepeatedField<float>();
         public pbc::RepeatedField<float> Zs
         {
@@ -2823,6 +2833,11 @@ namespace ETModel
             {
                 output.WriteRawTag(37);
                 output.WriteFloat(Z);
+            }
+            if (W != 0F)
+            {
+                output.WriteRawTag(45);
+                output.WriteFloat(W);
             }
             xs_.WriteTo(output, _repeated_xs_codec);
             ys_.WriteTo(output, _repeated_ys_codec);
@@ -2857,6 +2872,10 @@ namespace ETModel
             {
                 size += 1 + 4;
             }
+            if (W != 0F)
+            {
+                size += 1 + 4;
+            }
             size += xs_.CalculateSize(_repeated_xs_codec);
             size += ys_.CalculateSize(_repeated_ys_codec);
             size += zs_.CalculateSize(_repeated_zs_codec);
@@ -2869,6 +2888,7 @@ namespace ETModel
             x_ = 0f;
             y_ = 0f;
             z_ = 0f;
+            w_ = 0f;
             xs_.Clear();
             ys_.Clear();
             zs_.Clear();
@@ -2901,20 +2921,25 @@ namespace ETModel
                             Z = input.ReadFloat();
                             break;
                         }
-                    case 42:
                     case 45:
+                        {
+                            W = input.ReadFloat();
+                            break;
+                        }
+                    case 142:
+                    case 145:
                         {
                             xs_.AddEntriesFrom(input, _repeated_xs_codec);
                             break;
                         }
-                    case 50:
-                    case 53:
+                    case 150:
+                    case 153:
                         {
                             ys_.AddEntriesFrom(input, _repeated_ys_codec);
                             break;
                         }
-                    case 58:
-                    case 61:
+                    case 158:
+                    case 161:
                         {
                             zs_.AddEntriesFrom(input, _repeated_zs_codec);
                             break;

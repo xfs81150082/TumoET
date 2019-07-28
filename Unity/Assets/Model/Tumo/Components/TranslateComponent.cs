@@ -43,6 +43,7 @@ namespace ETModel
         public float jumpSpeed = 14.0f;                       //角色跳跃速度//(起跳的一瞬间) 角色往上跳的速度
 
         public float startTime = 0;
+        public bool isZero = false;
         public bool isStart = false;
         public float resTime = 1.0f;
         public Vector3 ClickPoint;

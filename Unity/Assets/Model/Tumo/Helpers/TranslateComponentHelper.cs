@@ -167,16 +167,15 @@ namespace ETModel
                     self.c2M_PathKeyboardResult.V = self.v;
                     self.c2M_PathKeyboardResult.H = self.h;
 
-                    //self.move_Map.X = self.GetParent<Unit>().Position.x;
-                    //self.move_Map.Y = self.GetParent<Unit>().Position.y;
-                    //self.move_Map.Z = self.GetParent<Unit>().Position.z;
-                    //self.move_Map.AY = self.GetParent<Unit>().GameObject.transform.eulerAngles.y;
-
                     ETModel.SessionComponent.Instance.Session.Send(self.c2M_PathKeyboardResult);
 
                     self.isStart = true;
 
-                    Debug.Log(" TranslateComponentHelper-178: " + (KeyType)self.c2M_PathKeyboardResult.KeyType + " / "  + self.c2M_PathKeyboardResult.Id + " :( " + self.c2M_PathKeyboardResult.V + " / " + self.c2M_PathKeyboardResult.H + ")");
+                    Debug.Log(" TranslateComponentHelper-178: " + (KeyType)self.c2M_PathKeyboardResult.KeyType + " / " + self.c2M_PathKeyboardResult.Id + " :( " + self.c2M_PathKeyboardResult.V + " / " + self.c2M_PathKeyboardResult.H + ")");
+                }
+                if (self.isZero)
+                {
+                    self.isZero = false;
                 }
             }
             else
@@ -185,6 +184,21 @@ namespace ETModel
                 {
                     self.isStart = true;
                 }
+
+                if (!self.isZero)
+                {
+                    self.c2M_PathKeyboardResult.KeyType = (int)KeyType.KeyCode;
+                    self.c2M_PathKeyboardResult.Id = ETModel.Game.Scene.GetComponent<PlayerComponent>().MyPlayer.UnitId;
+                    self.c2M_PathKeyboardResult.V = 0;
+                    self.c2M_PathKeyboardResult.H = 0;
+
+                    ETModel.SessionComponent.Instance.Session.Send(self.c2M_PathKeyboardResult);
+
+                    self.isZero = true;
+
+                    Debug.Log(" TranslateComponentHelper-178: " + (KeyType)self.c2M_PathKeyboardResult.KeyType + " / " + self.c2M_PathKeyboardResult.Id + " :( " + self.c2M_PathKeyboardResult.V + " / " + self.c2M_PathKeyboardResult.H + ")");
+                }
+
 
                 ///点击移动
                 if (Input.GetMouseButtonDown(1))

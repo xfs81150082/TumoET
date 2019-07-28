@@ -88,7 +88,7 @@ namespace ETHotfix
             num.Set(NumericType.HpAdd, 400);
             num.Set(NumericType.MaxHpAdd, 400);
 
-            unit.GetComponent<MoveComponent>().Speed = 4.0f;
+            unit.GetComponent<MoveComponent>().moveSpeed = 4.0f;
 
             Console.WriteLine(" M2M_CreateEnemyUnitHandler-Id-57: " + unit.Id + " MaxHp: " + num[NumericType.MaxHp] + " MaxHpBase: " + num[NumericType.MaxHpBase] + " MaxHpAdd: " + num[NumericType.MaxHpAdd]);
         }
@@ -168,7 +168,7 @@ namespace ETHotfix
             num[NumericType.MaxHpAdd] = numEnemy[NumericType.MaxHpAdd];
 
             ///小怪当前速度
-            unit.GetComponent<MoveComponent>().Speed = 2.0f;
+            unit.GetComponent<MoveComponent>().moveSpeed = 2.0f;
 
         }
                

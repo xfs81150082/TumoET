@@ -17,7 +17,7 @@ namespace ETModel
         public long needTime;
 
         // 当前的移动速度
-        public float Speed = 5.0f;
+        public float moveSpeed = 4.0f;
 
         /// <summary>
         /// 异步 移动到 目标点
@@ -27,12 +27,6 @@ namespace ETModel
         /// <returns></returns>
         public async ETTask MoveToAsync(Vector3 target, CancellationToken cancellationToken)
         {
-            Console.WriteLine(" MoveComponent-32-tx/tz: " + this.GetParent<Unit>().UnitType + " : " + " ( " + target.x + " , " + 0 + " , " + target.z + ")");
-            if (this.GetParent<Unit>().UnitType == UnitType.Player)
-            {
-                Console.WriteLine(" MoveComponent-32-tx/tz: " + this.GetParent<Unit>().UnitType + " : "+" ( " + target.x + " , " + 0 + " , " + target.z + ")");
-            }
-
             // 新目标点离旧目标点太近，不设置新的
             if ((target - this.Target).sqrMagnitude < 0.01f)
             {
@@ -76,11 +70,11 @@ namespace ETModel
             }
 
             
-            this.needTime = (long)(distance / this.Speed * 1000);
+            this.needTime = (long)(distance / this.moveSpeed * 1000);
 
             if (unit.UnitType == UnitType.Player)
             {
-                Console.WriteLine(" MoveComponent-69-needTime: " + this.needTime);
+                Console.WriteLine(" MoveComponent-83-needTime: " + this.needTime);
             }
 
             TimerComponent timerComponent = Game.Scene.GetComponent<TimerComponent>();
@@ -102,7 +96,7 @@ namespace ETModel
 
             while (true)
             {
-                await timerComponent.WaitAsync(50, cancellationToken);
+                await timerComponent.WaitAsync(50, cancellationToken); ///20190728 把50改为150 又改回为50
                 
                 long timeNow = TimeHelper.Now();
                 
@@ -118,7 +112,7 @@ namespace ETModel
 
                 if (unit.UnitType == UnitType.Player)
                 {
-                    Console.WriteLine(" MoveComponent-103-posx/posz: " + unit.Id + " / ( " + unit.Position.x + " , " + 0 + " , " + unit.Position.z + ")");
+                    Console.WriteLine(" MoveComponent-121: " + unit.UnitType + " / ( " + unit.Position.x + " , " + 0 + " , " + unit.Position.z + ")");
                 }
             }
         }

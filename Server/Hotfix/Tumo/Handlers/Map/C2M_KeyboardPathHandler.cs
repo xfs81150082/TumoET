@@ -34,8 +34,7 @@ namespace ETHotfix
 
         void ServerUnitKeyCodeMove(Unit unit, C2M_KeyboardPathResult message)
         {
-            unit.GetComponent<KeyboardPathComponent>().KeyboardHTrun(message.H);
-            unit.GetComponent<KeyboardPathComponent>().KeyboardVMove(message.V);
+            unit.GetComponent<KeyboardPathComponent>().KeyboardVHMove(message.V, message.H);
 
             Console.WriteLine(" Move_MapHandler-42-xyz: " + (KeyType)message.KeyType + " / " + unit.Id + " : ( " + message.V + " / " + message.H + ") ");     
         }
