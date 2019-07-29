@@ -24,22 +24,22 @@ namespace ETModel
 
         public void Update()
         {
-            Move();
+            //Move();
         }                  
 
-        public void Move()
-        {
-            while (mypath.Count > 0)
-            {
-                Move_KeyCodeMap map = this.mypath[0];
-                Vector3 target = new Vector3(map.X, map.Y, map.Z);
+        //public void Move()
+        //{
+        //    while (mypath.Count > 0)
+        //    {
+        //        Move_KeyCodeMap map = this.mypath[0];
+        //        Vector3 target = new Vector3(map.X, map.Y, map.Z);
 
-                this.GetParent<Unit>().GetComponent<ClientMoveComponent>().MoveTo(target);
-                this.GetParent<Unit>().GetComponent<TurnComponent>().Turn(map.AY);
+        //        this.GetParent<Unit>().GetComponent<ClientMoveComponent>().MoveTo(target);
+        //        this.GetParent<Unit>().GetComponent<TurnComponent>().Turn(map.AY);
 
-                this.mypath.Remove(map);
-            }
-        }
+        //        this.mypath.Remove(map);
+        //    }
+        //}
 
 
     }

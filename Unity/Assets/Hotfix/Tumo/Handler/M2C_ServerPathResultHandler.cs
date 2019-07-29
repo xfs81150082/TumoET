@@ -18,7 +18,7 @@ namespace ETHotfix
 
             unit.GetComponent<AnimatorComponent>().SetFloatValue("Speed", 5f);
             ServerUnitPathComponent unitPathComponent = unit.GetComponent<ServerUnitPathComponent>();
-            unitPathComponent.StartMove(message).Coroutine();
+            unitPathComponent.StartMT(message);
 
             GizmosDebug.Instance.Path.Clear();
             GizmosDebug.Instance.Path.Add(new Vector3(message.X, message.Y, message.Z));

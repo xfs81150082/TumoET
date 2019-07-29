@@ -65,6 +65,7 @@ namespace ETHotfix
                 unit.AddComponent<AttackComponent>();
                 unit.AddComponent<RayUnitComponent>();
                 unit.AddComponent<KeyboardPathComponent>();
+                unit.AddComponent<TurnComponent>();
 
                 SetNumeric(unit ,player);
 

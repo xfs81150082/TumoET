@@ -2812,6 +2812,15 @@ namespace ETModel
             set { zs_ = value; }
         }
 
+        private static readonly pb::FieldCodec<float> _repeated_ws_codec
+            = pb::FieldCodec.ForFloat(166);
+        private pbc::RepeatedField<float> ws_ = new pbc::RepeatedField<float>();
+        public pbc::RepeatedField<float> Ws
+        {
+            get { return ws_; }
+            set { ws_ = value; }
+        }
+
         public void WriteTo(pb::CodedOutputStream output)
         {
             if (Id != 0L)
@@ -2842,6 +2851,7 @@ namespace ETModel
             xs_.WriteTo(output, _repeated_xs_codec);
             ys_.WriteTo(output, _repeated_ys_codec);
             zs_.WriteTo(output, _repeated_zs_codec);
+            ws_.WriteTo(output, _repeated_ws_codec);
             if (ActorId != 0L)
             {
                 output.WriteRawTag(232, 5);
@@ -2879,6 +2889,7 @@ namespace ETModel
             size += xs_.CalculateSize(_repeated_xs_codec);
             size += ys_.CalculateSize(_repeated_ys_codec);
             size += zs_.CalculateSize(_repeated_zs_codec);
+            size += ws_.CalculateSize(_repeated_ws_codec);
             return size;
         }
 
@@ -2892,6 +2903,7 @@ namespace ETModel
             xs_.Clear();
             ys_.Clear();
             zs_.Clear();
+            ws_.Clear();
             actorId_ = 0;
             uint tag;
             while ((tag = input.ReadTag()) != 0)
@@ -2942,6 +2954,12 @@ namespace ETModel
                     case 161:
                         {
                             zs_.AddEntriesFrom(input, _repeated_zs_codec);
+                            break;
+                        }
+                    case 166:
+                    case 169:
+                        {
+                            ws_.AddEntriesFrom(input, _repeated_ws_codec);
                             break;
                         }
                     case 744:

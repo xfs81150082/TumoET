@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Threading;
+using UnityEngine;
 
 namespace ETModel
 {
@@ -17,26 +18,77 @@ namespace ETModel
 		public Quaternion To;
 		public Quaternion From;
 		public float t = float.MaxValue;
-		public float TurnTime = 0.1f;
+        public float TurnTime = 0.1f;
+        public float turnSpeed = 14.0f;
+        public CancellationToken cancellationToken;
 
-		public void Update()
-		{
-			UpdateTurn();
-		}
+        public Vector3 ToEul;
+        public Vector3 FromEul;
 
-		private void UpdateTurn()
+        public void Update()
 		{
+            UpdateQuaternionTurn(cancellationToken);
+
+            //EulerAnglesTurn();
+        }
+
+		
+
+        //void EulerAnglesTurn()
+        //{
+        //    //Log.Debug($"update turn: {this.t} {this.TurnTime}");
+        //    if (this.t > this.TurnTime)
+        //    {
+        //        return;
+        //    }
+
+        //    this.t += Time.deltaTime * turnSpeed;
+
+        //    Vector3 eul = Vector3.Slerp(this.FromEul, this.ToEul, this.t / this.TurnTime);
+        //    this.GetParent<Unit>().GameObject.transform.eulerAngles = eul;
+
+        //}
+        ///// <summary>
+        ///// 改变Unit的朝向
+        ///// </summary>
+        //public void TurnEulerAngles(Vector3 eulerAngles, float turnTime = 0.1f)
+        //{
+        //    this.ToEul = eulerAngles;
+        //    this.FromEul = this.GetParent<Unit>().GameObject.transform.eulerAngles;
+        //    this.t = 0;
+        //    this.TurnTime = turnTime;
+        //}
+
+        void UpdateQuaternionTurn(CancellationToken cancellationToken)
+        {
 			//Log.Debug($"update turn: {this.t} {this.TurnTime}");
 			if (this.t > this.TurnTime)
 			{
 				return;
 			}
 
-			this.t += Time.deltaTime;
+            this.t += Time.deltaTime * turnSpeed;
 
 			Quaternion v = Quaternion.Slerp(this.From, this.To, this.t / this.TurnTime);
 			this.GetParent<Unit>().Rotation = v;
+
+        }
+
+		/// <summary>
+		/// 改变Unit的朝向
+		/// </summary>
+		/// <param name="angle">与X轴正方向的夹角</param>
+		public void TurnAngles( float angle, CancellationToken cancellationToken, float turnTime = 0.1f )
+		{
+			Quaternion quaternion = PositionHelper.GetAngleToQuaternion(angle);
+
+			this.To = quaternion;
+			this.From = this.GetParent<Unit>().Rotation;
+			this.t = 0;
+			this.TurnTime = turnTime;
+            this.cancellationToken = cancellationToken;
 		}
+
 
 		/// <summary>
 		/// 改变Unit的朝向
@@ -59,21 +111,6 @@ namespace ETModel
 			this.t = 0;
 			this.TurnTime = turnTime;
 		}
-
-		/// <summary>
-		/// 改变Unit的朝向
-		/// </summary>
-		/// <param name="angle">与X轴正方向的夹角</param>
-		public void Turn(float angle, float turnTime = 0.1f)
-		{
-			Quaternion quaternion = PositionHelper.GetAngleToQuaternion(angle);
-
-			this.To = quaternion;
-			this.From = this.GetParent<Unit>().Rotation;
-			this.t = 0;
-			this.TurnTime = turnTime;
-		}
-
 		public void Turn(Quaternion quaternion, float turnTime = 0.1f)
 		{
 			this.To = quaternion;
