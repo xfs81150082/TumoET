@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace ETModel
 {
-    public class ClientMoveComponent : Component
+    public class PositionMoveComponent : Component
     {
         public Vector3 To;
         public Vector3 From;

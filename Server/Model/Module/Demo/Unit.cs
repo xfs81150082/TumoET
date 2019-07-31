@@ -27,6 +27,8 @@ namespace ETModel
 
         public Vector3 eulerAngles = Vector3.zero;
 
+        //public Quaternion ratation = Quaternion.identity;        
+
         public void Awake(UnitType unitType)
 		{
 			this.UnitType = unitType;

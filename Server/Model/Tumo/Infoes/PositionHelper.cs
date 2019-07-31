@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using UnityEngine;
 
 namespace ETModel
 {
@@ -19,10 +22,10 @@ namespace ETModel
 			return new Vector3(pos.x, 0, pos.z);
 		}
 
-		public static Quaternion AngleToQuaternion(int angle)
-		{
-			return Quaternion.AngleAxis(-angle, Vector3.up) * Quaternion.AngleAxis(90, Vector3.up);
-		}
+		//public static Quaternion AngleToQuaternion(int angle)
+		//{
+		//	return Quaternion.AngleAxis(-angle, Vector3.up) * Quaternion.AngleAxis(90, Vector3.up);
+		//}
 
 		public static Quaternion GetVector3ToQuaternion(Vector3 source, Vector3 dire)
 		{
@@ -35,12 +38,12 @@ namespace ETModel
 			return Quaternion.LookRotation(direction, Vector3.up);
 		}
 
-        public static float Distance2D(Unit u1, Unit u2)
-        {
-            Vector2 v1 = new Vector2(u1.GameObject.transform.position.x, u1.GameObject.transform.position.z);
-            Vector2 v2 = new Vector2(u2.GameObject.transform.position.x, u2.GameObject.transform.position.z);
-            return Vector2.Distance(v1, v2);
-        }
+        //public static float Distance2D(Unit u1, Unit u2)
+        //{
+        //    Vector2 v1 = new Vector2(u1.GameObject.transform.position.x, u1.GameObject.transform.position.z);
+        //    Vector2 v2 = new Vector2(u2.GameObject.transform.position.x, u2.GameObject.transform.position.z);
+        //    return Vector2.Distance(v1, v2);
+        //}
 
         public static float Distance2D(Vector3 v1, Vector3 v2)
         {
@@ -49,10 +52,10 @@ namespace ETModel
             return Vector2.Distance(d1, d2);
         }
 
-        public static Quaternion GetAngleToQuaternion(float angle)
-		{
-			return Quaternion.AngleAxis(-angle, Vector3.up) * Quaternion.AngleAxis(90, Vector3.up);
-		}
+  //      public static Quaternion GetAngleToQuaternion(float angle)
+		//{
+		//	return Quaternion.AngleAxis(-angle, Vector3.up) * Quaternion.AngleAxis(90, Vector3.up);
+		//}
 
 		public static float Vector3ToAngle360(Vector3 from, Vector3 to)
 		{
@@ -60,7 +63,6 @@ namespace ETModel
 			Vector3 cross = Vector3.Cross(from, to);
 			return cross.y > 0? angle : 360 - angle;
 		}
-
         /// <summary>
         ///  求点到直线的距离，采用数学公式Ax+By+C = 0; d = A*p.x + B * p.y + C / sqrt(A^2 + B ^ 2)
         /// </summary>
@@ -88,20 +90,20 @@ namespace ETModel
         /// <param name="redius"></param>
         /// <param name="dist"></param>
         /// <returns></returns>
-        public static bool RayCastSphere(Ray ray, Vector3 center, float redius, out float dist)
-        {
-            dist = 0;
-            Vector3 ma = center - ray.origin;
-            float distance = Vector3.Cross(ma, ray.direction).magnitude / ray.direction.magnitude;
-            if (distance < redius)
-            {
-                float op = GGTheorem(Vector3.Distance(center, ray.origin), distance);
-                float rp = GGTheorem(redius, distance);
-                dist = op - rp;
-                return true;
-            }
-            return false;
-        }
+        //public static bool RayCastSphere(Ray ray, Vector3 center, float redius, out float dist)
+        //{
+        //    dist = 0;
+        //    Vector3 ma = center - ray.origin;
+        //    float distance = Vector3.Cross(ma, ray.direction).magnitude / ray.direction.magnitude;
+        //    if (distance < redius)
+        //    {
+        //        float op = GGTheorem(Vector3.Distance(center, ray.origin), distance);
+        //        float rp = GGTheorem(redius, distance);
+        //        dist = op - rp;
+        //        return true;
+        //    }
+        //    return false;
+        //}
 
         /// <summary>
         /// 勾股定理
@@ -113,7 +115,6 @@ namespace ETModel
         {
             return Mathf.Sqrt(x * x + y * y);
         }
-
         /// <summary>
         /// 去掉三维向量的Y轴，把向量投射到xz平面。
         /// </summary>
@@ -123,7 +124,6 @@ namespace ETModel
 	    {
             return new Vector2(vector3.x, vector3.z);
         }
-
         /// <summary>
         /// 判断目标点是否位于向量的左边
         /// </summary>
@@ -146,6 +146,5 @@ namespace ETModel
 
             return dotValue < 0f;
         }
-
 	}
 }

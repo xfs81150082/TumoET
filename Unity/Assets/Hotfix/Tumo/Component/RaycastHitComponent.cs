@@ -8,16 +8,7 @@ using UnityEngine;
 
 namespace ETHotfix
 {
-    [ObjectSystem]
-    public class RaycastHitComponentAwakeSystem : AwakeSystem<RaycastHitComponent>
-    {
-        public override void Awake(RaycastHitComponent self)
-        {
-            self.Awake();
-        }
-    }
-
-    [ObjectSystem]
+   [ObjectSystem]
     public class RaycastHitComponentUpdateSystem : UpdateSystem<RaycastHitComponent>
     {
         public override void Update(RaycastHitComponent self)
@@ -25,6 +16,15 @@ namespace ETHotfix
             self.Update();           
         }
     }
+
+    [ObjectSystem]
+    public class RaycastHitComponentAwakeSystem : AwakeSystem<RaycastHitComponent>
+    {
+        public override void Awake(RaycastHitComponent self)
+        {
+            self.Awake();
+        }
+    } 
 
     public class RaycastHitComponent : Component
     {
@@ -37,9 +37,14 @@ namespace ETHotfix
             this.mapMask = LayerMask.GetMask("Unit");
         }
 
-        private readonly Frame_ClickMap frameClickMap = new Frame_ClickMap();
-
         public void Update()
+        {
+            RayHitMouseButtonDown0();
+
+        }     
+
+        #region
+        void RayHitMouseButtonDown0()
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -74,5 +79,10 @@ namespace ETHotfix
                 Log.Error(e);
             }
         }
+        #endregion
+
+
+
+
     }
 }

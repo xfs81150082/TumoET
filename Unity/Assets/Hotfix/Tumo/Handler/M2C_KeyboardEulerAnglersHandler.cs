@@ -6,19 +6,20 @@ using UnityEngine;
 namespace ETHotfix
 {
     [MessageHandler]
-    public class M2C_ServerPathResultHandler : AMHandler<M2C_ServerPathResult>
+    public class M2C_KeyboardEulerAnglersHandler : AMHandler<M2C_KeyboardEulerAnglers>
     {
-        protected override void Run(ETModel.Session session, M2C_ServerPathResult message)
+        protected override void Run(ETModel.Session session, M2C_KeyboardEulerAnglers message)
         {
-            Debug.Log(" ServerUnitPathComponent-13: " + message.Id );
+            Debug.Log(" M2C_KeyboardEulerAnglersHandler-13: " + message.Id );
 
             Unit unit = ETModel.Game.Scene.GetComponent<UnitComponent>().Get(message.Id);
 
             if (unit == null) return;
 
             unit.GetComponent<AnimatorComponent>().SetFloatValue("Speed", 5f);
-            ServerUnitPathComponent unitPathComponent = unit.GetComponent<ServerUnitPathComponent>();
-            unitPathComponent.StartMT(message);
+
+            //ServerUnitPathComponent unitPathComponent = unit.GetComponent<ServerUnitPathComponent>();
+            //unitPathComponent.StartMT(message);
 
             GizmosDebug.Instance.Path.Clear();
             GizmosDebug.Instance.Path.Add(new Vector3(message.X, message.Y, message.Z));

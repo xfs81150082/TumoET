@@ -40,6 +40,7 @@ namespace ETModel
                 #region ///20190613
                 Game.Scene.AddComponent<MonsterComponent>();
                 Game.Scene.AddComponent<MonsterUnitComponent>();
+                Game.Scene.AddComponent<TestComponent>();
 
 
 

@@ -509,12 +509,12 @@
     <Compile Include="Assets\Model\Other\ReferenceCollector.cs" />
     <Compile Include="Assets\Model\Tumo\Components\CameraComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Components\CharacterControllerComponent.cs" />
-    <Compile Include="Assets\Model\Tumo\Components\ClientMoveComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Components\MonsterComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Components\MonsterUnitComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Components\PingComponent.cs" />
-    <Compile Include="Assets\Model\Tumo\Components\ServerUnitPathComponent.cs" />
+    <Compile Include="Assets\Model\Tumo\Components\PositionMoveComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Components\StateMoveComponent.cs" />
+    <Compile Include="Assets\Model\Tumo\Components\TestComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Components\TmAnimatorComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Components\TranslateComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Helpers\CharacterControllerHelper.cs" />

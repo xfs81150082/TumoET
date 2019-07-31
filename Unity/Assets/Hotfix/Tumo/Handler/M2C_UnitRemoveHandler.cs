@@ -6,7 +6,7 @@ using UnityEngine;
 namespace ETHotfix
 {
     [MessageHandler]
-    public class M2C_RemoveUnitHandler : AMHandler<M2C_RemoveUnits>
+    public class M2C_UnitRemoveHandler : AMHandler<M2C_RemoveUnits>
     {
         protected override void Run(ETModel.Session session, M2C_RemoveUnits message)
         {

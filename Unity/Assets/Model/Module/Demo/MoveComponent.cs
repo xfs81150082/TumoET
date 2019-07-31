@@ -21,47 +21,13 @@ namespace ETModel
 		// 开启移动协程的时间
 		public long StartTime;
         public long needTime;
-        public ETTaskCompletionSource moveTcs;
-
-
-        public Vector3 To;
-        public Vector3 From;
-        public float t = float.MaxValue;
-        public float moveTime;
+        public ETTaskCompletionSource moveTcs;  
 
 		public void Update()
 		{
             MoveToAsync();
-
-            MoveTo();
         }
-        #region MoveTo
-
-        private void MoveTo()
-        {
-            if (this.t > this.moveTime)
-            {
-                return;
-            }
-
-            this.t += Time.deltaTime;
-
-            Vector3 vec = Vector3.Slerp(this.From, this.To, this.t / this.moveTime);
-            this.GetParent<Unit>().Position = vec;
-        }
-
-        /// <summary>
-        /// 改变Unit的位置
-        /// </summary>
-        public void MoveTo(Vector3 target, float moveTime = 0.1f)
-        {
-            this.To = this.GetParent<Unit>().Position;
-            this.From = target;
-            this.t = 0;
-            this.moveTime = moveTime;
-        }  
-        #endregion
-
+    
         #region MoveToAsync
         void MoveToAsync()
         {
@@ -96,7 +62,6 @@ namespace ETModel
 			}
 			
 			this.Target = target;
-
 			
 			this.StartPos = unit.Position;
 			this.StartTime = TimeHelper.Now();

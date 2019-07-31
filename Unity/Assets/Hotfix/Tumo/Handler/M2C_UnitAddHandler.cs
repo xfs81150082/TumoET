@@ -9,7 +9,7 @@ using UnityEngine;
 namespace ETHotfix
 {
     [MessageHandler]
-    public class M2C_AddUnitHandler : AMHandler<M2C_AddUnits>
+    public class M2C_UnitAddHandler : AMHandler<M2C_AddUnits>
     {
         protected override void Run(ETModel.Session session, M2C_AddUnits message)
         {
@@ -31,9 +31,10 @@ namespace ETHotfix
                         unit0.AddComponent<MoveComponent>();
                         unit0.AddComponent<TurnComponent>();
                         unit0.AddComponent<UnitPathComponent>();
-                        unit0.AddComponent<ServerUnitPathComponent>();
 
+                        //unit0.AddComponent<ServerUnitPathComponent>();
                         unit0.AddComponent<TmAnimatorComponent>();
+
                         //unit0.AddComponent<ClientMoveComponent>();
                         //unit0.AddComponent<StateMoveComponent>();
 
@@ -43,6 +44,7 @@ namespace ETHotfix
                             ETModel.Game.EventSystem.Awake<Unit>(ETModel.Game.Scene.GetComponent<CameraComponent>(), unit0);
 
                             ///20190703
+                            Game.Scene.AddComponent<OperaComponent>();
                             Game.Scene.AddComponent<RaycastHitComponent>();
                             Game.Scene.AddComponent<KeyboardPathComponent>();
 

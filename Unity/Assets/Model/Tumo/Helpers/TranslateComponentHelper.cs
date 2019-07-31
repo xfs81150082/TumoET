@@ -200,23 +200,23 @@ namespace ETModel
                 }
 
 
-                ///点击移动
-                if (Input.GetMouseButtonDown(1))
-                {
-                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                    RaycastHit hit;
-                    if (Physics.Raycast(ray, out hit, 1000, self.mapMask))
-                    {
-                        self.ClickPoint = hit.point;
-                        self.c2M_PathKeyboardResult.KeyType = (int)KeyType.Click;
-                        self.c2M_PathKeyboardResult.X = self.ClickPoint.x;
-                        self.c2M_PathKeyboardResult.Y = self.ClickPoint.y;
-                        self.c2M_PathKeyboardResult.Z = self.ClickPoint.z;
-                        ETModel.SessionComponent.Instance.Session.Send(self.c2M_PathKeyboardResult);
+                /////点击移动
+                //if (Input.GetMouseButtonDown(1))
+                //{
+                //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                //    RaycastHit hit;
+                //    if (Physics.Raycast(ray, out hit, 1000, self.mapMask))
+                //    {
+                //        self.ClickPoint = hit.point;
+                //        self.c2M_PathKeyboardResult.KeyType = (int)KeyType.Click;
+                //        self.c2M_PathKeyboardResult.X = self.ClickPoint.x;
+                //        self.c2M_PathKeyboardResult.Y = self.ClickPoint.y;
+                //        self.c2M_PathKeyboardResult.Z = self.ClickPoint.z;
+                //        ETModel.SessionComponent.Instance.Session.Send(self.c2M_PathKeyboardResult);
 
-                        Debug.Log(" TranslateComponentHelper-197: " + (KeyType)self.c2M_PathKeyboardResult.KeyType + " / " + self.c2M_PathKeyboardResult.Id + " :( " + self.c2M_PathKeyboardResult.X + ", " + self.c2M_PathKeyboardResult.Y + ", " + self.c2M_PathKeyboardResult.Z + ")");
-                    }
-                }
+                //        Debug.Log(" TranslateComponentHelper-197: " + (KeyType)self.c2M_PathKeyboardResult.KeyType + " / " + self.c2M_PathKeyboardResult.Id + " :( " + self.c2M_PathKeyboardResult.X + ", " + self.c2M_PathKeyboardResult.Y + ", " + self.c2M_PathKeyboardResult.Z + ")");
+                //    }
+                //}
             }
         }
 
