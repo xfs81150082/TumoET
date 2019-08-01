@@ -10,6 +10,7 @@ namespace ETHotfix
 {
     public static class KeyboardPathComponentHelper
     {
+        #region v h
         public static void KeyboardVH(this KeyboardPathComponent self, float V, float H)
         {
             if (Math.Abs(V) > 0.05f)
@@ -17,36 +18,39 @@ namespace ETHotfix
                 self.v = V;
                 self.vCount = 4;
             }
+
             if (Math.Abs(H) > 0.05f)
             {
                 self.h = H;
                 self.hCount = 4;
             }
 
-            Console.WriteLine(" KeyboardPathComponentHelper-26-vh: " + (KeyType)self.GetParent<Unit>().Id + " : ( " + V + "/" + H + ") ");
+            Console.WriteLine(" KeyboardPathComponentHelper-28-vh: " + (KeyType)self.GetParent<Unit>().Id + " : ( " + V + "/" + H + ") ");
         }
 
         public static void KeyboardMoveTurn(this KeyboardPathComponent self)
         {
+            if (self.offsetTimeTurn > self.resTime)
+            {
+                self.offsetTimeTurn = 0;
+            }
+
             if (self.offsetTimeMove > self.resTime)
             {
                 self.offsetTimeMove = 0;
             }
 
-            if (Math.Abs(self.v) > 0.3f || (Math.Abs(self.h) > 0.3f))
+            if (Math.Abs(self.h) > 0.3f)
             {
-                if (self.offsetTimeMove == 0)
+                if (self.offsetTimeTurn == 0)
                 {
-                    self.startTimeMove = TimeHelper.Now();
+                    self.startTimeTurn = TimeHelper.Now();
 
                     Vector3 targetEulerAngles = self.GetTargetEulerAngles(self.h);
-                    Vector3 targetPosition = self.GetTargetPosition(self.v);
 
                     self.GetParent<Unit>().GetComponent<UnitAnglesComponent>().TurnTo(targetEulerAngles).Coroutine();
-                    self.GetParent<Unit>().GetComponent<UnitPathComponent>().MoveTo(targetPosition).Coroutine();
 
-                    Console.WriteLine(" KeyboardPathComponentHelper-48-H: " + self.GetParent<Unit>().UnitType + " / ( " + 0 + " , " + targetEulerAngles.y + " , " + 0 + ")");
-                    Console.WriteLine(" KeyboardPathComponentHelper-49-V: " + self.GetParent<Unit>().UnitType + " / ( " + targetPosition.x + " , " + 0 + " , " + targetPosition.z + ")");
+                    Console.WriteLine(" KeyboardPathComponentHelper-53-H: " + self.GetParent<Unit>().UnitType + " / ( " + 0 + " , " + targetEulerAngles.y + " , " + 0 + ")");
                 }
             }
             else
@@ -57,33 +61,43 @@ namespace ETHotfix
                     self.GetParent<Unit>().GetComponent<UnitAnglesComponent>().CancellationTokenSource?.Dispose();
                     self.GetParent<Unit>().GetComponent<UnitAnglesComponent>().CancellationTokenSource = null;
 
-                    Console.WriteLine(" KeyboardPathComponentHelper-60-H: CancellationTokenSource is Cancel.");
-                }
-
-                if (self.GetParent<Unit>().GetComponent<UnitPathComponent>().CancellationTokenSource != null)
-                {
-                    self.GetParent<Unit>().GetComponent<UnitPathComponent>().CancellationTokenSource?.Cancel();
-                    self.GetParent<Unit>().GetComponent<UnitPathComponent>().CancellationTokenSource?.Dispose();
-                    self.GetParent<Unit>().GetComponent<UnitPathComponent>().CancellationTokenSource = null;
-
-                    Console.WriteLine(" KeyboardPathComponentHelper-69-V: CancellationTokenSource is Cancel.");
+                    Console.WriteLine(" KeyboardPathComponentHelper-64-H: CancellationTokenSource is Cancel.");
                 }
             }
+
+            if (Math.Abs(self.v) > 0.3f)
+            {
+                if (self.offsetTimeMove == 0)
+                {
+                    self.startTimeMove = TimeHelper.Now();
+
+                    Vector3 targetPosition = self.GetTargetPosition(self.v);
+
+                    self.GetParent<Unit>().GetComponent<UnitPositionComponent>().MoveTo(targetPosition).Coroutine();
+
+                    Console.WriteLine(" KeyboardPathComponentHelper-78-V: " + self.GetParent<Unit>().UnitType + " / ( " + targetPosition.x + " , " + 0 + " , " + targetPosition.z + ")");
+                }
+            }
+            else
+            {
+                if (self.GetParent<Unit>().GetComponent<UnitPositionComponent>().CancellationTokenSource != null)
+                {
+                    self.GetParent<Unit>().GetComponent<UnitPositionComponent>().CancellationTokenSource?.Cancel();
+                    self.GetParent<Unit>().GetComponent<UnitPositionComponent>().CancellationTokenSource?.Dispose();
+                    self.GetParent<Unit>().GetComponent<UnitPositionComponent>().CancellationTokenSource = null;
+
+                    Console.WriteLine(" KeyboardPathComponentHelper-89-V: CancellationTokenSource is Cancel.");
+                }
+            }
+
+            self.offsetTimeTurn = TimeHelper.Now() - self.startTimeTurn + 1;
 
             self.offsetTimeMove = TimeHelper.Now() - self.startTimeMove + 1;
         }
 
-        #region v h
-
-        /// <summary>
-        /// 得到 新目标点
-        /// </summary>
-        /// <param name="self"></param>
-        /// <param name="v"></param>
-        /// <returns></returns>
         static Vector3 GetTargetPosition(this KeyboardPathComponent self , float v)
         {
-            Vector3 dv = new Vector3((float)Math.Cos(self.GetParent<Unit>().eulerAngles.y) * v, 0, (float)Math.Sin(self.GetParent<Unit>().eulerAngles.y) * v).normalized;
+            Vector3 dv = new Vector3((float)Math.Cos(self.GetParent<Unit>().EulerAngles.y) * v, 0, (float)Math.Sin(self.GetParent<Unit>().EulerAngles.y) * v).normalized;
             dv = dv * self.moveSpeed;
 
             Vector3 se = self.GetParent<Unit>().Position;
@@ -97,7 +111,7 @@ namespace ETHotfix
             Vector3 dav = new Vector3(0, h, 0).normalized;
             dav = dav * self.roteSpeed;
 
-            Vector3 sea = self.GetParent<Unit>().eulerAngles;
+            Vector3 sea = self.GetParent<Unit>().EulerAngles;
             Vector3 aav = sea + dav;
 
             return aav;

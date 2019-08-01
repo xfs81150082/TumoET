@@ -10,24 +10,16 @@ namespace ETHotfix
     {
         protected override void Run(ETModel.Session session, M2C_KeyboardEulerAnglers message)
         {
-            Debug.Log(" M2C_KeyboardEulerAnglersHandler-13: " + message.Id );
+            Debug.Log(" M2C_KeyboardEulerAnglersHandler-13-angles: " + message.Y + " / " + message.Ys[0]);
 
             Unit unit = ETModel.Game.Scene.GetComponent<UnitComponent>().Get(message.Id);
 
             if (unit == null) return;
 
-            unit.GetComponent<AnimatorComponent>().SetFloatValue("Speed", 5f);
+            UnitAnglersComponent unitAnglersComponent = unit.GetComponent<UnitAnglersComponent>();
+            unitAnglersComponent.StartTurn(message).Coroutine();
 
-            //ServerUnitPathComponent unitPathComponent = unit.GetComponent<ServerUnitPathComponent>();
-            //unitPathComponent.StartMT(message);
-
-            GizmosDebug.Instance.Path.Clear();
-            GizmosDebug.Instance.Path.Add(new Vector3(message.X, message.Y, message.Z));
-            for (int i = 0; i < message.Xs.Count; ++i)
-            {
-                GizmosDebug.Instance.Path.Add(new Vector3(message.Xs[i], message.Ys[i], message.Zs[i]));
-            }
-
+            //unit.GetComponent<TmAnimatorComponent>().AnimSet(5f);
         }
 
 

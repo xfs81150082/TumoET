@@ -13,16 +13,17 @@ namespace ETHotfix
     {
         protected override void Run(ETModel.Session session, M2C_KeyboardPosition message)
         {
-            Debug.Log(" M2C_KeyboardEulerAnglersHandler-13: " + message.Id);
+            Debug.Log(" M2C_KeyboardPositionHandler-13: " + message.Id);
 
             Unit unit = ETModel.Game.Scene.GetComponent<UnitComponent>().Get(message.Id);
 
             if (unit == null) return;
 
-            unit.GetComponent<AnimatorComponent>().SetFloatValue("Speed", 5f);
 
-            //ServerUnitPathComponent unitPathComponent = unit.GetComponent<ServerUnitPathComponent>();
-            //unitPathComponent.StartMT(message);
+            UnitPositionComponent unitPositionComponent = unit.GetComponent<UnitPositionComponent>();
+            unitPositionComponent.StartMove(message).Coroutine();
+
+            unit.GetComponent<TmAnimatorComponent>().AnimSet(1);
 
             GizmosDebug.Instance.Path.Clear();
             GizmosDebug.Instance.Path.Add(new Vector3(message.X, message.Y, message.Z));

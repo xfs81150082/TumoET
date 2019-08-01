@@ -18,6 +18,8 @@ namespace ETModel
 
         public long startTimeMove = 0L;
         public long offsetTimeMove = 0L;
+        public long startTimeTurn = 0L;
+        public long offsetTimeTurn = 0L;
         public long resTime = 400L;
 
 

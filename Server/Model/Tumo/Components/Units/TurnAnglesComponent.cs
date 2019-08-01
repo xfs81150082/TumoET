@@ -7,15 +7,15 @@ using UnityEngine;
 namespace ETModel
 {
     [ObjectSystem]
-    public class TurnComponentUpdateSystem : UpdateSystem<TurnComponent>
+    public class TurnComponentUpdateSystem : UpdateSystem<TurnAnglesComponent>
     {
-        public override void Update(TurnComponent self)
+        public override void Update(TurnAnglesComponent self)
         {
             self.Update();
         }
     }
 
-    public class TurnComponent : Component
+    public class TurnAnglesComponent : Component
     {
         // turn
         public Vector3 TargetEulerAngles;
@@ -24,7 +24,7 @@ namespace ETModel
         public long StartTime;
 
         // 开启移动协程的Unit的位置
-        public Vector3 StartPos;
+        public Vector3 StartEul;
 
         public long needTime;
   
@@ -50,14 +50,14 @@ namespace ETModel
             }
 
             // 距离当前位置太近
-            if (Math.Abs(this.GetParent<Unit>().eulerAngles.y - targetEulerAngles.y) < 0.1f)
+            if (Math.Abs(this.GetParent<Unit>().EulerAngles.y - targetEulerAngles.y) < 0.1f)
             {
                 return;
             }
 
             this.TargetEulerAngles = targetEulerAngles;
 
-            Console.WriteLine(" TurnComponent-47-tx/tz: " + " ( " + 0 + " , " + targetEulerAngles.y + " , " + 0 + ")");
+            Console.WriteLine(" TurnAnglesComponent-47-tx/tz: " + " ( " + 0 + " , " + targetEulerAngles.y + " , " + 0 + ")");
 
             // 开启协程移动
             await StartTurn(cancellationToken);
@@ -69,11 +69,11 @@ namespace ETModel
         public async ETTask StartTurn(CancellationToken cancellationToken)
         {
             Unit unit = this.GetParent<Unit>();
-            this.StartPos = unit.eulerAngles;
+            this.StartEul = unit.EulerAngles;
             this.StartTime = TimeHelper.Now();
-            float angle = this.TargetEulerAngles.y - this.StartPos.y;
+            float angle = this.TargetEulerAngles.y - this.StartEul.y;
 
-            Console.WriteLine(" TurnComponent-65-distance: " + angle);
+            Console.WriteLine(" TurnAnglesComponent-65-distance: " + angle);
 
             if (Math.Abs(angle) < 0.1f)
             {
@@ -82,7 +82,7 @@ namespace ETModel
 
             this.needTime = (long)(Math.Abs(angle) / this.ratateSpeed * 1000);
 
-            Console.WriteLine(" TurnComponent-74-needTime: " + this.needTime);
+            Console.WriteLine(" TurnAnglesComponent-74-needTime: " + this.needTime);
 
             TimerComponent timerComponent = Game.Scene.GetComponent<TimerComponent>();
 
@@ -92,12 +92,12 @@ namespace ETModel
                 long timeNow = TimeHelper.Now();
                 if (timeNow - this.StartTime >= this.needTime)
                 {
-                    unit.eulerAngles = this.TargetEulerAngles;
+                    unit.EulerAngles = this.TargetEulerAngles;
                 }
                 else
                 {
                     float amount = (timeNow - this.StartTime) * 1f / this.needTime;
-                    unit.eulerAngles = Vector3.Lerp(this.StartPos, this.TargetEulerAngles, amount);
+                    unit.EulerAngles = Vector3.Lerp(this.StartEul, this.TargetEulerAngles, amount);
                 }
 
                 isSky = true;
@@ -112,14 +112,14 @@ namespace ETModel
 
                 if (timeNow - this.StartTime >= this.needTime)
                 {
-                    unit.eulerAngles = this.TargetEulerAngles;
+                    unit.EulerAngles = this.TargetEulerAngles;
                     break;
                 }
 
                 float amount = (timeNow - this.StartTime) * 1f / this.needTime;
-                unit.eulerAngles = Vector3.Lerp(this.StartPos, this.TargetEulerAngles, amount);
+                unit.EulerAngles = Vector3.Lerp(this.StartEul, this.TargetEulerAngles, amount);
 
-                Console.WriteLine(" TurnComponent-123: " + unit.UnitType + " / ( " + 0 + " , " + unit.eulerAngles.y + " , " + 0 + ")");
+                Console.WriteLine(" TurnAnglesComponent-123: " + unit.UnitType + " / ( " + 0 + " , " + unit.EulerAngles.y + " , " + 0 + ")");
             }
 
             isSky = true;
@@ -130,7 +130,7 @@ namespace ETModel
         {
             if (isSky)
             {
-                float ay = this.GetParent<Unit>().eulerAngles.y;
+                float ay = this.GetParent<Unit>().EulerAngles.y;
                 if (ay > 360)
                 {
                     ay -= 360;
@@ -139,7 +139,7 @@ namespace ETModel
                 {
                     ay += 360;
                 }
-                this.GetParent<Unit>().eulerAngles.y = ay;
+                this.GetParent<Unit>().EulerAngles.y = ay;
             }
         }
 

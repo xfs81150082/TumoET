@@ -32,33 +32,6 @@ namespace ETModel
             //EulerAnglesTurn();
         }
 
-		
-
-        //void EulerAnglesTurn()
-        //{
-        //    //Log.Debug($"update turn: {this.t} {this.TurnTime}");
-        //    if (this.t > this.TurnTime)
-        //    {
-        //        return;
-        //    }
-
-        //    this.t += Time.deltaTime * turnSpeed;
-
-        //    Vector3 eul = Vector3.Slerp(this.FromEul, this.ToEul, this.t / this.TurnTime);
-        //    this.GetParent<Unit>().GameObject.transform.eulerAngles = eul;
-
-        //}
-        ///// <summary>
-        ///// 改变Unit的朝向
-        ///// </summary>
-        //public void TurnEulerAngles(Vector3 eulerAngles, float turnTime = 0.1f)
-        //{
-        //    this.ToEul = eulerAngles;
-        //    this.FromEul = this.GetParent<Unit>().GameObject.transform.eulerAngles;
-        //    this.t = 0;
-        //    this.TurnTime = turnTime;
-        //}
-
         void UpdateQuaternionTurn(CancellationToken cancellationToken)
         {
 			//Log.Debug($"update turn: {this.t} {this.TurnTime}");

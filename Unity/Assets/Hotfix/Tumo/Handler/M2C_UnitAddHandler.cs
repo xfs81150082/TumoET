@@ -32,9 +32,13 @@ namespace ETHotfix
                         unit0.AddComponent<TurnComponent>();
                         unit0.AddComponent<UnitPathComponent>();
 
-                        //unit0.AddComponent<ServerUnitPathComponent>();
                         unit0.AddComponent<TmAnimatorComponent>();
-
+                        unit0.AddComponent<TurnEulerAnglesComponent>();
+                        unit0.AddComponent<MovePositionComponent>();
+                        unit0.AddComponent<UnitAnglersComponent>();
+                        unit0.AddComponent<UnitPositionComponent>();
+     
+                        //unit0.AddComponent<ServerUnitPathComponent>();
                         //unit0.AddComponent<ClientMoveComponent>();
                         //unit0.AddComponent<StateMoveComponent>();
 

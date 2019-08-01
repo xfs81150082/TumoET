@@ -25,7 +25,7 @@ namespace ETModel
 
         public Vector3 Position = Vector3.zero;
 
-        public Vector3 eulerAngles = Vector3.zero;
+        public Vector3 EulerAngles = Vector3.zero;
 
         //public Quaternion ratation = Quaternion.identity;        
 

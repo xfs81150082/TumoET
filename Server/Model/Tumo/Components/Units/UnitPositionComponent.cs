@@ -12,7 +12,24 @@ namespace ETModel
 
         public Vector3 TargetPosition;
 
+        private ABPathWrap abPath;
+
+        public List<Vector3> Path;
+
         public CancellationTokenSource CancellationTokenSource;
+
+        public ABPathWrap ABPath
+        {
+            get
+            {
+                return this.abPath;
+            }
+            set
+            {
+                this.abPath?.Dispose();
+                this.abPath = value;
+            }
+        }
 
         public override void Dispose()
         {
@@ -21,6 +38,8 @@ namespace ETModel
                 return;
             }
             base.Dispose();
+
+            this.abPath?.Dispose();
         }
     }
 }
