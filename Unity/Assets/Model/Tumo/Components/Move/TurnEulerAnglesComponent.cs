@@ -60,7 +60,13 @@ namespace ETModel
 
             float amount = this.time * 1f / this.needTime;
 
-            unit.GameObject.transform.eulerAngles = Vector3.Lerp(this.StartEul, this.TargetEulerAngles, amount);
+            Quaternion from = PositionHelper.GetAngleToQuaternion(this.StartEul.y);
+            Quaternion to = PositionHelper.GetAngleToQuaternion(this.TargetEulerAngles.y);
+
+            Quaternion v = Quaternion.Slerp(from, to, amount);
+            this.GetParent<Unit>().Rotation = v;
+
+            //unit.GameObject.transform.eulerAngles = Vector3.Lerp(this.StartEul, this.TargetEulerAngles, amount);
 
             Debug.Log(" TurnEulerAnglesComponent-68-amount: " + this.time + " / " + this.needTime + " / " + amount);
             Debug.Log(" TurnEulerAnglesComponent-69-eulerAngles: " + "(" + 0 + ", " + unit.GameObject.transform.eulerAngles.y + ", " + 0 + " )");

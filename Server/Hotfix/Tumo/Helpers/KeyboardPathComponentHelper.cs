@@ -25,7 +25,7 @@ namespace ETHotfix
                 self.hCount = 4;
             }
 
-            Console.WriteLine(" KeyboardPathComponentHelper-28-vh: " + (KeyType)self.GetParent<Unit>().Id + " : ( " + V + "/" + H + ") ");
+            Console.WriteLine(" KeyboardPathComponentHelper-28-vh: " + (KeyType)self.GetParent<Unit>().Id + " : ( " + V + " / " + H + ") ");
         }
 
         public static void KeyboardMoveTurn(this KeyboardPathComponent self)
@@ -50,7 +50,9 @@ namespace ETHotfix
 
                     self.GetParent<Unit>().GetComponent<UnitAnglesComponent>().TurnTo(targetEulerAngles).Coroutine();
 
-                    Console.WriteLine(" KeyboardPathComponentHelper-53-H: " + self.GetParent<Unit>().UnitType + " / ( " + 0 + " , " + targetEulerAngles.y + " , " + 0 + ")");
+                    //Console.WriteLine(" KeyboardPathComponentHelper-53-H: " + self.GetParent<Unit>().UnitType + " / ( " + 0 + " , " + targetEulerAngles.y + " , " + 0 + ")");
+                    //Console.WriteLine(" KeyboardPathComponentHelper-54-unitH: " + self.GetParent<Unit>().UnitType + " / ( " + 0 + " , " + self.GetParent<Unit>().EulerAngles.y + " , " + 0 + ")");
+                    //Console.WriteLine(" KeyboardPathComponentHelper-55-unitV: " + self.GetParent<Unit>().UnitType + " / ( " + self.GetParent<Unit>().Position.x + " , " + 0 + " , " + self.GetParent<Unit>().Position.z + ")");
                 }
             }
             else
@@ -61,7 +63,7 @@ namespace ETHotfix
                     self.GetParent<Unit>().GetComponent<UnitAnglesComponent>().CancellationTokenSource?.Dispose();
                     self.GetParent<Unit>().GetComponent<UnitAnglesComponent>().CancellationTokenSource = null;
 
-                    Console.WriteLine(" KeyboardPathComponentHelper-64-H: CancellationTokenSource is Cancel.");
+                    Console.WriteLine(" KeyboardPathComponentHelper-66-H: CancellationTokenSource is Cancel.");
                 }
             }
 
@@ -75,7 +77,9 @@ namespace ETHotfix
 
                     self.GetParent<Unit>().GetComponent<UnitPositionComponent>().MoveTo(targetPosition).Coroutine();
 
-                    Console.WriteLine(" KeyboardPathComponentHelper-78-V: " + self.GetParent<Unit>().UnitType + " / ( " + targetPosition.x + " , " + 0 + " , " + targetPosition.z + ")");
+                    //Console.WriteLine(" KeyboardPathComponentHelper-80-targetV: " + self.GetParent<Unit>().UnitType + " / ( " + targetPosition.x + " , " + 0 + " , " + targetPosition.z + ")");
+                    //Console.WriteLine(" KeyboardPathComponentHelper-81-unitV: " + self.GetParent<Unit>().UnitType + " / ( " + self.GetParent<Unit>().Position.x + " , " + 0 + " , " + self.GetParent<Unit>().Position.z + ")");
+                    //Console.WriteLine(" KeyboardPathComponentHelper-82-unitH: " + self.GetParent<Unit>().UnitType + " / ( " + 0 + " , " + self.GetParent<Unit>().EulerAngles.y + " , " + 0 + ")");
                 }
             }
             else
@@ -86,7 +90,7 @@ namespace ETHotfix
                     self.GetParent<Unit>().GetComponent<UnitPositionComponent>().CancellationTokenSource?.Dispose();
                     self.GetParent<Unit>().GetComponent<UnitPositionComponent>().CancellationTokenSource = null;
 
-                    Console.WriteLine(" KeyboardPathComponentHelper-89-V: CancellationTokenSource is Cancel.");
+                    Console.WriteLine(" KeyboardPathComponentHelper-93-V: CancellationTokenSource is Cancel.");
                 }
             }
 

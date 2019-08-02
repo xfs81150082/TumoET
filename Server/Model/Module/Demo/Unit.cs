@@ -22,10 +22,29 @@ namespace ETModel
 	public sealed class Unit: Entity
 	{
 		public UnitType UnitType { get; private set; }
+        public Vector3 EulerAngles
+        {
+            get
+            {
+                return eulerAngles;
+            }
+            set
+            {
+                eulerAngles = value;
+                if (eulerAngles.y > 180.0f)
+                {
+                    eulerAngles.y -= 360.0f;
+                }
+                if (eulerAngles.y < -180.0f)
+                {
+                    eulerAngles.y += 360.0f;
+                }
+            }
+        }
 
         public Vector3 Position = Vector3.zero;
 
-        public Vector3 EulerAngles = Vector3.zero;
+        private Vector3 eulerAngles = Vector3.zero;
 
         //public Quaternion ratation = Quaternion.identity;        
 
