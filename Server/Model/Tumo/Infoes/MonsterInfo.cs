@@ -39,7 +39,7 @@ namespace ETModel
 
                 ///20190702
                 enemy.AddComponent<NumericComponent>();
-                enemy.spawnPosition = new Vector3(-30 + 10 * i, 0, 30);
+                enemy.spawnPosition = new Vector3(-35 + 10 * i, 0, 30);
 
 
                 SetNumeric(enemy, new object());
@@ -54,25 +54,18 @@ namespace ETModel
             if (enemy.GetComponent<NumericComponent>() == null) return;
             NumericComponent num = enemy.GetComponent<NumericComponent>();
             /// 二次赋值
-            num.Set(NumericType.MaxHpAdd, 20);
+            num.Set(NumericType.HpAdd, 80);       // HpAdd 数值,进行赋值
         }
-
 
         void SetPosition(Dictionary<long, Monster> enemys)
         {
             List<long> list = new List<long>(enemys.Keys);
 
-            enemys[list[0]].spawnPosition = new Vector3(-30, 0, 30);
-            enemys[list[1]].spawnPosition = new Vector3(-10, 0, 30);
-            enemys[list[2]].spawnPosition = new Vector3(10, 0, 30);
-            enemys[list[3]].spawnPosition = new Vector3(30, 0, 30);
-
-
-
-
+            enemys[list[0]].spawnPosition = new Vector3(-35, 0, 30);
+            enemys[list[1]].spawnPosition = new Vector3(-15, 0, 30);
+            enemys[list[2]].spawnPosition = new Vector3(15, 0, 30);
+            enemys[list[3]].spawnPosition = new Vector3(35, 0, 30);
         }
-
-
 
     }
 }

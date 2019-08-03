@@ -76,7 +76,12 @@ namespace ETModel
 
         public void Update()
 		{
-			if (this.isStop)
+            UpdatePlayerAnimator();
+        }
+
+        void UpdatePlayerAnimator()
+        {
+            if (this.isStop)
 			{
 				return;
 			}

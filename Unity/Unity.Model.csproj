@@ -511,25 +511,25 @@
     <Compile Include="Assets\Model\Tumo\Components\MonsterComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Components\MonsterUnitComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Components\Move\CharacterControllerComponent.cs" />
-    <Compile Include="Assets\Model\Tumo\Components\Move\MovePositionComponent.cs" />
-    <Compile Include="Assets\Model\Tumo\Components\Move\StateMoveComponent.cs" />
-    <Compile Include="Assets\Model\Tumo\Components\Move\TranslateComponent.cs" />
-    <Compile Include="Assets\Model\Tumo\Components\Move\TurnEulerAnglesComponent.cs" />
-    <Compile Include="Assets\Model\Tumo\Components\Move\UnitAnglersComponent.cs" />
-    <Compile Include="Assets\Model\Tumo\Components\Move\UnitPositionComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Components\PingComponent.cs" />
-    <Compile Include="Assets\Model\Tumo\Components\RigidBodyComponent.cs" />
-    <Compile Include="Assets\Model\Tumo\Components\TestComponent.cs" />
-    <Compile Include="Assets\Model\Tumo\Components\TmAnimatorComponent.cs" />
+    <Compile Include="Assets\Model\Tumo\Helpers\AnimatorComponentHelper.cs" />
     <Compile Include="Assets\Model\Tumo\Helpers\CharacterControllerHelper.cs" />
-    <Compile Include="Assets\Model\Tumo\Helpers\TmAnimatorComponentHelper.cs" />
-    <Compile Include="Assets\Model\Tumo\Helpers\TranslateComponentHelper.cs" />
     <Compile Include="Assets\Model\Tumo\Infoes\AoiGridGizmos.cs" />
     <Compile Include="Assets\Model\Tumo\Infoes\Monster.cs" />
     <Compile Include="Assets\Model\Tumo\Infoes\MonsterFactory.cs" />
     <Compile Include="Assets\Model\Tumo\Infoes\MonsterUnitFactory.cs" />
     <Compile Include="Assets\Model\Tumo\Message\TumoEnum.cs" />
     <Compile Include="Assets\Model\Tumo\Message\TumoMessage.cs" />
+    <Compile Include="Assets\Model\Tumo\Nousing\MovePositionComponent.cs" />
+    <Compile Include="Assets\Model\Tumo\Nousing\RigidBodyComponent.cs" />
+    <Compile Include="Assets\Model\Tumo\Nousing\StateMoveComponent.cs" />
+    <Compile Include="Assets\Model\Tumo\Nousing\TestComponent.cs" />
+    <Compile Include="Assets\Model\Tumo\Nousing\TmAnimatorComponent.cs" />
+    <Compile Include="Assets\Model\Tumo\Nousing\TranslateComponent.cs" />
+    <Compile Include="Assets\Model\Tumo\Nousing\TranslateComponentHelper.cs" />
+    <Compile Include="Assets\Model\Tumo\Nousing\TurnEulerAnglesComponent.cs" />
+    <Compile Include="Assets\Model\Tumo\Nousing\UnitAnglersComponent.cs" />
+    <Compile Include="Assets\Model\Tumo\Nousing\UnitPositionComponent.cs" />
     <None Include="Assets\Model\Module\Pathfinding\AstarPathfindingProject\ExampleScenes\Materials\DiffuseAlwaysVisible.shader" />
     <None Include="Assets\Model\Module\Pathfinding\AstarPathfindingProject\ExampleScenes\_Example Scenes.txt" />
     <None Include="Assets\Model\Module\Pathfinding\AstarPathfindingProject\Readme_upgrading.txt" />
@@ -752,9 +752,6 @@
     </Reference>
     <Reference Include="UnityEditor.Graphs">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.Android.Extensions">
-      <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.WindowsStandalone.Extensions">
       <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>

@@ -32,8 +32,7 @@ namespace ETModel
 
 		public void Awake()
 		{
-            // 这里初始化base值
-
+            // 这里初始化base值，给各个数值进行赋值
             ///20190621
             //注意，这两个语句都将触发数值改变组件，只是没有写Max的处理函数，所以会没有反应
             this.Set(NumericType.Max, 981150082);

@@ -19,7 +19,6 @@ namespace ETModel
 
     public class MovePositionComponent : Component
     {
-
         public Vector3 TargetPosition;
         // 开启移动协程的Unit的位置
         public Vector3 StartPos;
@@ -38,6 +37,7 @@ namespace ETModel
         {
             if (this.moveTcs == null)
             {
+                this.GetParent<Unit>().GetComponent<AnimatorComponent>().AnimSet(0);
                 return;
             }
 

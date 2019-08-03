@@ -74,7 +74,7 @@ namespace ETHotfix
                 m2CPathfindingResult.Ys.Add(v.y);
                 m2CPathfindingResult.Zs.Add(v.z);
             }
-            MessageHelper.Broadcast(m2CPathfindingResult);
+            MessageHelper.Broadcast(m2CPathfindingResult, unit.GetComponent<AoiUnitComponent>().playerIds.MovesSet.ToArray());
         }
         #endregion
         

@@ -41,11 +41,6 @@ namespace ETModel
             
             this.Target = target;
 
-            if (this.GetParent<Unit>().UnitType == UnitType.Player)
-            {
-                Console.WriteLine(" MoveComponent-51-tx/tz: " + " ( " + target.x + " , " + 0 + " , " + target.z + ")");
-            }
-
             // 开启协程移动
             await StartMove(cancellationToken);
         }
@@ -59,11 +54,6 @@ namespace ETModel
             this.StartTime = TimeHelper.Now();
             float distance = (this.Target - this.StartPos).magnitude;
 
-            if (unit.UnitType == UnitType.Player)
-            {
-                Console.WriteLine(" MoveComponent-59-distance: " + distance);
-            }
-
             if (Math.Abs(distance) < 0.1f)
             {
                 return;
@@ -71,11 +61,6 @@ namespace ETModel
 
             
             this.needTime = (long)(distance / this.moveSpeed * 1000);
-
-            if (unit.UnitType == UnitType.Player)
-            {
-                Console.WriteLine(" MoveComponent-83-needTime: " + this.needTime);
-            }
 
             TimerComponent timerComponent = Game.Scene.GetComponent<TimerComponent>();
             
@@ -86,11 +71,21 @@ namespace ETModel
                 if (timeNow - this.StartTime >= this.needTime)
                 {
                     unit.Position = this.Target;
+
+                    if (this.GetParent<Unit>().UnitType == UnitType.Player)
+                    {
+                        Console.WriteLine(" MoveComponent-77-unitPos: " + unit.UnitType + "  " + unit.Position.ToString());
+                    }
                 }
                 else
                 {
                     float amount = (timeNow - this.StartTime) * 1f / this.needTime;
                     unit.Position = Vector3.Lerp(this.StartPos, this.Target, amount);
+
+                    if (this.GetParent<Unit>().UnitType == UnitType.Player)
+                    {
+                        Console.WriteLine(" MoveComponent-87-unitPos: " + unit.UnitType + "  " + unit.Position.ToString());
+                    }
                 }
             });
 
@@ -103,17 +98,17 @@ namespace ETModel
                 if (timeNow - this.StartTime >= this.needTime)
                 {
                     unit.Position = this.Target;
+
+                    if (this.GetParent<Unit>().UnitType == UnitType.Player)
+                    {
+                        Console.WriteLine(" MoveComponent-104-unitPos: " + unit.UnitType + "  " + unit.Position.ToString());
+                    }
+
                     break;
                 }
 
                 float amount = (timeNow - this.StartTime) * 1f / this.needTime;
                 unit.Position = Vector3.Lerp(this.StartPos, this.Target, amount);
-
-
-                if (unit.UnitType == UnitType.Player)
-                {
-                    Console.WriteLine(" MoveComponent-121: " + unit.UnitType + " / ( " + unit.Position.x + " , " + 0 + " , " + unit.Position.z + ")");
-                }
             }
         }
         

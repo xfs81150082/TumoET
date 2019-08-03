@@ -74,11 +74,15 @@ namespace ETModel
                 if (timeNow - this.StartTime >= this.needTime)
                 {
                     unit.Position = this.TargetPosition;
+
+                    Console.WriteLine(" MovePositionComponent-78-unitPos: " + unit.UnitType + "  " + unit.Position.ToString());
                 }
                 else
                 {
                     float amount = (timeNow - this.StartTime) * 1f / this.needTime;
                     unit.Position = Vector3.Lerp(this.StartPos, this.TargetPosition, amount);
+
+                    Console.WriteLine(" MovePositionComponent-85-unitPos: " + unit.UnitType + "  " + unit.Position.ToString());
                 }
             });
 
@@ -91,13 +95,15 @@ namespace ETModel
                 if (timeNow - this.StartTime >= this.needTime)
                 {
                     unit.Position = this.TargetPosition;
+
+                    Console.WriteLine(" MovePositionComponent-99-unitPos: " + unit.UnitType + "  " + unit.Position.ToString());
+
                     break;
                 }
 
                 float amount = (timeNow - this.StartTime) * 1f / this.needTime;
                 unit.Position = Vector3.Lerp(this.StartPos, this.TargetPosition, amount);
 
-                Console.WriteLine(" MovePositionComponent-100-unitPos: " + unit.UnitType + " ( " + unit.Position.x + " , " + 0 + " , " + unit.Position.z + ")");
             }
         }
 

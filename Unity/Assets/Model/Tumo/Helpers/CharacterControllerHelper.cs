@@ -21,7 +21,7 @@ namespace ETModel
             if (self.isCanControl)
             {
                 self.h = Input.GetAxis("Horizontal");    //获取水平方线   //默认 Horizontal a键 为 -1  d键为 1 
-                self.v = Input.GetAxis("Vertical");      //获取水平方线    //默认 Vertical s键 为 -1  w键为 1   
+                self.v = Input.GetAxis("Vertical");      //获取水平方线   //默认 Vertical s键 为 -1  w键为 1   
 
                 //if (Mathf.Abs(EngineerJoyStick.hv2.x) > 10.0f || Mathf.Abs(EngineerJoyStick.hv2.y) > 10.0f)
                 //{
@@ -53,10 +53,7 @@ namespace ETModel
 
             self.animatorComponent.AnimSet(self.v);
 
-            //Debug.Log(" CharacterControllerHelper-58-v/h: " + TimeHelper.ClientNow() + " : " +  self.v + " / " + self.h);
-
             self.SetMoveMap();
-
         }
 
         public static bool IsGrounded(this CharacterControllerComponent self)
@@ -112,8 +109,6 @@ namespace ETModel
 
                     self.isStart = true;
                     self.isZero = false;
-
-                    Debug.Log(" CharacterControllerHelper-116-clientPos/dir: " + clientPos.ToString() + " / " + dir.ToString());
                 }
             }
             else

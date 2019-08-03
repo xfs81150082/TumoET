@@ -65,10 +65,11 @@ namespace ETModel
                 Player player = ComponentFactory.CreateWithId<Player>(IdGenerater.GenerateId());
                 player.UserId = user.Id;
                 player.Account = user.Account;
-                player.spawnPosition = new Vector3(-40, 0, -10);
+                player.spawnPosition = new Vector3(-40, 0, -20);
 
                 player.AddComponent<NumericComponent>();
-                player.GetComponent<NumericComponent>().Set(NumericType.MaxHpAdd, 20);
+                player.GetComponent<NumericComponent>().Set(NumericType.MaxHpAdd, 140);   // MaxHpAdd 数值,进行赋值
+                player.GetComponent<NumericComponent>().Set(NumericType.HpAdd, 140);      // HpAdd 数值,进行赋值
 
                 players.Add(player.Id, player);
             }

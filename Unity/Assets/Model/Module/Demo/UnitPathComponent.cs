@@ -32,7 +32,9 @@ namespace ETModel
 					}
 				}
 
-				this.Entity.GetComponent<TurnComponent>().Turn(v);
+                Debug.Log(" UnitPathComponent-35: " + this.GetParent<Unit>().Id + " : " );
+
+                this.Entity.GetComponent<TurnComponent>().Turn(v);
 				await this.Entity.GetComponent<MoveComponent>().MoveToAsync(v, speed, cancellationToken);
 			}
 		}

@@ -92,39 +92,16 @@ namespace ETHotfix
         {
             if (unit.GetComponent<NumericComponent>() == null) return;
             NumericComponent num = unit.GetComponent<NumericComponent>();
+            NumericComponent numPlayer = player.GetComponent<NumericComponent>();
 
-            num.Set(NumericType.HpAdd, 400);
-            num.Set(NumericType.MaxHpAdd, 400);
+            num[NumericType.MaxHpAdd] = numPlayer[NumericType.MaxHpAdd]; // MaxHpAdd 数值,进行赋值
+            num[NumericType.HpAdd] = numPlayer[NumericType.HpAdd]; // HpAdd 数值,进行赋值
 
             unit.GetComponent<MoveComponent>().moveSpeed = 4.0f;
 
-            Console.WriteLine(" M2M_CreateEnemyUnitHandler-Id-57: " + unit.Id + " MaxHp: " + num[NumericType.MaxHp] + " MaxHpBase: " + num[NumericType.MaxHpBase] + " MaxHpAdd: " + num[NumericType.MaxHpAdd]);
+            Console.WriteLine(" M2M_CreateEnemyUnitHandler-Id-101: " + unit.Id + " MaxHp: " + num[NumericType.MaxHp] + " MaxHpBase: " + num[NumericType.MaxHpBase] + " MaxHpAdd: " + num[NumericType.MaxHpAdd]);
         }
-
-        /// <summary>
-        /// 给客户端 添加 玩家 单元实例
-        /// </summary>
-        /// <param name="unitIds"></param>
-        /// <param name="unit"></param>
-        void AddPlayers(long[] unitIds, long[] playerUnitIds)
-        {        
-            /// 广播创建的unit
-            M2M_AddUnits m2M_AddUnits = new M2M_AddUnits() { UnitType = (int)UnitType.Player, UnitIds = unitIds.ToHashSet(), PlayerUnitIds = playerUnitIds.ToHashSet() };
-            SessionHelper.MapSession().Send(m2M_AddUnits);
-        }
-
-        /// <summary>
-        /// 给客户端 添加 小怪 单元实例
-        /// </summary>
-        /// <param name="unitIds"></param>
-        /// <param name="unit"></param>
-        void AddMonsters(long[] unitIds , long[] playerUnitIds)
-        {
-            /// 广播创建的unit
-            M2M_AddUnits m2M_AddUnits = new M2M_AddUnits() { UnitType = (int)UnitType.Monster, UnitIds = unitIds.ToHashSet(), PlayerUnitIds = playerUnitIds.ToHashSet() };
-            SessionHelper.MapSession().Send(m2M_AddUnits);
-        }
-
+        
         #endregion
 
         #region
@@ -174,12 +151,14 @@ namespace ETHotfix
             NumericComponent numEnemy = enemy.GetComponent<NumericComponent>();
 
             num[NumericType.MaxHpAdd] = numEnemy[NumericType.MaxHpAdd];
+            num[NumericType.HpAdd] = numEnemy[NumericType.HpAdd];
 
             ///小怪当前速度
             unit.GetComponent<MoveComponent>().moveSpeed = 2.0f;
 
+            Console.WriteLine(" M2M_CreateEnemyUnitHandler-Id-158: " + unit.Id + " MaxHp: " + num[NumericType.MaxHp] + " MaxHpBase: " + num[NumericType.MaxHpBase] + " MaxHpAdd: " + num[NumericType.MaxHpAdd]);
         }
-               
+
         #endregion
 
     }

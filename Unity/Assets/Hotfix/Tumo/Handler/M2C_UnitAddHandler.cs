@@ -27,17 +27,18 @@ namespace ETHotfix
                         }
                         Unit unit0 = UnitFactory.Create(unitInfo.UnitId);
                         unit0.Position = new Vector3(unitInfo.X, unitInfo.Y, unitInfo.Z);
-                        unit0.AddComponent<AnimatorComponent>();
-                        unit0.AddComponent<MoveComponent>();
-                        unit0.AddComponent<TurnComponent>();
-                        unit0.AddComponent<UnitPathComponent>();
+
+                        //unit0.AddComponent<AnimatorComponent>();
+                        //unit0.AddComponent<MoveComponent>();
+                        //unit0.AddComponent<TurnComponent>();
+                        //unit0.AddComponent<UnitPathComponent>();
+
+                        //unit0.AddComponent<MovePositionComponent>();
+                        //unit0.AddComponent<UnitPositionComponent>();
 
                         //unit0.AddComponent<TmAnimatorComponent>();
                         //unit0.AddComponent<TurnEulerAnglesComponent>();
                         //unit0.AddComponent<UnitAnglersComponent>();
-
-                        unit0.AddComponent<MovePositionComponent>();
-                        unit0.AddComponent<UnitPositionComponent>();
 
                         //unit0.AddComponent<ServerUnitPathComponent>();
                         //unit0.AddComponent<ClientMoveComponent>();

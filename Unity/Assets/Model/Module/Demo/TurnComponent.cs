@@ -84,7 +84,8 @@ namespace ETModel
 			this.t = 0;
 			this.TurnTime = turnTime;
 		}
-		public void Turn(Quaternion quaternion, float turnTime = 0.1f)
+
+        public void Turn(Quaternion quaternion, float turnTime = 0.1f)
 		{
 			this.To = quaternion;
 			this.From = this.GetParent<Unit>().Rotation;
