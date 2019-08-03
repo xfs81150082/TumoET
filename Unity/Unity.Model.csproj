@@ -518,6 +518,7 @@
     <Compile Include="Assets\Model\Tumo\Components\Move\UnitAnglersComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Components\Move\UnitPositionComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Components\PingComponent.cs" />
+    <Compile Include="Assets\Model\Tumo\Components\RigidBodyComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Components\TestComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Components\TmAnimatorComponent.cs" />
     <Compile Include="Assets\Model\Tumo\Helpers\CharacterControllerHelper.cs" />

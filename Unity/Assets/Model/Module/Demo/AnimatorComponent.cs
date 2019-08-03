@@ -33,46 +33,48 @@ namespace ETModel
 		public float stopSpeed;
 		public Animator Animator;
 
-		public void Awake()
-		{
-			Animator animator = this.GetParent<Unit>().GameObject.GetComponent<Animator>();
+        public void Awake()
+        {
+            Animator = this.GetParent<Unit>().GameObject.GetComponent<Animator>();
+     
+            #region
+            //Animator animator = this.GetParent<Unit>().GameObject.GetComponent<Animator>();
+            //if (animator == null)
+            //{
+            //    return;
+            //}
 
-			if (animator == null)
-			{
-				return;
-			}
+            //if (animator.runtimeAnimatorController == null)
+            //{
+            //    return;
+            //}
 
-			if (animator.runtimeAnimatorController == null)
-			{
-				return;
-			}
+            //if (animator.runtimeAnimatorController.animationClips == null)
+            //{
+            //    return;
+            //}
+            //this.Animator = animator;
+            //foreach (AnimationClip animationClip in animator.runtimeAnimatorController.animationClips)
+            //{
+            //    // 20190715 报空指针 修改增加 if 条件
+            //    //if (animationClip == null)
+            //    //{
+            //    //    continue;
+            //    //}
+            //    //if (this.animationClips[animationClip.name] == null)
+            //    //{
+            //    //    continue;
+            //    //}
+            //    this.animationClips[animationClip.name] = animationClip;
+            //}
+            //foreach (AnimatorControllerParameter animatorControllerParameter in animator.parameters)
+            //{
+            //    this.Parameter.Add(animatorControllerParameter.name);
+            //}
+            #endregion
+        }
 
-			if (animator.runtimeAnimatorController.animationClips == null)
-			{
-				return;
-			}
-			this.Animator = animator;
-            foreach (AnimationClip animationClip in animator.runtimeAnimatorController.animationClips)
-            {
-                ///20190715 报空指针 修改增加 if 条件
-                //if (animationClip == null)
-                //{
-                //    continue;
-                //}
-                //if (this.animationClips[animationClip.name] == null)
-                //{
-                //    continue;
-                //}
-
-                this.animationClips[animationClip.name] = animationClip;
-            }
-			foreach (AnimatorControllerParameter animatorControllerParameter in animator.parameters)
-			{
-				this.Parameter.Add(animatorControllerParameter.name);
-			}
-		}
-
-		public void Update()
+        public void Update()
 		{
 			if (this.isStop)
 			{
@@ -86,24 +88,118 @@ namespace ETModel
 
 			try
 			{
-				this.Animator.SetFloat("MotionSpeed", this.MontionSpeed);
+                ///2019.8.2
+                this.AnimSet(this.MontionSpeed);
+                this.AnimSet(this.MotionType.ToString());
 
-				this.Animator.SetTrigger(this.MotionType.ToString());
+                //this.Animator.SetFloat("Move", this.MontionSpeed);
+                //this.Animator.SetTrigger(this.MotionType.ToString());
 
-				this.MontionSpeed = 1;
+				this.MontionSpeed = 0;
 				this.MotionType = MotionType.None;
 			}
 			catch (Exception ex)
 			{
 				throw new Exception($"动作播放失败: {this.MotionType}", ex);
 			}
-		}
+        }
 
-		public bool HasParameter(string parameter)
+        #region
+
+        public void AnimSet(float v)
+        {
+            if (Math.Abs(v) < 0.05)
+            {
+                AnimSet("Idle");
+
+            }
+            else if (Math.Abs(v) < 0.5)
+            {
+                AnimSet("Walk", 0, v);
+            }
+            else
+            {
+                AnimSet("Run", 0, v);
+            }
+        }
+
+        public void AnimSet( float h, float v)
+        {
+            AnimSet("Move", h, v);
+        }
+
+        public void AnimSet( string moveState)
+        {
+            AnimSet(moveState, 0, 0);
+        }
+
+        void AnimSet(string moveState, float h, float v)
+        {
+            switch (moveState)
+            {
+                case "Move":    //播放行走动画    
+                    Animator.SetBool("Move", true);
+                    Animator.SetFloat("Vblend", 1);
+                    Animator.SetFloat("Hblend", 0);
+                    Animator.SetBool("Attack", false);
+                    break;
+                case "Walk":    //播放行走动画    
+                    Animator.SetBool("Move", true);
+                    Animator.SetFloat("Vblend", 0.5f);
+                    Animator.SetFloat("Hblend", 0);
+                    Animator.SetBool("Attack", false);
+                    break;
+                case "Run":     //播放追击动画  
+                    Animator.SetBool("Move", true);
+                    Animator.SetFloat("Vblend", 1f);
+                    Animator.SetFloat("Hblend", 0);
+                    Animator.SetBool("Attack", false);
+                    break;
+                case "Attack":  //播放攻击动画
+                    Animator.SetBool("Attack", true);
+                    Animator.SetBool("Move", false);
+                    break;
+                case "Idle":    //播放休息动画
+                    Animator.SetBool("Move", false);
+                    Animator.SetBool("Attack", false);
+                    break;
+                case "Die":     //播放死亡动画 
+                    Animator.SetTrigger("Die");
+                    Animator.SetBool("Attack", false);
+                    Animator.SetBool("Move", false);
+                    break;
+                case "Jump":    //播放跳跃动画 
+                    Animator.SetTrigger("Jump");
+                    break;
+                case "Hit":    //播放挨打动画 
+                    Animator.SetTrigger("Hit");
+                    break;
+                case "SkillOne":    //播放攻击特效1动画 
+                    Animator.SetTrigger("SkillOne");
+                    break;
+                case "SkillTwo":    //播放攻击特效1动画 
+                    Animator.SetTrigger("SkillTwo");
+                    break;
+                case "SkillThree":  //播放攻击特效1动画 
+                    Animator.SetTrigger("SkillThree");
+                    break;
+                case "SkillZero":  //播放基本攻击动画 
+                    Animator.SetTrigger("SkillZero");
+                    break;
+            }
+        }
+
+
+
+
+
+        #endregion
+
+
+
+        #region ET
+        public bool HasParameter(string parameter)
 		{
-            ///20190715
-            if (Parameter == null) return false;
-
 			return this.Parameter.Contains(parameter);
 		}
 
@@ -127,9 +223,6 @@ namespace ETModel
 
 		public void Play(MotionType motionType, float motionSpeed = 1f)
 		{
-            ///20190715
-            if (Parameter == null) return;
-
             if (!this.HasParameter(motionType.ToString()))
 			{
 				return;
@@ -255,5 +348,7 @@ namespace ETModel
 			this.Parameter = null;
 			this.Animator = null;
 		}
-	}
+        #endregion
+
+    }
 }

@@ -2434,7 +2434,7 @@ namespace ETModel
                 id_ = value;
             }
         }
-  
+
         private float v_;
         public float V
         {
@@ -2455,9 +2455,19 @@ namespace ETModel
             }
         }
 
+        private float w_;
+        public float W
+        {
+            get { return w_; }
+            set
+            {
+                w_ = value;
+            }
+        }
+
         public void WriteTo(pb::CodedOutputStream output)
         {
-           if (Id != 0L)
+            if (Id != 0L)
             {
                 output.WriteRawTag(13);
                 output.WriteInt64(Id);
@@ -2466,7 +2476,7 @@ namespace ETModel
             {
                 output.WriteRawTag(21);
                 output.WriteInt32(KeyType);
-            }          
+            }
             if (V != 0F)
             {
                 output.WriteRawTag(29);
@@ -2476,6 +2486,11 @@ namespace ETModel
             {
                 output.WriteRawTag(37);
                 output.WriteFloat(H);
+            }
+            if (W != 0F)
+            {
+                output.WriteRawTag(45);
+                output.WriteFloat(W);
             }
 
             if (RpcId != 0)
@@ -2487,7 +2502,7 @@ namespace ETModel
             {
                 output.WriteRawTag(232, 5);
                 output.WriteInt64(ActorId);
-            } 
+            }
         }
 
         public int CalculateSize()
@@ -2509,12 +2524,16 @@ namespace ETModel
             if (KeyType != 0)
             {
                 size += 2 + pb::CodedOutputStream.ComputeInt32Size(KeyType);
-            }          
+            }
             if (V != 0F)
             {
                 size += 1 + 4;
             }
             if (H != 0F)
+            {
+                size += 1 + 4;
+            }
+            if (W != 0F)
             {
                 size += 1 + 4;
             }
@@ -2524,9 +2543,10 @@ namespace ETModel
         public void MergeFrom(pb::CodedInputStream input)
         {
             id_ = 0;
-            keyType_ = 0;           
+            keyType_ = 0;
             v_ = 0f;
             h_ = 0f;
+            w_ = 0f;
             rpcId_ = 0;
             actorId_ = 0;
             uint tag;
@@ -2546,7 +2566,7 @@ namespace ETModel
                         {
                             KeyType = input.ReadInt32();
                             break;
-                        }                 
+                        }
                     case 29:
                         {
                             V = input.ReadFloat();
@@ -2555,6 +2575,11 @@ namespace ETModel
                     case 37:
                         {
                             H = input.ReadFloat();
+                            break;
+                        }
+                    case 45:
+                        {
+                            W = input.ReadFloat();
                             break;
                         }
 

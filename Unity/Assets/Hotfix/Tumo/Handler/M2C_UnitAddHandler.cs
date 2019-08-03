@@ -32,12 +32,13 @@ namespace ETHotfix
                         unit0.AddComponent<TurnComponent>();
                         unit0.AddComponent<UnitPathComponent>();
 
-                        unit0.AddComponent<TmAnimatorComponent>();
-                        unit0.AddComponent<TurnEulerAnglesComponent>();
+                        //unit0.AddComponent<TmAnimatorComponent>();
+                        //unit0.AddComponent<TurnEulerAnglesComponent>();
+                        //unit0.AddComponent<UnitAnglersComponent>();
+
                         unit0.AddComponent<MovePositionComponent>();
-                        unit0.AddComponent<UnitAnglersComponent>();
                         unit0.AddComponent<UnitPositionComponent>();
-     
+
                         //unit0.AddComponent<ServerUnitPathComponent>();
                         //unit0.AddComponent<ClientMoveComponent>();
                         //unit0.AddComponent<StateMoveComponent>();
@@ -46,11 +47,12 @@ namespace ETHotfix
                         {
                             ///20190621//将参数unit 传给组件CameraComponent awake方法
                             ETModel.Game.EventSystem.Awake<Unit>(ETModel.Game.Scene.GetComponent<CameraComponent>(), unit0);
+                            unit0.AddComponent<CharacterControllerComponent>().isCanControl = true;
 
                             ///20190703
                             Game.Scene.AddComponent<OperaComponent>();
                             Game.Scene.AddComponent<RaycastHitComponent>();
-                            Game.Scene.AddComponent<KeyboardPathComponent>();
+                            //Game.Scene.AddComponent<KeyboardPathComponent>();
 
                             Debug.Log(" M2C_AddUnitHandler-47: " + unit0.Id);
                         }

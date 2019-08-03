@@ -12,9 +12,9 @@ namespace ETHotfix
         {
             if (Math.Abs(self.v) > 0.03f || (Math.Abs(self.h) > 0.03f))
             {
-                self.KeyboardMoveTurn();
+                self.KeyboardMove();
 
-                self.VHToZero();
+                self.VToZero();
             }
         }
     }

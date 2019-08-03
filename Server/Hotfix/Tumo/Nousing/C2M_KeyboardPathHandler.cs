@@ -10,9 +10,9 @@ namespace ETHotfix
     [ActorMessageHandler(AppType.Map)]
     public class C2M_KeyboardPathHandler : AMActorLocationHandler<Unit, C2M_KeyboardPathResult>
     {
-        protected override void Run(Unit unit, C2M_KeyboardPathResult message)
+        protected override void Run(Unit entity, C2M_KeyboardPathResult message)
         {
-            unit.GetComponent<KeyboardPathComponent>().KeyboardVH(message.V, message.H);
+            entity.GetComponent<KeyboardPathComponent>().KeyboardVW(message.V, message.W);
         }
 
 

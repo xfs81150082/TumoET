@@ -18,11 +18,15 @@ namespace ETHotfix
             if (Math.Abs(self.v) > 0.05f || Math.Abs(self.h) > 0.05f)
             {
                 self.isZero = false;
+                long playerUnitId = ETModel.Game.Scene.GetComponent<PlayerComponent>().MyPlayer.UnitId;
+                Unit player = ETModel.Game.Scene.GetComponent<UnitComponent>().Get(playerUnitId);
+                self.w = player.Rotation.eulerAngles.y;
 
                 self.c2M_PathKeyboardResult.KeyType = (int)KeyType.KeyCode;
-                self.c2M_PathKeyboardResult.Id = ETModel.Game.Scene.GetComponent<PlayerComponent>().MyPlayer.UnitId;
+                self.c2M_PathKeyboardResult.Id = playerUnitId;
                 self.c2M_PathKeyboardResult.V = self.v;
                 self.c2M_PathKeyboardResult.H = self.h;
+                self.c2M_PathKeyboardResult.W = self.w;
 
                 ETModel.SessionComponent.Instance.Session.Send(self.c2M_PathKeyboardResult);
 

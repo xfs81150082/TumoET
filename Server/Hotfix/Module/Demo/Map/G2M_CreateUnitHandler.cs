@@ -64,11 +64,15 @@ namespace ETHotfix
                 unit.AddComponent<NumericComponent>();
                 unit.AddComponent<AttackComponent>();
                 unit.AddComponent<RayUnitComponent>();
-                unit.AddComponent<KeyboardPathComponent>();
-                unit.AddComponent<TurnAnglesComponent>();
+
+                //unit.AddComponent<KeyboardPathComponent>();
+                //unit.AddComponent<TurnAnglesComponent>();
+                //unit.AddComponent<UnitAnglesComponent>();
+                //unit.AddComponent<UnitPositionComponent>();
+
                 unit.AddComponent<MovePositionComponent>();
-                unit.AddComponent<UnitAnglesComponent>();
-                unit.AddComponent<UnitPositionComponent>();
+                unit.AddComponent<UnitDirComponent>();
+                unit.AddComponent<MapPathComponent>();
 
                 SetNumeric(unit ,player);
 

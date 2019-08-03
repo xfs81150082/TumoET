@@ -10,7 +10,9 @@ namespace ETModel
     {
         public float moveSpeed = 4.0f;
 
-        public Vector3 TargetPosition;
+        public Vector3 dirPos;       //向量坐标
+
+        public Vector3 TargetPosition;  //目标坐标
 
         private ABPathWrap abPath;
 

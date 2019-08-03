@@ -275,7 +275,7 @@ GameObject:
   - component: {fileID: 438}
   - component: {fileID: 247}
   m_Layer: 8
-  m_Name: Cube
+  m_Name: Cube1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -294,7 +294,7 @@ GameObject:
   - component: {fileID: 439}
   - component: {fileID: 248}
   m_Layer: 8
-  m_Name: Cube
+  m_Name: Cube1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -313,7 +313,7 @@ GameObject:
   - component: {fileID: 440}
   - component: {fileID: 249}
   m_Layer: 8
-  m_Name: Cube
+  m_Name: Cube1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7605,6 +7605,7 @@ MonoBehaviour:
   count: 5
   wide: 20
   mapLength: 100
+  isLine: 1
 --- !u!65 &1930434232
 BoxCollider:
   m_ObjectHideFlags: 0

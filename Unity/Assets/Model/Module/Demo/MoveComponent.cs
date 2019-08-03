@@ -33,6 +33,7 @@ namespace ETModel
         {
             if (this.moveTcs == null)
             {
+                this.GetParent<Unit>().GetComponent<AnimatorComponent>().AnimSet("Idle");
                 return;
             }
 

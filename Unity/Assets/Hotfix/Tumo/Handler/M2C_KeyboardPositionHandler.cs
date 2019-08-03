@@ -23,8 +23,6 @@ namespace ETHotfix
             UnitPositionComponent unitPositionComponent = unit.GetComponent<UnitPositionComponent>();
             unitPositionComponent.StartMove(message).Coroutine();
 
-            unit.GetComponent<TmAnimatorComponent>().AnimSet(1);
-
             GizmosDebug.Instance.Path.Clear();
             GizmosDebug.Instance.Path.Add(new Vector3(message.X, message.Y, message.Z));
             for (int i = 0; i < message.Xs.Count; ++i)

@@ -44,7 +44,7 @@ namespace ETHotfix
                 // 每移动3个点发送下3个点给客户端
                 if (i % 3 == 1)
                 {
-                    self.BroadcastPath(path, i, 3);
+                    //self.BroadcastPath(path, i, 3);  ///取消向客户端发送同步坐标
                 }
                 Vector3 v3 = path[i];
                 await self.Entity.GetComponent<MovePositionComponent>().MoveToAsync(v3, self.CancellationTokenSource.Token);
@@ -56,7 +56,6 @@ namespace ETHotfix
         {
             Unit unit = self.GetParent<Unit>();
             Vector3 unitPos = unit.Position;
-            //M2C_PathfindingResult m2CPathfindingResult = new M2C_PathfindingResult();
             M2C_KeyboardPosition m2C_KeyboardPosition = new M2C_KeyboardPosition();
             m2C_KeyboardPosition.X = unitPos.x;
             m2C_KeyboardPosition.Y = unitPos.y;

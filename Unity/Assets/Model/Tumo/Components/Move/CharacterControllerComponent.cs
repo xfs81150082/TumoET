@@ -35,8 +35,10 @@ namespace ETModel
         public float moveSpeed = 4.0f;
         public float jumpSpeed = 5.0f;
         public float gravity = 10.0f;
-        public CharacterController controller;
-        public TmAnimatorComponent animator;
+        public float gdy = 0.2f;
+        public bool isZero = false;
+        public CharacterController Controller;
+        public AnimatorComponent animatorComponent;
 
         public float startTime = 0;
         public bool isStart = false;
@@ -48,6 +50,7 @@ namespace ETModel
         public void Awake()
         {
             this.mapMask = LayerMask.GetMask("Map");
+            Controller = this.GetParent<Unit>().GameObject.GetComponent<CharacterController>();
 
             Debug.Log(" CharacterControllerComponent-42: " + mapMask);
         }

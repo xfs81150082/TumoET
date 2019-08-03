@@ -17,7 +17,11 @@ namespace ETHotfix
             }
             if (unit == null) return;
 
-            unit.GetComponent<AnimatorComponent>().SetFloatValue("Speed", 5f);
+            //unit.GetComponent<AnimatorComponent>().SetFloatValue("Speed", 5f);
+
+            ///20190803
+            unit.GetComponent<AnimatorComponent>().AnimSet("Run");
+
             UnitPathComponent unitPathComponent = unit.GetComponent<UnitPathComponent>();
 			unitPathComponent.StartMove(message).Coroutine();
 

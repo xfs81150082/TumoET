@@ -4,6 +4,9 @@
 	{
 		None,
 		Idle,
+        Move,
 		Run,
+        Jump,
+
 	}
 }

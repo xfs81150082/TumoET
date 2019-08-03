@@ -13,11 +13,9 @@ namespace ETModel
         public static void KeyMove(this CharacterControllerComponent self)
         {
             Unit unit = self.GetParent<Unit>();
-            self.animator = unit.GetComponent<TmAnimatorComponent>();
-            if (self.animator.animator == null || self.controller == null)
+            if (self.animatorComponent == null)
             {
-                self.animator.animator = unit.GameObject.GetComponent<Animator>();
-                self.controller = unit.GameObject.GetComponent<CharacterController>();
+                self.animatorComponent = unit.GetComponent<AnimatorComponent>();
             }
 
             if (self.isCanControl)
@@ -38,11 +36,10 @@ namespace ETModel
                 //}
             }
 
-            if (IsGrounded(unit.GameObject))
+            if (self.IsGrounded())
             {
-                unit.GameObject.GetComponent<Transform>().Rotate(0, self.h * self.roteSpeed, 0);
                 self.moveDirection = new Vector3(0, 0, self.v);
-                self.moveDirection = unit.GameObject.GetComponent<Transform>().TransformDirection(self.moveDirection);
+                self.moveDirection = unit.GameObject.transform.TransformDirection(self.moveDirection);
                 self.moveDirection *= self.moveSpeed;
                 if (Input.GetButton("Jump"))
                 {
@@ -51,22 +48,23 @@ namespace ETModel
             }
 
             self.moveDirection.y -= self.gravity * Time.deltaTime;
-            self.controller.Move(self.moveDirection * Time.deltaTime);
+            self.Controller.Move(self.moveDirection * Time.deltaTime);
+            unit.GameObject.transform.Rotate(new Vector3(0, self.h * self.roteSpeed, 0));
 
-            self.animator.AnimSet(self.v);
+            self.animatorComponent.AnimSet(self.v);
 
             //Debug.Log(" CharacterControllerHelper-58-v/h: " + TimeHelper.ClientNow() + " : " +  self.v + " / " + self.h);
 
-            self.SetMapMove();
+            self.SetMoveMap();
 
         }
 
-        static bool IsGrounded(GameObject go)
+        public static bool IsGrounded(this CharacterControllerComponent self)
         {
-            return Physics.Raycast(go.GetComponent<Transform>().position, -Vector3.up, 0.2f);
+            return Physics.Raycast(self.GetParent<Unit>().GameObject.transform.position, -Vector3.up, self.gdy);
         }
 
-        static void SetMapMove(this CharacterControllerComponent self)
+        static void SetMoveMap(this CharacterControllerComponent self)
         {
             if (self.isStart)
             {
@@ -78,45 +76,77 @@ namespace ETModel
                 self.isStart = false;
             }
 
-            //self.v = Input.GetAxis("Vertical") * self.moveSpeed;
-            //self.h = Input.GetAxis("Horizontal") * self.roteSpeed;
+            if (Math.Abs(self.h) > 0.05f)
+            {
+                self.resTime = 0.3f;
+            }
+            else
+            {
+                if (self.resTime != 1.0f)
+                {
+                    self.resTime = 1.0f;
+                }
+            }
 
-            if (Math.Abs(self.v) > 0.05f || Math.Abs(self.h) > 0.05f)
+            if (Math.Abs(self.v) > 0.05f)
             {
                 if (self.startTime == 0)
                 {
+                    Vector3 clientPos = self.GetParent<Unit>().Position;
+                    Vector3 dir = self.moveDirection;
+
                     self.move_Map.KeyType = (int)KeyType.KeyCode;
                     self.move_Map.Id = ETModel.Game.Scene.GetComponent<PlayerComponent>().MyPlayer.UnitId;
 
                     self.move_Map.V = self.v;
-                    self.move_Map.H = self.h;
+
+                    self.move_Map.X = clientPos.x;
+                    self.move_Map.Y = 0;
+                    self.move_Map.Z = clientPos.z;
+
+                    self.move_Map.AX = dir.x;
+                    self.move_Map.AY = 0;
+                    self.move_Map.AZ = dir.z;
 
                     ETModel.SessionComponent.Instance.Session.Send(self.move_Map);
 
                     self.isStart = true;
+                    self.isZero = false;
 
-                    //Debug.Log(" CharacterControllerHelper-91: " + TimeHelper.ClientNow() + " : " + (KeyType)self.move_Map.KeyType + " / " + self.move_Map.Id + " / " + self.move_Map.V + " / " + self.move_Map.H);
+                    Debug.Log(" CharacterControllerHelper-116-clientPos/dir: " + clientPos.ToString() + " / " + dir.ToString());
                 }
             }
             else
             {
-                if (Input.GetMouseButtonDown(1))
+                if (!self.isZero)
                 {
-                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                    RaycastHit hit;
-                    if (Physics.Raycast(ray, out hit, 1000, self.mapMask))
-                    {
-                        self.ClickPoint = hit.point;
-                        self.move_Map.KeyType = (int)KeyType.Click;
-                        self.move_Map.X = self.ClickPoint.x;
-                        self.move_Map.Y = self.ClickPoint.y;
-                        self.move_Map.Z = self.ClickPoint.z;
-                        ETModel.SessionComponent.Instance.Session.Send(self.move_Map);
+                    self.v = 0;
+                    self.moveDirection = Vector3.zero;
 
-                        Debug.Log(" CharacterControllerHelper-116: " + (KeyType)self.move_Map.KeyType + " / " + self.move_Map.Id + " / " + self.move_Map.X + " / " + self.move_Map.Y + " / " + self.move_Map.Z);
-                    }
+                    Vector3 clientPos = self.GetParent<Unit>().Position;
+                    Vector3 dir = self.moveDirection;
+
+                    self.move_Map.KeyType = (int)KeyType.KeyCode;
+                    self.move_Map.Id = ETModel.Game.Scene.GetComponent<PlayerComponent>().MyPlayer.UnitId;
+
+                    self.move_Map.V = self.v;
+
+                    self.move_Map.X = clientPos.x;
+                    self.move_Map.Y = 0;
+                    self.move_Map.Z = clientPos.z;
+
+                    self.move_Map.AX = dir.x;
+                    self.move_Map.AY = 0;
+                    self.move_Map.AZ = dir.z;
+
+                    ETModel.SessionComponent.Instance.Session.Send(self.move_Map);
+
+                    self.isZero = true;
+
+                    Debug.Log(" CharacterControllerHelper-146-clientPos/dir: " + clientPos.ToString() + " / " + dir.ToString());
                 }
             }
+
         }
 
 

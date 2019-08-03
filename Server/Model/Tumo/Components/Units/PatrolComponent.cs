@@ -25,8 +25,8 @@ namespace ETModel
         public long patolTimer = 0;
         public long lifeCdTime = 400;
 
-        public int coreDis = 20;
-        public int coreRan = 0;
+        public int coreDis = 4;  //巡逻半径4米
+        public int coreRan = 0;  // 随机数种子
         public Vector3 spawnPosition { get; set; } = new Vector3(0, 0, 0);
         public Vector3 goalPoint;
 
@@ -36,8 +36,8 @@ namespace ETModel
 
         public void Awake()
         {
-            this.spawnPosition = new Vector3(GetParent<Unit>().Position.x, GetParent<Unit>().Position.y, GetParent<Unit>().Position.z);
             coreRan = Convert.ToInt32(GetParent<Unit>().Id % 10);
+            this.spawnPosition = new Vector3(GetParent<Unit>().Position.x, GetParent<Unit>().Position.y, GetParent<Unit>().Position.z);
         }        
     }
 }

@@ -2060,6 +2060,7 @@ namespace ETModel
                 }
             }
         }
+
     }
     public partial class Move_KeyCodeMap : pb::IMessage
     {
@@ -2456,6 +2457,16 @@ namespace ETModel
             }
         }
 
+        private float w_;
+        public float W
+        {
+            get { return w_; }
+            set
+            {
+                w_ = value;
+            }
+        }
+
         public void WriteTo(pb::CodedOutputStream output)
         {
             if (Id != 0L)
@@ -2477,6 +2488,11 @@ namespace ETModel
             {
                 output.WriteRawTag(37);
                 output.WriteFloat(H);
+            }
+            if (W != 0F)
+            {
+                output.WriteRawTag(45);
+                output.WriteFloat(W);
             }
 
             if (RpcId != 0)
@@ -2519,6 +2535,10 @@ namespace ETModel
             {
                 size += 1 + 4;
             }
+            if (W != 0F)
+            {
+                size += 1 + 4;
+            }
             return size;
         }
 
@@ -2528,6 +2548,7 @@ namespace ETModel
             keyType_ = 0;
             v_ = 0f;
             h_ = 0f;
+            w_ = 0f;
             rpcId_ = 0;
             actorId_ = 0;
             uint tag;
@@ -2556,6 +2577,11 @@ namespace ETModel
                     case 37:
                         {
                             H = input.ReadFloat();
+                            break;
+                        }
+                    case 45:
+                        {
+                            W = input.ReadFloat();
                             break;
                         }
 

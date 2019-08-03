@@ -21,6 +21,7 @@ namespace ETHotfix
     {
         public float h = 0;
         public float v = 0;
+        public float w = 0;
 
         public bool isZero = true;
 

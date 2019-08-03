@@ -13,6 +13,8 @@ namespace ETHotfix
         {
             Vector3 target = new Vector3(message.X, message.Y, message.Z);
             entity.GetComponent<UnitPathComponent>().MoveTo(target).Coroutine();
+
+            //Console.WriteLine(" See_MapHandler-17-SeePos: " + entity.Id + " " + target.ToString());
         }
 
     }

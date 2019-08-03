@@ -9,15 +9,15 @@ namespace ETModel
     {
         public static void KeyCodeContorlMove(this TranslateComponent self)
         {
-            self.Init();                               /// self 初始化
+            self.Init();                                                /// self 初始化
 
-            //self.ContorlMove();                        /// 控制 向角色正前方移动和角色原地旋转
+            self.ContorlMove();                                         /// 控制 向角色正前方移动和角色原地旋转
 
-            //self.ControlJump();                        /// 控制 跳跃
+            self.ControlJump();                                         /// 控制 跳跃
 
-            //self.animator.AnimSet(self.v);             /// 控制 动画
+            self.animatorComponent.MontionSpeed = self.v;               /// 控制 动画
 
-            self.SetMapMove();                         /// 控制 状态同步
+            //self.SetMapMove();                                          /// 控制 状态同步
         }
 
         /// self 初始化
@@ -27,13 +27,13 @@ namespace ETModel
             {
                 self.roler = self.GetParent<Unit>().GameObject;
             }
-            if (self.animator == null)
+            if (self.animatorComponent == null)
             {
-                self.animator = self.GetParent<Unit>().GetComponent<TmAnimatorComponent>();
+                self.animatorComponent = self.GetParent<Unit>().GetComponent<AnimatorComponent>();
             }
-            if (self.animator.animator == null)
+            if (self.animatorComponent.Animator == null)
             {
-                self.animator.animator = self.GetParent<Unit>().GameObject.GetComponent<Animator>();
+                self.animatorComponent.Animator = self.GetParent<Unit>().GameObject.GetComponent<Animator>();
             }
         }
 
@@ -60,16 +60,17 @@ namespace ETModel
                 #endregion
             }
 
-            self.GetParent<Unit>().GameObject.GetComponent<Transform>().Translate(0, 0, self.v * self.moveSpeed * Time.deltaTime);
+            self.GetParent<Unit>().GameObject.transform.Translate(0, 0, self.v * self.moveSpeed * Time.deltaTime);
+            self.GetParent<Unit>().GameObject.transform.Rotate(0, self.h * self.roteSpeed, 0);
 
             if (self.IsGrounded())
             {
-                self.GetParent<Unit>().GameObject.GetComponent<Transform>().Rotate(0, self.h * self.roteSpeed, 0);
+                Debug.Log(" self.IsGrounded(): " + self.IsGrounded());
             }
         }
 
-        /// 控制 跳跃
-        static void ControlJump(this TranslateComponent self)
+            /// 控制 跳跃
+            static void ControlJump(this TranslateComponent self)
         {
             if (Input.GetButton("Jump") && self.IsGrounded())//如果点击了触发跳跃的键盘按钮的话
             {
@@ -114,7 +115,7 @@ namespace ETModel
                     self.GetParent<Unit>().GameObject.transform.Translate(new Vector3(0, -self.actuallySpeed * Time.deltaTime, 0));
                     self.actuallySpeed += self.gravity;            //加速下落 Position的Y 轴一直在减少
 
-                    if (self.GetParent<Unit>().GameObject.transform.position.y <= self.dy)
+                    if (self.GetParent<Unit>().GameObject.transform.position.y <= self.gdy)
                     {
                         Vector3 currentPosition = self.GetParent<Unit>().GameObject.transform.position;
                         self.GetParent<Unit>().GameObject.transform.position = new Vector3(currentPosition.x, 0, currentPosition.z);
@@ -131,11 +132,7 @@ namespace ETModel
         /// 角色离地0.2米以内 返回真 否则假
         static bool IsGrounded(this TranslateComponent self)
         {
-            if (self.GetParent<Unit>().Position.y < self.dy)
-            {
-                return true;
-            }
-            return false;
+            return Physics.Raycast(self.GetParent<Unit>().GameObject.transform.position, -Vector3.up, self.gdy);
         }
 
         static bool IsGrounded(GameObject go)

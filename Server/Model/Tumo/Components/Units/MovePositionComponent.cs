@@ -43,8 +43,6 @@ namespace ETModel
 
             this.TargetPosition = target;
 
-            //Console.WriteLine(" MovePositionComponent-46-tx/tz: " + " ( " + target.x + " , " + 0 + " , " + target.z + ")");
-
             // 开启协程移动
             await StartMove(cancellationToken);
         }
@@ -60,17 +58,12 @@ namespace ETModel
 
             Vector3 target = new Vector3(this.TargetPosition.x, this.TargetPosition.y, this.TargetPosition.z);
 
-            //Console.WriteLine(" MovePositionComponent-59-distance: " + distance);
-
             if (Math.Abs(distance) < 0.1f)
             {
                 return;
             }
 
-
             this.needTime = (long)(distance / this.moveSpeed * 1000);
-
-            //Console.WriteLine(" MovePositionComponent-71-needTime: " + this.needTime);
 
             TimerComponent timerComponent = Game.Scene.GetComponent<TimerComponent>();
 
@@ -104,10 +97,7 @@ namespace ETModel
                 float amount = (timeNow - this.StartTime) * 1f / this.needTime;
                 unit.Position = Vector3.Lerp(this.StartPos, this.TargetPosition, amount);
 
-                Console.WriteLine(" MovePositionComponent-107-targetV: " + unit.UnitType + " / ( " + target.x + " , " + 0 + " , " + target.z + ")");
-                Console.WriteLine(" MovePositionComponent-108-unitV: " + unit.UnitType + " / ( " + unit.Position.x + " , " + 0 + " , " + unit.Position.z + ")");
-                Console.WriteLine(" MovePositionComponent-109-unitH: " + unit.UnitType + " / ( " + 0 + " , " + unit.EulerAngles.y + " , " + 0 + ")");
-
+                Console.WriteLine(" MovePositionComponent-100-unitPos: " + unit.UnitType + " ( " + unit.Position.x + " , " + 0 + " , " + unit.Position.z + ")");
             }
         }
 

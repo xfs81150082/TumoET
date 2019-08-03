@@ -11,7 +11,7 @@ namespace ETModel
         {
             self.KeyCodeContorlMove();
 
-            self.SetMapMove();
+            //self.SetMapMove();
         }
     }
 
@@ -31,10 +31,10 @@ namespace ETModel
         public float v = 0;
         public float moveSpeed = 4.0f;                      //移动速度
         public float roteSpeed = 5.0f;                      //旋转速度
-        public TmAnimatorComponent animator;
+        public AnimatorComponent animatorComponent;
         public GameObject roler;
 
-        public float dy = 0.2f;                              //离地高度
+        public float gdy= 0.5f;                               //离地高度
         public bool IsJump = false;                          //触发跳跃条件？       
         public bool IsJumpUp = false;                        //在向上跳     
         public bool IsJumpDown = false;                      //在向下跳？       
@@ -48,15 +48,14 @@ namespace ETModel
         public float resTime = 1.0f;
         public Vector3 ClickPoint;
         public int mapMask;
-        public readonly Move_Map move_Map = new Move_Map();
         public readonly C2M_KeyboardPathResult c2M_PathKeyboardResult = new C2M_KeyboardPathResult();
 
         public void Awake()
         {
             this.mapMask = LayerMask.GetMask("Map");
             roler = this.GetParent<Unit>().GameObject;
-            animator = this.GetParent<Unit>().GetComponent<TmAnimatorComponent>();
-            animator.animator = this.GameObject.GetComponent<Animator>();
+            animatorComponent = this.GetParent<Unit>().GetComponent<AnimatorComponent>();
+            animatorComponent.Animator = this.GameObject.GetComponent<Animator>();
 
             Debug.Log(" TranslateComponent-55: " + mapMask);
         }
