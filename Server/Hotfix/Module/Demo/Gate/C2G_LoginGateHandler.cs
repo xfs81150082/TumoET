@@ -21,12 +21,12 @@ namespace ETHotfix
                     return;
                 }            
 
-                User user = Game.Scene.GetComponent<UserComponent>().Get(account);
+                User user = Game.Scene.GetComponent<UserComponent>().GetByAccount(account);
                 Player[] players = Game.Scene.GetComponent<PlayerComponent>().GetByUserId(user.Id);
                 Player player = players[0];
 
                 session.AddComponent<SessionPlayerComponent>().Player = player;
-                session.AddComponent<MailBoxComponent, string>(MailboxType.GateSession);               
+                session.AddComponent<MailBoxComponent, string>(MailboxType.GateSession);
 
                 response.PlayerId = player.Id;
                 reply(response);

@@ -41,6 +41,8 @@ namespace ETModel
     public partial class M2C_KeyboardPosition : IActorMessage { }
     [Message(OuterOpcode.M2C_KeyboardEulerAnglers)]
     public partial class M2C_KeyboardEulerAnglers : IActorMessage { }
+    [Message(OuterOpcode.C2M_KeyboardSkillResult)]
+    public partial class C2M_KeyboardSkillResult : IActorLocationMessage { }
 
 
     #endregion
@@ -123,6 +125,7 @@ namespace ETModel
         public const ushort C2M_KeyboardPathResult = 1439;
         public const ushort M2C_KeyboardPosition = 1443;
         public const ushort M2C_KeyboardEulerAnglers = 1445;
+        public const ushort C2M_KeyboardSkillResult = 1447;
 
 
 

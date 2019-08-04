@@ -49,7 +49,7 @@ namespace ETModel
                 }
             }
         }
-        public User Get(string account)
+        public User GetByAccount(string account)
         {
             User user = null;
             foreach(User tem in this.idUsers.Values .ToArray())
@@ -66,6 +66,9 @@ namespace ETModel
             this.idUsers.TryGetValue(id, out User user);
             return user;
         }
-
+        public int Count
+        {
+            get { return idUsers.Count; }
+        }
     }
 }

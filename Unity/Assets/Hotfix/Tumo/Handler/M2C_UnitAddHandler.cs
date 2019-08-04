@@ -26,7 +26,7 @@ namespace ETHotfix
                             continue;
                         }
                         Unit unit0 = UnitFactory.Create(unitInfo.UnitId);
-                        unit0.Position = new Vector3(unitInfo.X, unitInfo.Y, unitInfo.Z);
+                        unit0.Position = new Vector3(unitInfo.X, unitInfo.Y + 3, unitInfo.Z);
 
                         //unit0.AddComponent<AnimatorComponent>();
                         //unit0.AddComponent<MoveComponent>();

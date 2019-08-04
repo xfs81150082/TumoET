@@ -518,6 +518,7 @@
     <Compile Include="Assets\Model\Tumo\Infoes\Monster.cs" />
     <Compile Include="Assets\Model\Tumo\Infoes\MonsterFactory.cs" />
     <Compile Include="Assets\Model\Tumo\Infoes\MonsterUnitFactory.cs" />
+    <Compile Include="Assets\Model\Tumo\Infoes\SkillType.cs" />
     <Compile Include="Assets\Model\Tumo\Message\TumoEnum.cs" />
     <Compile Include="Assets\Model\Tumo\Message\TumoMessage.cs" />
     <Compile Include="Assets\Model\Tumo\Nousing\MovePositionComponent.cs" />
@@ -752,6 +753,9 @@
     </Reference>
     <Reference Include="UnityEditor.Graphs">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Android.Extensions">
+      <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.WindowsStandalone.Extensions">
       <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>

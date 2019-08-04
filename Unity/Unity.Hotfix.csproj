@@ -124,11 +124,12 @@
     <Compile Include="Assets\Hotfix\Module\UI\UI.cs" />
     <Compile Include="Assets\Hotfix\Module\UI\UIComponent.cs" />
     <Compile Include="Assets\Hotfix\Module\UI\UIType.cs" />
+    <Compile Include="Assets\Hotfix\Tumo\Component\KeyboardSkillComponent.cs" />
     <Compile Include="Assets\Hotfix\Tumo\Component\RaycastHitComponent.cs" />
     <Compile Include="Assets\Hotfix\Tumo\Handler\M2C_UnitAddHandler.cs" />
     <Compile Include="Assets\Hotfix\Tumo\Handler\M2C_UnitRemoveHandler.cs" />
+    <Compile Include="Assets\Hotfix\Tumo\Helper\KeyboardPathComponentHelper.cs" />
     <Compile Include="Assets\Hotfix\Tumo\Nousing\KeyboardPathComponent.cs" />
-    <Compile Include="Assets\Hotfix\Tumo\Nousing\KeyboardPathComponentHelper.cs" />
     <Compile Include="Assets\Hotfix\Tumo\Nousing\M2C_KeyboardEulerAnglersHandler.cs" />
     <Compile Include="Assets\Hotfix\Tumo\Nousing\M2C_KeyboardPositionHandler.cs" />
     <None Include="Assets\Hotfix\Unity.Hotfix.asmdef" />
@@ -359,6 +360,9 @@
     </Reference>
     <Reference Include="UnityEditor.Graphs">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Android.Extensions">
+      <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.WindowsStandalone.Extensions">
       <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>

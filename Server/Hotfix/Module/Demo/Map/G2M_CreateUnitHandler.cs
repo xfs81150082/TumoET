@@ -45,7 +45,7 @@ namespace ETHotfix
                 unit.AddComponent<MoveComponent>();
                 unit.AddComponent<UnitPathComponent>();
                 unit.Position = new Vector3(-40, 0, -10);
-                unit.Position = new Vector3(player.spawnPosition.x, 0, player.spawnPosition.z);
+                unit.Position = new Vector3(player.spawnPosition.x, player.spawnPosition.y, player.spawnPosition.z);
 
                 await unit.AddComponent<MailBoxComponent>().AddLocation();
                 unit.AddComponent<UnitGateComponent, long>(message.GateSessionId);

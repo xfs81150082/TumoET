@@ -10,8 +10,8 @@ namespace ETHotfix
     {
         public static void MoveMap(this MapPathComponent self, Move_Map move_Map)
         {
-            self.clientPos = new Vector3(move_Map.X, 0, move_Map.Z);
-            self.dirPos = new Vector3(move_Map.AX, 0, move_Map.AZ);
+            self.clientPos = new Vector3(move_Map.X, move_Map.Y, move_Map.Z);
+            self.dirPos = new Vector3(move_Map.AX, move_Map.AY, move_Map.AZ);
 
             if (move_Map.V == 0f)
             {
@@ -22,6 +22,7 @@ namespace ETHotfix
                     self.GetParent<Unit>().GetComponent<UnitDirComponent>().CancellationTokenSource = null;
 
                     self.GetParent<Unit>().Position = self.clientPos;
+                    self.GetParent<Unit>().SaveVector3();
 
                     Console.WriteLine(" MapPathComponentHelper-26-ServerPos: CancellationTokenSource is Cancel." + self.GetParent<Unit>().Position.ToString());
                 }

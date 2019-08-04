@@ -342,7 +342,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4781799842951158}
   - component: {fileID: 95876942513160466}
-  - component: {fileID: 950150776674115207}
+  - component: {fileID: 7172522608850563466}
   m_Layer: 10
   m_Name: Skeleton
   m_TagString: Untagged
@@ -386,7 +386,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!143 &950150776674115207
+--- !u!143 &7172522608850563466
 CharacterController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -17,7 +17,7 @@ namespace ETHotfix
 			R2C_Login response = new R2C_Login();
             try
             {
-                User user = Game.Scene.GetComponent<UserComponent>().Get(message.Account);
+                User user = Game.Scene.GetComponent<UserComponent>().GetByAccount(message.Account);
                 if (user != null)
                 {
                     if (message.Password == user.Password)

@@ -41,7 +41,7 @@ namespace ETModel
             users.Add(user1.Id, user1);
 
             User user2 = ComponentFactory.CreateWithId<User>(102);
-            user2.Count = 2;
+            user2.Count = 1;
             user2.Account = "tumo";
             user2.Password = "123456";
             users.Add(user2.Id, user2);
@@ -68,6 +68,7 @@ namespace ETModel
                 player.spawnPosition = new Vector3(-40, 0, -20);
 
                 player.AddComponent<NumericComponent>();
+
                 player.GetComponent<NumericComponent>().Set(NumericType.MaxHpAdd, 140);   // MaxHpAdd 数值,进行赋值
                 player.GetComponent<NumericComponent>().Set(NumericType.HpAdd, 140);      // HpAdd 数值,进行赋值
 
