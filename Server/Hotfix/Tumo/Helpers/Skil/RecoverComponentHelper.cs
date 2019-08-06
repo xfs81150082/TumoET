@@ -6,13 +6,13 @@ using System.Text;
 
 namespace ETHotfix
 {
-    public static class NumericComponentHelper
+    public static class RecoverComponentHelper
     {
         /// <summary>
         ///  更新血量和法量, 更新断定死亡结算
         /// </summary>
         /// <param name="self"></param>
-        public static void UpdateProperty(this NumericComponent self)
+        public static void UpdateProperty(this RecoverComponent self)
         {
             self.DeathSettlement();
 
@@ -25,20 +25,22 @@ namespace ETHotfix
         /// 更新血量
         /// </summary>
         /// <param name="self"></param>
-        static void RecoverHp(this NumericComponent self)
+        static void RecoverHp(this RecoverComponent self)
         {
             if (self.isDeath || self.isWarring) return;
 
-            if (self[NumericType.Hp] == self[NumericType.MaxHp]) return;
+            NumericComponent numC = self.GetParent<Unit>().GetComponent<NumericComponent>();
 
-            if (self[NumericType.Hp] > self[NumericType.MaxHp])
+            if (numC[NumericType.Hp] == numC[NumericType.MaxHp]) return;
+
+            if (numC[NumericType.Hp] > numC[NumericType.MaxHp])
             {
-                self[NumericType.Hp] = self[NumericType.MaxHp];
-                Console.WriteLine(" Hp: " + self[NumericType.Hp] + " MaxHp: " + self[NumericType.MaxHp]);
+                numC[NumericType.Hp] = numC[NumericType.MaxHp];
+                Console.WriteLine(" Hp: " + numC[NumericType.Hp] + " MaxHp: " + numC[NumericType.MaxHp]);
                 return;
             }
 
-            if (self[NumericType.Hp] < self[NumericType.MaxHp])
+            if (numC[NumericType.Hp] < numC[NumericType.MaxHp])
             {
                 if (!self.hpNull)
                 {
@@ -50,7 +52,7 @@ namespace ETHotfix
 
                 if ((timeNow - self.hptimer) > self.reshpTime)
                 {
-                    self[NumericType.HpAdd] += (int)(self[NumericType.MaxHpBase] * self.reshp);
+                    numC[NumericType.HpAdd] += (int)(numC[NumericType.MaxHpBase] * self.reshp);
                     self.hpNull = false;
                 }
             }
@@ -60,20 +62,21 @@ namespace ETHotfix
         /// 更新法量
         /// </summary>
         /// <param name="self"></param>
-        static void RecoverMp(this NumericComponent self)
+        static void RecoverMp(this RecoverComponent self)
         {
             if (self.isDeath) return;
 
-            if (self[NumericType.Mp] == self[NumericType.MaxMp]) return;
+            NumericComponent numC = self.GetParent<Unit>().GetComponent<NumericComponent>();
+            if (numC[NumericType.Mp] == numC[NumericType.MaxMp]) return;
 
-            if (self[NumericType.Mp] > self[NumericType.MaxMp])
+            if (numC[NumericType.Mp] > numC[NumericType.MaxMp])
             {
-                self[NumericType.Mp] = self[NumericType.MaxMp];
-                Console.WriteLine(" Mp: " + self[NumericType.Mp] + " MaxMp: " + self[NumericType.MaxMp]);
+                numC[NumericType.Mp] = numC[NumericType.MaxMp];
+                Console.WriteLine(" Mp: " + numC[NumericType.Mp] + " MaxMp: " + numC[NumericType.MaxMp]);
                 return;
             }
 
-            if (self[NumericType.Mp] < self[NumericType.MaxMp])
+            if (numC[NumericType.Mp] < numC[NumericType.MaxMp])
             {
                 if (!self.mpNull)
                 {
@@ -85,7 +88,7 @@ namespace ETHotfix
 
                 if ((timeNow - self.mptimer) > self.resmpTime)
                 {
-                    self[NumericType.MpAdd] += (int)(self[NumericType.MaxMpBase] * self.resmp);
+                    numC[NumericType.MpAdd] += (int)(numC[NumericType.MaxMpBase] * self.resmp);
                     self.mpNull = false;
                 }
             }
@@ -95,11 +98,13 @@ namespace ETHotfix
         /// 死亡判断 后结算
         /// </summary>
         /// <param name="unit"></param>
-        static async void DeathSettlement(this NumericComponent self)
+        static async void DeathSettlement(this RecoverComponent self)
         {
             if (self.isSettlement) return;
 
-            if (self[NumericType.Hp] <= 0)
+            NumericComponent numC = self.GetParent<Unit>().GetComponent<NumericComponent>();
+
+            if (numC[NumericType.Hp] <= 0)
             {
                 ///Hp小于0时，标记死亡状态
                 self.isDeath = true;
@@ -110,15 +115,18 @@ namespace ETHotfix
             }
         }
 
-        public static void GetExpAndCoin(this NumericComponent self)
+        public static void GetExpAndCoin(this RecoverComponent self)
         {
             Unit selfUnit = self.GetParent<Unit>();
+
+            NumericComponent numC = self.GetParent<Unit>().GetComponent<NumericComponent>();
+
             AttackComponent targetAttack = selfUnit.GetComponent<AttackComponent>();
 
             if (selfUnit.GetComponent<AttackComponent>() != null)
             {
-                int addexp = self[NumericType.Level] * self[NumericType.Level] + 1;
-                int addcoin = self[NumericType.Level] + 1;
+                int addexp = numC[NumericType.Level] * numC[NumericType.Level] + 1;
+                int addcoin = numC[NumericType.Level] + 1;
                 NumericComponent numeric = null;
 
                 ///我的类型，我敌人的类型是什么呢

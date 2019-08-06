@@ -90,12 +90,12 @@ namespace App
 						
 						// 发送location actor消息
 						Game.Scene.AddComponent<ActorLocationSenderComponent>();
-						
-						//Game.Scene.AddComponent<DBComponent>();
-						//Game.Scene.AddComponent<DBProxyComponent>();
-						
-						// location server需要的组件
-						Game.Scene.AddComponent<LocationComponent>();
+
+                        Game.Scene.AddComponent<DBComponent>();
+                        Game.Scene.AddComponent<DBProxyComponent>();
+
+                        // location server需要的组件
+                        Game.Scene.AddComponent<LocationComponent>();
 						
 						// 访问location server的组件
 						Game.Scene.AddComponent<LocationProxyComponent>();
@@ -121,7 +121,6 @@ namespace App
                         #region ///20190621
                         // 调用方法
                         //Game.Scene.AddComponent<PingComponent, long, long, Action<long>>(5000, 6, OnExit);
-
                         // 调用匿名方法
                         Game.Scene.AddComponent<BongComponent, long, long, Action<long>>(5000, 10, sessionId => {
                             Game.Scene.GetComponent<NetOuterComponent>().Remove(sessionId);
@@ -130,6 +129,7 @@ namespace App
 
                         Game.Scene.AddComponent<NumericWatcherComponent>();     //创建数值组件NumericWatcherComponent
                         Game.Scene.AddComponent<AoiGridComponent>();            //创建 AOI 组件
+                        Game.Scene.AddComponent<SkillComponent>();              //创建 AOI 组件
 
 
                         #endregion

@@ -12,22 +12,7 @@ namespace ETModel
 	}
 
 	public class NumericComponent: Component
-    {
-        public bool isDeath = false;
-        public bool isWarring = false;
-        public bool isSettlement = false;
-        public float enterWarringSqr = 225.0f;
-
-        public bool hpNull = false;
-        public long hptimer = 0;
-        public long reshpTime = 4;
-        public float reshp = 0.15f;
-
-        public bool mpNull = false;
-        public long mptimer = 0;
-        public long resmpTime = 4;
-        public float resmp = 0.15f;
-
+    {       
         public Dictionary<int, int> NumericDic = new Dictionary<int, int>();
 
 		public void Awake()
@@ -35,19 +20,12 @@ namespace ETModel
             // 这里初始化base值，给各个数值进行赋值
             ///20190621
             //注意，这两个语句都将触发数值改变组件，只是没有写Max的处理函数，所以会没有反应
-            this.Set(NumericType.Max, 981150082);
+            this.Set(NumericType.Max, 9981150082);
 
-            this.Set(NumericType.SpeedBase, 4);
-            this.Set(NumericType.HpBase, 40);
-            this.Set(NumericType.MaxHpBase, 140);
-            this.Set(NumericType.MpBase, 40);
-            this.Set(NumericType.MaxMpBase, 100);
-            this.Set(NumericType.AttackBase, 14);
-            this.Set(NumericType.SkillBase, 40);
-
-            this.Set(NumericType.Exp, 1);
-            this.Set(NumericType.Level, 1);
-            this.Set(NumericType.Coin, 1);            
+            //this.Set(NumericType.SpeedBase, 0);
+            //this.Set(NumericType.HpBase, 0);
+            //this.Set(NumericType.AttackBase, 0);
+          
         }
 
         public float GetAsFloat(NumericType numericType)

@@ -60,8 +60,9 @@ namespace ETHotfix
                 Game.EventSystem.Awake<UnitType>(unit, UnitType.Player);
                 unit.AddComponent<AoiUnitComponent>();
                 unit.AddComponent<AoiPlayerComponent>();    //玩家独有
-                unit.AddComponent<SqrDistanceComponent>();
                 unit.AddComponent<NumericComponent>();
+                unit.AddComponent<RecoverComponent>();
+                unit.AddComponent<SqrDistanceComponent>();
                 unit.AddComponent<AttackComponent>();
                 unit.AddComponent<RayUnitComponent>();
 
@@ -130,8 +131,9 @@ namespace ETHotfix
                 ///20190702
                 Game.EventSystem.Awake<UnitType>(unit, UnitType.Monster);
                 unit.AddComponent<AoiUnitComponent>();
-                unit.AddComponent<SqrDistanceComponent>();
                 unit.AddComponent<NumericComponent>();
+                unit.AddComponent<RecoverComponent>();
+                unit.AddComponent<SqrDistanceComponent>();
                 unit.AddComponent<AttackComponent>();
                 unit.AddComponent<PatrolComponent>();
                 unit.AddComponent<SeeComponent>();

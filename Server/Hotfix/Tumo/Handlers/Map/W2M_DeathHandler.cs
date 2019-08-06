@@ -17,7 +17,7 @@ namespace ETHotfix
                 unit.GetComponent<AoiUnitComponent>().DeathRemove();
 
                 ///结算经验和金币
-                unit.GetComponent<NumericComponent>().GetExpAndCoin();
+                unit.GetComponent<RecoverComponent>().GetExpAndCoin();
 
                 ///删除Unit
                 switch (unit.UnitType)

@@ -13,7 +13,7 @@ namespace ETHotfix
 
             if (self.target == null)
             {
-                if (self.GetParent<Unit>().GetComponent<SqrDistanceComponent>().neastDistance < self.GetParent<Unit>().GetComponent<NumericComponent>().enterWarringSqr)
+                if (self.GetParent<Unit>().GetComponent<SqrDistanceComponent>().neastDistance < self.GetParent<Unit>().GetComponent<RecoverComponent>().enterWarringSqr)
                 {
                     self.target = self.GetParent<Unit>().GetComponent<SqrDistanceComponent>().neastUnit;
                 }
@@ -22,7 +22,7 @@ namespace ETHotfix
             {
                 self.targetDistance = SqrDistanceHelper.Distance(self.GetParent<Unit>().Position, self.target.Position);
 
-                if (self.targetDistance > self.GetParent<Unit>().GetComponent<NumericComponent>().enterWarringSqr)
+                if (self.targetDistance > self.GetParent<Unit>().GetComponent<RecoverComponent>().enterWarringSqr)
                 {
                     self.target = null;
                 }

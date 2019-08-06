@@ -14,7 +14,7 @@ namespace ETHotfix
         /// <param name="self"></param>
         public static void TakeAttack(this AttackComponent self)
         {
-            if (self.GetParent<Unit>().GetComponent<NumericComponent>().isDeath) return;
+            if (self.GetParent<Unit>().GetComponent<RecoverComponent>().isDeath) return;
 
             GetAttackTarget(self);
 
@@ -90,8 +90,8 @@ namespace ETHotfix
             Unit my = self.GetParent<Unit>();
             Unit target = self.target;
             if (self.target == null) return;
-            if (self.GetParent<Unit>().GetComponent<NumericComponent>().isDeath) return;
-            if (self.target.GetComponent<NumericComponent>().isDeath) return;
+            if (self.GetParent<Unit>().GetComponent<RecoverComponent>().isDeath) return;
+            if (self.target.GetComponent<RecoverComponent>().isDeath) return;
 
             AttackComponent attack = target.GetComponent<AttackComponent>();
             if (!attack.attackers.Contains(my.Id))
@@ -118,5 +118,28 @@ namespace ETHotfix
             Console.WriteLine(" TakeDamage: " + "-" + domhp + " / " + numTarget[NumericType.Hp] + " / " + target.UnitType);
         }
         
+        public static void UpdateBuff(this AttackComponent self)
+        {
+            Unit unit = self.GetParent<Unit>();
+            SkillItem[] skillItems = self.GetBuffs();
+           
+
+
+        }
+        public static SkillItem[] GetBuffs(this AttackComponent self)
+        {
+            HashSet<SkillItem> skillItems = new HashSet<SkillItem>();
+            foreach (long tem in self.idBuffs.Keys.ToArray())
+            {
+                int level;
+                self.idBuffs.TryGetValue(tem, out level);
+                SkillItem skillItem = Game.Scene.GetComponent<SkillComponent>().Get(tem, level);
+                skillItems.Add(skillItem);
+            }
+            return skillItems.ToArray();
+        }
+
+
+
     }
 }

@@ -1,0 +1,62 @@
+﻿using ETModel;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using UnityEngine;
+
+namespace ETHotfix
+{  
+    public static class UnitHelper
+    {
+        public static void SaveVector3(this Unit unit)
+        {
+            Player player = Game.Scene.GetComponent<PlayerComponent>().GetByUnitId(unit.Id);
+            Vector3 unitVec = unit.Position;
+            if (player != null)
+            {
+                player.spawnPosition = unitVec;
+
+                Console.WriteLine(" UnitHelper-19-playerVec: " + player.Id + " / " + player.UnitId + " : " + player.spawnPosition.ToString());
+            }
+        }
+
+        public static void UpdateLevel(this Unit unit)
+        {
+            ///unit 根据角色等级，初始化属性
+            ///unit 根据装备，第二次初始化属性
+            ///unit 根据技能Buff，第三次初始化属性
+            ///unit 根据施放的当前技能，第四次初始化属性
+            ///unit 得到最终属性
+        }
+
+        public static void UpdateEquip(this Unit unit)
+        {
+            ///unit 根据角色等级，初始化属性
+            ///unit 根据装备，第二次初始化属性
+            ///unit 根据技能Buff，第三次初始化属性
+            ///unit 根据施放的当前技能，第四次初始化属性
+            ///unit 得到最终属性
+        }
+
+        public static void UpdateBuffs(this Unit unit)
+        {
+            ///unit 根据角色等级，初始化属性
+            ///unit 根据装备，第二次初始化属性
+            ///unit 根据技能Buff，第三次初始化属性
+            ///unit 根据施放的当前技能，第四次初始化属性
+            ///unit 得到最终属性           
+        }
+
+        public static void UpdateSkillItem(this Unit unit)
+        {
+            ///unit 根据角色等级，初始化属性
+            ///unit 根据装备，第二次初始化属性
+            ///unit 根据技能Buff，第三次初始化属性
+            ///unit 根据施放的当前技能，第四次初始化属性
+            ///unit 得到最终属性
+        }
+
+
+    }
+}

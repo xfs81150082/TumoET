@@ -33,14 +33,6 @@ namespace ETHotfix
 
                 response.UnitId = player.UnitId;
                 reply(response);
-
-                Console.WriteLine(" C2G_EnterMapHandler-33-player.UnitId: " + player.UnitId);
-                foreach(Unit tem in Game.Scene.GetComponent<UnitComponent>().GetAll())
-                {
-                    Console.WriteLine(" C2G_EnterMapHandler-36-UnitComponent: " + tem.Id);
-                    Console.WriteLine(" C2G_EnterMapHandler-37-UnitComponent.count: " + Game.Scene.GetComponent<UnitComponent>().GetAll().Length);
-                }
-
             }
 			catch (Exception e)
 			{

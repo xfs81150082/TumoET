@@ -6,9 +6,9 @@ using System.Text;
 namespace ETHotfix
 {
     [ObjectSystem]
-    public class NumericComponentDestorySystem : DestroySystem<NumericComponent>
+    public class RecoverComponentDestorySystem : DestroySystem<RecoverComponent>
     {
-        public override void Destroy(NumericComponent self)
+        public override void Destroy(RecoverComponent self)
         {
             //DeathSpawn(self).Coroutine();
         }
@@ -17,7 +17,7 @@ namespace ETHotfix
         /// 自己被销毁时 将要做的事
         /// </summary>
         /// <param name="self"></param>
-        async ETVoid DeathSpawn(NumericComponent self)
+        async ETVoid DeathSpawn(RecoverComponent self)
         {
             Console.WriteLine(" LifeComponentDestorySystem-22: " + self.GetParent<Unit>().Id);
 

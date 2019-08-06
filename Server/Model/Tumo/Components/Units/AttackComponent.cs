@@ -19,9 +19,15 @@ namespace ETModel
         public float attackDistance = float.PositiveInfinity;
         public float cdDistance = 25.0f;
 
-        public Unit target { get; set; }
-        public HashSet<long> attackers = new HashSet<long>();
-        public HashSet<long> targeters = new HashSet<long>();
+        public Unit attacker { get; set; }                               //正在攻击我的敌人
+        public Unit target { get; set; }                                 //我正在攻击的敌人
+        public HashSet<long> attackers = new HashSet<long>();            //已攻击到我的敌人
+        public HashSet<long> targeters = new HashSet<long>();            //已被我攻击到的敌人
+
+        public Dictionary<long, int> idSkillitemls = new Dictionary<long, int>();             // 我有那些技能，及其等级
+        public Dictionary<string, long> keyIds = new Dictionary<string, long>();              // 我的技能与对应的按键  一般是3-4个技能
+        public Dictionary<long, int> idBuffs = new Dictionary<long, int>();                   // 我身上挂的Buff
+        public SkillItem curSkillItem;                                                        // 我的当前技能（最近一次使用用的技能）
 
 
     }
