@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ETModel
 {
-    public class SkillItemInfo : Entity
+    public class SkillItemInfo : Component
     {
         public Dictionary<long, Skill> skills = new Dictionary<long, Skill>();
         public Dictionary<long, SkillItem> skillItems = new Dictionary<long, SkillItem>();

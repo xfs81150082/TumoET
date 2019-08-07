@@ -2,7 +2,7 @@
 
 namespace ETModel
 {
-    public class TmChangeType : Component
+    public class ChangeType : Component
     {
         public int Exp { get; set; } = 0;
         public int Level { get; set; } = 0;
@@ -12,5 +12,6 @@ namespace ETModel
         public int Count { get ; set ; }
         public int Durability { get; set; }
         public int changeCount = -1;
+        public TaskState TaskState { get; set; }
     }
 }

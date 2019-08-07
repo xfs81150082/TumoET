@@ -32,7 +32,7 @@ namespace ETModel
             {
                 try
                 {
-                    string line = await Task.Factory.StartNew(() =>
+                    string line = await System.Threading.Tasks.Task.Factory.StartNew(() =>
                     {
                         Console.Write($"{this.Mode}> ");
                         return Console.In.ReadLine();

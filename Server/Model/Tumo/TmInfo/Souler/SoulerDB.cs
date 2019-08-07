@@ -2,7 +2,7 @@
 
 namespace ETModel
 {
-    public class TmSoulerDB
+    public class SoulerDB : Component
     {    
         public int Id { get; set; } = 100001;           //Id
         public string Name { get; set; } = "tumo";      //用户名

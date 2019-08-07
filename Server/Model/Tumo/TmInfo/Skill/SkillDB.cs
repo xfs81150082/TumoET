@@ -5,9 +5,9 @@ using System.Text;
 
 namespace ETModel
 {
-    public class TmSkillDB : Component
+    public class SkillDB : Component
     {  
-        public TmSkillDB() { }
+        public SkillDB() { }
         public int Id { get; set; } = 151011;
         public string Name { get; set; } = "tumo";
         public int SkillId { get; set; } = 11101;

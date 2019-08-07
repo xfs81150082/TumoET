@@ -12,7 +12,7 @@ namespace ETHotfix
         /// 攻击 CD 计时
         /// </summary>
         /// <param name="self"></param>
-        public static void TakeAttack(this AttackComponent self)
+        public static void TakeAttack(this UnitSkillComponent self)
         {
             if (self.GetParent<Unit>().GetComponent<RecoverComponent>().isDeath) return;
 
@@ -56,7 +56,7 @@ namespace ETHotfix
         /// 得到 单目标 敌人
         /// </summary>
         /// <param name="unit"></param>
-        static void GetAttackTarget(this AttackComponent self)
+        static void GetAttackTarget(this UnitSkillComponent self)
         {
             Unit unit = self.GetParent<Unit>();
 
@@ -64,7 +64,7 @@ namespace ETHotfix
             {
                 if (unit.GetComponent<RayUnitComponent>().target != null)
                 {
-                    unit.GetComponent<AttackComponent>().target = unit.GetComponent<RayUnitComponent>().target;
+                    unit.GetComponent<UnitSkillComponent>().target = unit.GetComponent<RayUnitComponent>().target;
                 }
                 else
                 {
@@ -75,7 +75,7 @@ namespace ETHotfix
             {
                 if (unit.GetComponent<SeeComponent>() != null && unit.GetComponent<SeeComponent>().target != null)
                 {
-                    unit.GetComponent<AttackComponent>().target = unit.GetComponent<SeeComponent>().target;
+                    unit.GetComponent<UnitSkillComponent>().target = unit.GetComponent<SeeComponent>().target;
                 }
             }
         }
@@ -85,7 +85,7 @@ namespace ETHotfix
         /// </summary>
         /// <param name="self"></param>
         /// <param name="target"></param>
-        public static void TakeDamage(this AttackComponent self)
+        public static void TakeDamage(this UnitSkillComponent self)
         {
             Unit my = self.GetParent<Unit>();
             Unit target = self.target;
@@ -93,7 +93,7 @@ namespace ETHotfix
             if (self.GetParent<Unit>().GetComponent<RecoverComponent>().isDeath) return;
             if (self.target.GetComponent<RecoverComponent>().isDeath) return;
 
-            AttackComponent attack = target.GetComponent<AttackComponent>();
+            UnitSkillComponent attack = target.GetComponent<UnitSkillComponent>();
             if (!attack.attackers.Contains(my.Id))
             {
                 attack.attackers.Add(my.Id);
@@ -118,7 +118,7 @@ namespace ETHotfix
             Console.WriteLine(" TakeDamage: " + "-" + domhp + " / " + numTarget[NumericType.Hp] + " / " + target.UnitType);
         }
         
-        public static void UpdateBuff(this AttackComponent self)
+        public static void UpdateBuff(this UnitSkillComponent self)
         {
             Unit unit = self.GetParent<Unit>();
             SkillItem[] skillItems = self.GetBuffs();
@@ -126,7 +126,7 @@ namespace ETHotfix
 
 
         }
-        public static SkillItem[] GetBuffs(this AttackComponent self)
+        public static SkillItem[] GetBuffs(this UnitSkillComponent self)
         {
             HashSet<SkillItem> skillItems = new HashSet<SkillItem>();
             foreach (long tem in self.idBuffs.Keys.ToArray())

@@ -63,7 +63,7 @@ namespace ETHotfix
                 unit.AddComponent<NumericComponent>();
                 unit.AddComponent<RecoverComponent>();
                 unit.AddComponent<SqrDistanceComponent>();
-                unit.AddComponent<AttackComponent>();
+                unit.AddComponent<UnitSkillComponent>();
                 unit.AddComponent<RayUnitComponent>();
 
                 //unit.AddComponent<KeyboardPathComponent>();
@@ -134,7 +134,7 @@ namespace ETHotfix
                 unit.AddComponent<NumericComponent>();
                 unit.AddComponent<RecoverComponent>();
                 unit.AddComponent<SqrDistanceComponent>();
-                unit.AddComponent<AttackComponent>();
+                unit.AddComponent<UnitSkillComponent>();
                 unit.AddComponent<PatrolComponent>();
                 unit.AddComponent<SeeComponent>();
 

@@ -41,7 +41,7 @@ namespace ETHotfix
 
 			// var info = await db.Query<RechargeRecord>(id);
 
-			await Task.Delay(1000); // 用于测试
+			await System.Threading.Tasks.Task.Delay(1000); // 用于测试
 
 			object info = null;
 			if (info != null)

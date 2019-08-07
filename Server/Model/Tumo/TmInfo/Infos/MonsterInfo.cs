@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ETModel
 {
-    public class MonsterInfo : Entity
+    public class MonsterInfo : Component
     {
         public MonsterInfo()
         {

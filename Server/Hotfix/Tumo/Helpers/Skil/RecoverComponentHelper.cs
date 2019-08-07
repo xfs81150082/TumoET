@@ -121,9 +121,9 @@ namespace ETHotfix
 
             NumericComponent numC = self.GetParent<Unit>().GetComponent<NumericComponent>();
 
-            AttackComponent targetAttack = selfUnit.GetComponent<AttackComponent>();
+            UnitSkillComponent targetAttack = selfUnit.GetComponent<UnitSkillComponent>();
 
-            if (selfUnit.GetComponent<AttackComponent>() != null)
+            if (selfUnit.GetComponent<UnitSkillComponent>() != null)
             {
                 int addexp = numC[NumericType.Level] * numC[NumericType.Level] + 1;
                 int addcoin = numC[NumericType.Level] + 1;

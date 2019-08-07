@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ETModel
 {
-    public class TmInventoryDB : Component
+    public class InventoryDB : Component
     {
         public int Id { get; set; } = 0;
         public string Name { get; set; } = "物品";

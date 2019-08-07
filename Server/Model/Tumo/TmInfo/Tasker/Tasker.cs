@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ETModel
 {
-    public class TmTask : Component
+    public class Tasker : Component
     {
         public int Stamina { get; set; } = 10;            //耐力，案例，每升1级加1，影响血量
         public int Brains { get; set; } = 10;             //智力，计价，每升1级加1，影响魔法攻击强度，魔法防御

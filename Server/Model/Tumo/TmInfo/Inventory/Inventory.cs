@@ -2,7 +2,7 @@
 
 namespace ETModel
 {
-    public class TmSkill : Component
+    public class Inventory : Component
     {
         public string Name { get; set; } = "tumo";
         public int Id { get; set; } = 100001;
@@ -13,7 +13,7 @@ namespace ETModel
         public int LevelUpLimit { get; set; } = 30;                         //等级上级 
         public string Does { get; set; } = "人族是最智慧的生灵之一";        //简介  
 
-        public RoleType RoleType { get; set; } = RoleType.Engineer;     //种族和职业：造价师、监理师、建造师
+        public RoleType RoleType { get; set; } = RoleType.Engineer;         //种族和职业：造价师、监理师、建造师
         public EquipType EquipType { get; set; } = EquipType.Weapon;        //装备类型（帽子，衣，鞋子，武器，项链。。。等）  套装技能
         public InfoType InfoType { get; set; } = InfoType.Bp;               //作用类型，表示作用在那个属性之上
         public Quality Quality { get; set; } = Quality.Green;               //品质等级（白绿蓝紫橙）//怪的级别：普通-白、精英-蓝、首领-橙
@@ -48,6 +48,6 @@ namespace ETModel
         public double BpRate { get; set; } = 0.0f;       //Bp与智力成正比；暂定1倍；
         public double HrRate { get; set; } = 0.0f;       //hr命中率与敏捷成正比。
         public double CrRate { get; set; } = 0.0f;       //cr暴击率与敏捷成正比。
-        public double SpRate { get; set; } = 0.0f;       //移动速度       
+        public double SpRate { get; set; } = 0.0f;       //移动速度 
     }
 }

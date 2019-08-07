@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ETModel
 {
-    public class AttackComponent : Component
+    public class UnitSkillComponent : Component
     {
         public bool isAttacking = false;                                 //表示是否战斗状态
 

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace ETModel
 {
-    public class UserInfo : Entity
+    public class UserInfo : Component
     {
         public UserInfo()
         {
