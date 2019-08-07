@@ -15,7 +15,5 @@ namespace ETHotfix
             return Game.Scene.GetComponent<NetInnerComponent>().Get(mapAddress);
         }
 
-
-
     }
 }

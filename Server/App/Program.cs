@@ -152,6 +152,7 @@ namespace App
                         Game.Scene.AddComponent<UserComponent>();
 
                         Game.Scene.AddComponent<TestComponent>();
+                        Game.Scene.AddComponent<SpawnComponent>();
 
 
                         #endregion

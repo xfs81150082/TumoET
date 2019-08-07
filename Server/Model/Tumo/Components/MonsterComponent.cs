@@ -75,6 +75,10 @@ namespace ETModel
         {
             return this.IdEnemys.Values.ToArray();
         }
+        public long[] GetIdsAll()
+        {
+            return this.IdEnemys.Keys.ToArray();
+        }
 
         public override void Dispose()
         {

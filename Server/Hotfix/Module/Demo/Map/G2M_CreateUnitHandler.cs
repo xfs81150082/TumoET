@@ -111,16 +111,17 @@ namespace ETHotfix
             M2G_CreateUnit response = new M2G_CreateUnit();
             try
             {
-                if (message.UnitId == 0)
-                {
-                    message.UnitId = IdGenerater.GenerateId();
-                }
                 Monster monster = Game.Scene.GetComponent<MonsterComponent>().Get(message.RolerId);
                 if (monster == null) return;
-                Unit unit = ComponentFactory.CreateWithId<Unit>(message.UnitId);
+                Unit unit0 = Game.Scene.GetComponent<MonsterUnitComponent>().Get(monster.UnitId);
+                if (unit0 != null)
+                {
+                    return;
+                }
+                Unit unit = ComponentFactory.CreateWithId<Unit>(IdGenerater.GenerateId());
                 unit.AddComponent<MoveComponent>();
                 unit.AddComponent<UnitPathComponent>();
-                unit.Position = new Vector3(monster.spawnPosition.x, 0, monster.spawnPosition.z);
+                unit.Position = new Vector3(monster.spawnPosition.x, monster.spawnPosition.y, monster.spawnPosition.z);
 
                 await unit.AddComponent<MailBoxComponent>().AddLocation();
                 Game.Scene.GetComponent<MonsterUnitComponent>().Add(unit);

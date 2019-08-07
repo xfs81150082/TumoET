@@ -17,7 +17,7 @@ namespace ETHotfix
             GetEnemyFromBD();
 
             ///向 map 服务器 实例小怪
-            CreateMonsterToMap(Game.Scene.GetComponent<MonsterComponent>().GetAll()).Coroutine();
+            CreateMonsterToMap(Game.Scene.GetComponent<MonsterComponent>().GetAll());
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace ETHotfix
         /// <summary>
         /// 再向 Map 服务器 初始化小怪实例
         /// </summary>
-        async ETVoid CreateMonsterToMap(Monster[] monsters)
+        void CreateMonsterToMap(Monster[] monsters)
         {
             /// 再向 Map 服务器 初始化小怪实例
             if (monsters.Length > 0)
@@ -53,14 +53,21 @@ namespace ETHotfix
                 /// 再向 Map 服务器 初始化小怪实例
                 foreach (Monster tem in monsters)
                 {
-                    M2G_CreateUnit response = (M2G_CreateUnit)await SessionHelper.MapSession().Call(new G2M_CreateUnit() { UnitType = (int)UnitType.Monster, RolerId = tem.Id });
-                    tem.UnitId = response.UnitId;
+                    SpawnUnit(tem).Coroutine();
+
+                    //M2G_CreateUnit response = (M2G_CreateUnit)await SessionHelper.MapSession().Call(new G2M_CreateUnit() { UnitType = (int)UnitType.Monster, RolerId = tem.Id });
+                    //tem.UnitId = response.UnitId;
                 }
             }
             Console.WriteLine(" MonsterComponentStartSystem-60: " + " BD服务器，小怪数量： " + Game.Scene.GetComponent<MonsterComponent>().Count);
             Console.WriteLine(" MonsterComponentStartSystem-61: " + " map服务器，实例小怪数量： " + Game.Scene.GetComponent<MonsterUnitComponent>().Count);
         }
 
+        async ETVoid SpawnUnit(Monster monster)
+        {
+            M2G_CreateUnit response = (M2G_CreateUnit)await SessionHelper.MapSession().Call(new G2M_CreateUnit() { UnitType = (int)UnitType.Monster, RolerId = monster.Id });
+            monster.UnitId = response.UnitId;
+        }
 
     }
 }

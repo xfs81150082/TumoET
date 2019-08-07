@@ -77,12 +77,16 @@ namespace ETModel
 			}
 		}
 
-		public Player[] GetAll()
-		{
-			return this.idPlayers.Values.ToArray();
-		}
+        public Player[] GetAll()
+        {
+            return this.idPlayers.Values.ToArray();
+        }
+        public long[] GetIdsAll()
+        {
+            return this.idPlayers.Keys.ToArray();
+        }
 
-		public override void Dispose()
+        public override void Dispose()
 		{
 			if (this.IsDisposed)
 			{
