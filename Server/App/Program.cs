@@ -129,7 +129,8 @@ namespace App
 
                         Game.Scene.AddComponent<NumericWatcherComponent>();     //创建数值组件NumericWatcherComponent
                         Game.Scene.AddComponent<AoiGridComponent>();            //创建 AOI 组件
-                        Game.Scene.AddComponent<SkillComponent>();              //创建 AOI 组件
+                        Game.Scene.AddComponent<InventoryComponent>();          //创建 Inventory 组件
+                        Game.Scene.AddComponent<SkillComponent>();              //创建 Skill 组件
 
 
                         #endregion

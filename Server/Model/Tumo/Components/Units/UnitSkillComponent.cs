@@ -4,7 +4,16 @@ using System.Text;
 
 namespace ETModel
 {
-    public class UnitSkillComponent : Component
+    [ObjectSystem]
+    public class UnitSkillComponentAwakeSystem : AwakeSystem<UnitSkillComponent>
+    {
+        public override void Awake(UnitSkillComponent self)
+        {
+            self.Awake();
+        }
+    }
+
+    public class UnitSkillComponent : Entity
     {
         public bool isAttacking = false;                                 //表示是否战斗状态
 
@@ -26,9 +35,13 @@ namespace ETModel
 
         public Dictionary<long, int> idSkillitemls = new Dictionary<long, int>();             // 我有那些技能，及其等级
         public Dictionary<string, long> keyIds = new Dictionary<string, long>();              // 我的技能与对应的按键  一般是3-4个技能
-        public Dictionary<long, int> idBuffs = new Dictionary<long, int>();                   // 我身上挂的Buff
+        public Dictionary<long, int> idBuffs = new Dictionary<long, int>();                   // 我身上挂的Buff,及其等级
         public SkillItem curSkillItem;                                                        // 我的当前技能（最近一次使用用的技能）
 
+        public void Awake()
+        {
+            this.AddComponent<NumericComponent>();
+        }
 
     }
 }
