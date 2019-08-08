@@ -57,7 +57,11 @@ namespace ETModel
             SoulerItems.Add(item21101.Id, item21101);
             SoulerItems.Add(item31101.Id, item31101);
             SoulerItems.Add(item41101.Id, item41101);
+
         }
+
+  
+   
 
 
     }

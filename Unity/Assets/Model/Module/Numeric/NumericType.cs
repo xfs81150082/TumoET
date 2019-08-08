@@ -2,7 +2,6 @@
 {
     public enum NumericType
     {
-
         #region Manage 1001 管理，每升1级加1，影响防御,要钱难度
         Manage = 1001,                                
         ManageBase = Manage * 10 + 1,
@@ -31,7 +30,8 @@
         MaxValuationAdd = MaxValuation * 10 + 2,
         MaxValuationPct = MaxValuation * 10 + 3,
         MaxValuationFinalAdd = MaxValuation * 10 + 4,
-        MaxValuationFinalPct = MaxValuation * 10 + 5,  
+        MaxValuationFinalPct = MaxValuation * 10 + 5,
+  
         #endregion
 
         #region Measure 3001 计量，每升1级加1，影响速度，要钱速度
