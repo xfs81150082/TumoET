@@ -7,6 +7,7 @@ using System.Text;
 
 namespace ETModel
 {
+    [ObjectSystem]
     public class InventoryComponent : Component
     {
         [BsonElement]
@@ -17,19 +18,11 @@ namespace ETModel
 
         public void Awake()
         {
-            /// idSkillItems idSkills
-            InventoryInfo skillItemInfo = new InventoryInfo();
-
-            foreach (Inventory tem in skillItemInfo.Inventorys.Values)
+            InventoryInfo Info = new InventoryInfo();
+            foreach (Inventory tem in Info.idInventorys.Values.ToArray())
             {
                 this.idInventorys.Add(tem.Id, tem);
             }
-
-            foreach (InventoryItem tem in skillItemInfo.InventoryItems.Values)
-            {
-                this.idInventoryItems.Add(tem.Id, tem);
-            }
-
         }
 
         #region SkillItem

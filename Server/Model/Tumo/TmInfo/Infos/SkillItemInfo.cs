@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ETModel
 {
     public class SkillItemInfo : Component
     {
-        public Dictionary<long, Skill> skills = new Dictionary<long, Skill>();
-        public Dictionary<long, SkillItem> skillItems = new Dictionary<long, SkillItem>();
+        public readonly Dictionary<long, Skill> idSkills = new Dictionary<long, Skill>();
 
         public SkillItemInfo()
         {
             GetSkills();
-            GetSkillItems();
         }
 
         void GetSkills()
@@ -31,32 +30,20 @@ namespace ETModel
             inv41101.AddComponent<NumericComponent>().Set(NumericType.CaseAdd, 14);
             inv41101.AddComponent<NumericComponent>().Set(NumericType.ValuationAdd, 14);
 
-            skills.Add(inv11101.Id, inv11101);
-            skills.Add(inv21101.Id, inv21101);
-            skills.Add(inv31101.Id, inv31101);
-            skills.Add(inv41101.Id, inv41101);
+            idSkills.Add(inv11101.Id, inv11101);
+            idSkills.Add(inv21101.Id, inv21101);
+            idSkills.Add(inv31101.Id, inv31101);
+            idSkills.Add(inv41101.Id, inv41101);
         }
 
-        void GetSkillItems()
+        public int Count
         {
-            SkillItem item11101 = ComponentFactory.CreateWithId<SkillItem>(IdGenerater.GenerateId());
-            SkillItem item21101 = ComponentFactory.CreateWithId<SkillItem>(IdGenerater.GenerateId());
-            SkillItem item31101 = ComponentFactory.CreateWithId<SkillItem>(IdGenerater.GenerateId());
-            SkillItem item41101 = ComponentFactory.CreateWithId<SkillItem>(IdGenerater.GenerateId());
+            get { return idSkills.Count; }
+        }
 
-            item11101.AddComponent<NumericComponent>().Set(NumericType.ManageAdd, 10);
-            item11101.AddComponent<NumericComponent>().Set(NumericType.ValuationAdd, 10);
-            item21101.AddComponent<NumericComponent>().Set(NumericType.ValuationAdd, 12);
-            item21101.AddComponent<NumericComponent>().Set(NumericType.ValuationAdd, 12);
-            item31101.AddComponent<NumericComponent>().Set(NumericType.MeasureAdd, 10);
-            item31101.AddComponent<NumericComponent>().Set(NumericType.ValuationAdd, 10);
-            item41101.AddComponent<NumericComponent>().Set(NumericType.CaseAdd, 14);
-            item41101.AddComponent<NumericComponent>().Set(NumericType.ValuationAdd, 14);
-
-            skillItems.Add(item11101.Id, item11101);
-            skillItems.Add(item21101.Id, item21101);
-            skillItems.Add(item31101.Id, item31101);
-            skillItems.Add(item41101.Id, item41101);
+        public Skill[] GetAll()
+        {
+            return idSkills.Values.ToArray();
         }
 
 

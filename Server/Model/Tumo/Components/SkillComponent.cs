@@ -7,6 +7,7 @@ using System.Text;
 
 namespace ETModel
 {
+    [ObjectSystem]
     public class SkillComponentAwakeSystem : AwakeSystem<SkillComponent>
     {
         public override void Awake(SkillComponent self)
@@ -25,19 +26,11 @@ namespace ETModel
 
         public void Awake()
         {
-            /// idSkillItems idSkills
-            SkillItemInfo skillItemInfo = new SkillItemInfo();
-
-            foreach (Skill tem in skillItemInfo.skills.Values)
+            SkillItemInfo  Info = new SkillItemInfo();
+            foreach (Skill tem in  Info.idSkills.Values.ToArray())
             {
                 this.idSkills.Add(tem.Id, tem);
             }
-
-            foreach (SkillItem tem in skillItemInfo.skillItems.Values)
-            {
-                this.idSkillItems.Add(tem.Id, tem);
-            }
-
         } 
 
         #region SkillItem
