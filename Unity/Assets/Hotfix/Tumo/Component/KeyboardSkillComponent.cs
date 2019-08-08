@@ -4,54 +4,35 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ETModel;
+using UnityEngine;
 
 namespace ETHotfix
 {
+    [ObjectSystem]
     public class KeyboardSkillComponentUpdateSystem : UpdateSystem<KeyboardSkillComponent>
     {
         public override void Update(KeyboardSkillComponent self)
         {
-            self.Update();
+            self.SkillKeyboardToMapServer();
         }
     }
 
     public class KeyboardSkillComponent : Component
     {
-        public string key;
+        public float cdTime = 2.0f;
+        public float cd = 2.0f;
+        public KeyCode currentKey;
+        public bool isSend = false;
 
-        public Dictionary<string, long> skillIds = new Dictionary<string, long>();
-
-        public void Update()
-        {
-            if (key != null)
-            {
-                CurSkillId(key);
-            }
-        }
-        
-        public long CurSkillId(string keyname)
-        {
-            skillIds.TryGetValue(keyname, out long tem);
-            return tem;
-        }
-
-        public void Add(string keyname,long skillId)
-        {
-            skillIds.Add(keyname, skillId);
-        }
-
-        public void Remove(string keyname)
-        {
-            skillIds.Remove(keyname);
-        }
-
-        public int Count { get { return skillIds.Count; } }
+        //public readonly C2M_KeyboardSkillResult c2M_KeyboardSkillResult = new C2M_KeyboardSkillResult();
+        public readonly C2M_KeyboardSkillRequest c2M_KeyboardSkillRequest = new C2M_KeyboardSkillRequest();
+        public readonly M2C_KeyboardSkillResponse m2C_KeyboardSkillResponse = new M2C_KeyboardSkillResponse();
 
         public override void Dispose()
         {
             base.Dispose();
-            skillIds.Clear();
         }
+
 
     }
 }

@@ -53,6 +53,7 @@ namespace ETHotfix
                             ///20190703
                             Game.Scene.AddComponent<OperaComponent>();
                             Game.Scene.AddComponent<RaycastHitComponent>();
+                            Game.Scene.AddComponent<KeyboardSkillComponent>();
                             //Game.Scene.AddComponent<KeyboardPathComponent>();
 
                             Debug.Log(" M2C_AddUnitHandler-47: " + unit0.Id);
