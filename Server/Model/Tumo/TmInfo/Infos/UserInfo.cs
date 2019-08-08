@@ -69,8 +69,8 @@ namespace ETModel
 
                 player.AddComponent<NumericComponent>();
 
-                player.GetComponent<NumericComponent>().Set(NumericType.MaxHpAdd, 140);   // MaxHpAdd 数值,进行赋值
-                player.GetComponent<NumericComponent>().Set(NumericType.HpAdd, 140);      // HpAdd 数值,进行赋值
+                player.GetComponent<NumericComponent>().Set(NumericType.MaxValuationAdd, 140);   // MaxHpAdd 数值,进行赋值
+                player.GetComponent<NumericComponent>().Set(NumericType.ValuationAdd, 140);      // HpAdd 数值,进行赋值
 
                 players.Add(player.Id, player);
             }

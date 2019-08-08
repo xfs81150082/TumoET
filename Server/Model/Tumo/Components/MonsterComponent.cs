@@ -6,24 +6,14 @@ using UnityEngine;
 
 namespace ETModel
 {
-    [ObjectSystem]
-    public class MonsterComponentAwakeSystem : AwakeSystem<MonsterComponent>
-    {
-        public override void Awake(MonsterComponent self)
-        {
-            self.Awake();
-        }
-    }  
-
     public class MonsterComponent : Component
     {
-        public static MonsterComponent Instance { get; private set; }
-
         private readonly Dictionary<long, Monster> IdEnemys = new Dictionary<long, Monster>();
 
-        public void Awake()
+        public void Add(Monster booker)
         {
-            Instance = this;
+            this.IdEnemys.Add(booker.Id, booker);
+            booker.Parent = this;
         }
 
         public void AddAll(Monster[] enemys)
@@ -35,17 +25,13 @@ namespace ETModel
                 tem.Parent = this;
             }
         }
-        public void Add(Monster booker)
-        {
-            this.IdEnemys.Add(booker.Id, booker);
-            booker.Parent = this;
-        }
 
         public Monster Get(long id)
         {
             this.IdEnemys.TryGetValue(id, out Monster booker);
             return booker;
         }
+
         public Monster GetByUnitId(long id)
         {
             foreach(Monster tem in GetAll())
@@ -75,6 +61,7 @@ namespace ETModel
         {
             return this.IdEnemys.Values.ToArray();
         }
+
         public long[] GetIdsAll()
         {
             return this.IdEnemys.Keys.ToArray();
@@ -94,8 +81,6 @@ namespace ETModel
             }
 
             this.IdEnemys.Clear();
-
-            Instance = null;
         }
 
     }
