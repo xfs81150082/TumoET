@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ETModel
 {
-    [NumericWatcher(NumericType.Mp)]
+    [NumericWatcher(NumericType.Manage)]
     public class NumericWatcher_MP_ShowUI : INumericWatcher
     {
         public void Run(long id, int value)

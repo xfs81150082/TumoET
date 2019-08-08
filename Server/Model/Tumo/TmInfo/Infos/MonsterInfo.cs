@@ -54,7 +54,7 @@ namespace ETModel
             if (enemy.GetComponent<NumericComponent>() == null) return;
             NumericComponent num = enemy.GetComponent<NumericComponent>();
             /// 二次赋值
-            num.Set(NumericType.HpAdd, 80);       // HpAdd 数值,进行赋值
+            num.Set(NumericType.ValuationAdd, 80);       // HpAdd 数值,进行赋值
         }
 
         void SetPosition(Dictionary<long, Monster> enemys)

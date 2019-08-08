@@ -13,7 +13,10 @@ namespace ETHotfix
         {
             UpdateSpawnAsync().Coroutine();
         }
-
+        /// <summary>
+        /// 向 map 服务器 实例小怪单元
+        /// </summary>
+        /// <returns></returns>
         async ETVoid UpdateSpawnAsync()
         {
             TimerComponent timer = Game.Scene.GetComponent<TimerComponent>();
@@ -21,6 +24,8 @@ namespace ETHotfix
             {
                 try
                 {
+                    await timer.WaitAsync(4000);
+
                     foreach (Monster monster in Game.Scene.GetComponent<MonsterComponent>().GetAll())
                     {
                         Unit unit = Game.Scene.GetComponent<MonsterUnitComponent>().Get(monster.UnitId);
@@ -31,10 +36,10 @@ namespace ETHotfix
 
                         SpawnUnit(monster).Coroutine();
 
-                        Console.WriteLine(" SpawnComponentAwakeSystem-35-生产小怪：" + monster.Id);
+                        Console.WriteLine(" SpawnComponentAwakeSystem-35-生产小怪id：" + monster.Id);
                     }
 
-                    await timer.WaitAsync(4000);
+                    await timer.WaitAsync(10000);
                 }
                 catch (Exception ex)
                 {

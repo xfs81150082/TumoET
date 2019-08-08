@@ -106,16 +106,16 @@ namespace ETHotfix
             int domhp = 0;
             if (dom < 26)
             {
-                domhp = numSelf[NumericType.Attack] * 2;
-                numTarget[NumericType.HpAdd] -= domhp; 
+                domhp = numSelf[NumericType.Case] * 2;
+                numTarget[NumericType.ValuationAdd] -= domhp; 
             }
             else
             {
-                domhp = numSelf[NumericType.Attack];
-                numTarget[NumericType.HpAdd] -= domhp;
+                domhp = numSelf[NumericType.Case];
+                numTarget[NumericType.ValuationAdd] -= domhp;
             }
 
-            Console.WriteLine(" TakeDamage: " + "-" + domhp + " / " + numTarget[NumericType.Hp] + " / " + target.UnitType);
+            Console.WriteLine(" TakeDamage: " + "-" + domhp + " / " + numTarget[NumericType.Valuation] + " / " + target.UnitType);
         }
         
         public static void UpdateBuff(this UnitSkillComponent self)

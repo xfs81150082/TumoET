@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ETModel
 {
-    [NumericWatcher(NumericType.MaxMp)]
+    [NumericWatcher(NumericType.MaxValuation)]
     public class NumericWatcher_MaxMP_ShowUI : INumericWatcher
     {
         public void Run(long id, int value)

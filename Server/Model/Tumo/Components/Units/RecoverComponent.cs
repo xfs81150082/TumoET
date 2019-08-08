@@ -38,17 +38,15 @@ namespace ETModel
             //注意，这两个语句都将触发数值改变组件，只是没有写Max的处理函数，所以会没有反应
             numC.Set(NumericType.Max, 981150082);
 
-            numC.Set(NumericType.SpeedBase, 4);
-            numC.Set(NumericType.HpBase, 40);
-            numC.Set(NumericType.MaxHpBase, 140);
-            numC.Set(NumericType.MpBase, 40);
-            numC.Set(NumericType.MaxMpBase, 100);
-            numC.Set(NumericType.AttackBase, 14);
-            numC.Set(NumericType.SkillBase, 40);
+            numC.Set(NumericType.ValuationBase, 40);
+            numC.Set(NumericType.MaxValuationBase, 140);
+            numC.Set(NumericType.ManageBase, 100);
+            numC.Set(NumericType.MaxCaseBase, 100);
+            numC.Set(NumericType.CaseBase, 14);
 
-            numC.Set(NumericType.Exp, 1);
-            numC.Set(NumericType.Level, 1);
-            numC.Set(NumericType.Coin, 1);
+            numC.Set(NumericType.LevelBase, 1);
+            numC.Set(NumericType.ExpBase, 1);
+            numC.Set(NumericType.CoinBase, 1);
         }
 
 

@@ -95,12 +95,12 @@ namespace ETHotfix
             NumericComponent num = unit.GetComponent<NumericComponent>();
             NumericComponent numPlayer = player.GetComponent<NumericComponent>();
 
-            num[NumericType.MaxHpAdd] = numPlayer[NumericType.MaxHpAdd]; // MaxHpAdd 数值,进行赋值
-            num[NumericType.HpAdd] = numPlayer[NumericType.HpAdd]; // HpAdd 数值,进行赋值
+            num[NumericType.MaxValuationAdd] = numPlayer[NumericType.MaxValuationAdd]; // MaxHpAdd 数值,进行赋值
+            num[NumericType.ValuationAdd] = numPlayer[NumericType.ValuationAdd]; // HpAdd 数值,进行赋值
 
             unit.GetComponent<MoveComponent>().moveSpeed = 4.0f;
 
-            Console.WriteLine(" M2M_CreateEnemyUnitHandler-Id-101: " + unit.Id + " MaxHp: " + num[NumericType.MaxHp] + " MaxHpBase: " + num[NumericType.MaxHpBase] + " MaxHpAdd: " + num[NumericType.MaxHpAdd]);
+            Console.WriteLine(" M2M_CreateEnemyUnitHandler-Id-101: " + unit.Id + " MaxHp: " + num[NumericType.MaxValuation] + " MaxHpBase: " + num[NumericType.MaxValuationBase] + " MaxHpAdd: " + num[NumericType.MaxValuationAdd]);
         }
         
         #endregion
@@ -153,13 +153,13 @@ namespace ETHotfix
             NumericComponent num = unit.GetComponent<NumericComponent>();
             NumericComponent numEnemy = enemy.GetComponent<NumericComponent>();
 
-            num[NumericType.MaxHpAdd] = numEnemy[NumericType.MaxHpAdd];
-            num[NumericType.HpAdd] = numEnemy[NumericType.HpAdd];
+            num[NumericType.MaxValuationAdd] = numEnemy[NumericType.MaxValuationAdd];
+            num[NumericType.ValuationAdd] = numEnemy[NumericType.ValuationAdd];
 
             ///小怪当前速度
             unit.GetComponent<MoveComponent>().moveSpeed = 2.0f;
 
-            Console.WriteLine(" M2M_CreateEnemyUnitHandler-Id-158: " + unit.Id + " MaxHp: " + num[NumericType.MaxHp] + " MaxHpBase: " + num[NumericType.MaxHpBase] + " MaxHpAdd: " + num[NumericType.MaxHpAdd]);
+            Console.WriteLine(" M2M_CreateEnemyUnitHandler-Id-158: " + unit.Id + " MaxHp: " + num[NumericType.MaxValuation] + " MaxHpBase: " + num[NumericType.MaxValuationBase] + " MaxHpAdd: " + num[NumericType.MaxValuationAdd]);
         }
 
         #endregion

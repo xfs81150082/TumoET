@@ -31,16 +31,16 @@ namespace ETHotfix
 
             NumericComponent numC = self.GetParent<Unit>().GetComponent<NumericComponent>();
 
-            if (numC[NumericType.Hp] == numC[NumericType.MaxHp]) return;
+            if (numC[NumericType.Valuation] == numC[NumericType.MaxValuation]) return;
 
-            if (numC[NumericType.Hp] > numC[NumericType.MaxHp])
+            if (numC[NumericType.Valuation] > numC[NumericType.MaxValuation])
             {
-                numC[NumericType.Hp] = numC[NumericType.MaxHp];
-                Console.WriteLine(" Hp: " + numC[NumericType.Hp] + " MaxHp: " + numC[NumericType.MaxHp]);
+                numC[NumericType.Valuation] = numC[NumericType.MaxValuation];
+                Console.WriteLine(" Hp: " + numC[NumericType.Valuation] + " MaxHp: " + numC[NumericType.MaxValuation]);
                 return;
             }
 
-            if (numC[NumericType.Hp] < numC[NumericType.MaxHp])
+            if (numC[NumericType.Valuation] < numC[NumericType.MaxValuation])
             {
                 if (!self.hpNull)
                 {
@@ -52,7 +52,7 @@ namespace ETHotfix
 
                 if ((timeNow - self.hptimer) > self.reshpTime)
                 {
-                    numC[NumericType.HpAdd] += (int)(numC[NumericType.MaxHpBase] * self.reshp);
+                    numC[NumericType.ValuationAdd] += (int)(numC[NumericType.MaxValuation] * self.reshp);
                     self.hpNull = false;
                 }
             }
@@ -67,16 +67,16 @@ namespace ETHotfix
             if (self.isDeath) return;
 
             NumericComponent numC = self.GetParent<Unit>().GetComponent<NumericComponent>();
-            if (numC[NumericType.Mp] == numC[NumericType.MaxMp]) return;
+            if (numC[NumericType.Manage] == numC[NumericType.MaxManage]) return;
 
-            if (numC[NumericType.Mp] > numC[NumericType.MaxMp])
+            if (numC[NumericType.Manage] > numC[NumericType.MaxManage])
             {
-                numC[NumericType.Mp] = numC[NumericType.MaxMp];
-                Console.WriteLine(" Mp: " + numC[NumericType.Mp] + " MaxMp: " + numC[NumericType.MaxMp]);
+                numC[NumericType.Manage] = numC[NumericType.MaxManage];
+                Console.WriteLine(" Mp: " + numC[NumericType.Manage] + " MaxMp: " + numC[NumericType.MaxManage]);
                 return;
             }
 
-            if (numC[NumericType.Mp] < numC[NumericType.MaxMp])
+            if (numC[NumericType.Manage] < numC[NumericType.MaxManage])
             {
                 if (!self.mpNull)
                 {
@@ -88,7 +88,7 @@ namespace ETHotfix
 
                 if ((timeNow - self.mptimer) > self.resmpTime)
                 {
-                    numC[NumericType.MpAdd] += (int)(numC[NumericType.MaxMpBase] * self.resmp);
+                    numC[NumericType.ManageAdd] += (int)(numC[NumericType.MaxManage] * self.resmp);
                     self.mpNull = false;
                 }
             }
@@ -104,7 +104,7 @@ namespace ETHotfix
 
             NumericComponent numC = self.GetParent<Unit>().GetComponent<NumericComponent>();
 
-            if (numC[NumericType.Hp] <= 0)
+            if (numC[NumericType.Valuation] <= 0)
             {
                 ///Hp小于0时，标记死亡状态
                 self.isDeath = true;

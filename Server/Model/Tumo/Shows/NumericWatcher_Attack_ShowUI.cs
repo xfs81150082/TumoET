@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ETModel
 {
-    [NumericWatcher(NumericType.Attack)]
+    [NumericWatcher(NumericType.Case)]
     public class NumericWatcher_Attack_ShowUI : INumericWatcher
     {
         public void Run(long id, int value)

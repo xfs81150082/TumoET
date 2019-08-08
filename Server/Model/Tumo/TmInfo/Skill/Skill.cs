@@ -4,10 +4,10 @@ using System.Text;
 
 namespace ETModel
 {
-    public class Skill : Component
+    public class Skill : Entity
     {
         public string Name { get; set; } = "tumo";
-        public int Id { get; set; } = 100001;
+        public int SkillId { get; set; } = 100001;
         public int ParentId { get; set; } = 0;
         public string Icon { get; set; } = "headimagegirl";                 //图标
         public string AvatarName { get; set; } = "15101_AncientWarrior";    //预制体名称

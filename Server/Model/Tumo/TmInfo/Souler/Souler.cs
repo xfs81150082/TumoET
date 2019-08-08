@@ -2,10 +2,10 @@
 
 namespace ETModel
 {
-    public class Souler : Component
+    public class Souler : Entity
     {
         public string Name { get; set; } = "tumo";
-        public int Id { get; set; } = 100001;
+        public int SoulerId { get; set; } = 100001;
         public string Icon { get; set; } = "headimagegirl";                 //图标
         public string AvatarName { get; set; } = "EngineerOne";             //预制体名称
         public string Chater { get; set; } = "Icon_Player01";               //章节号,种族家族 
