@@ -16,14 +16,16 @@ namespace ETModel
     {
         public bool isPatrol = true;                                   //表示是否在巡逻
         public bool isIdle = true;                                     //表示在休息？
+        public bool isStartWalk = true;                                //表示在休息？
 
         public bool startNull = false;
+        public long delTime = 0;
         public long startTime = 0;
         public long idleResTime = 4;
 
         public bool patolNull = false;
         public long patolTimer = 0;
-        public long lifeCdTime = 400;
+        public long lifeCdTime = 40;
 
         public int coreDis = 4;  //巡逻半径4米
         public int coreRan = 0;  // 随机数种子

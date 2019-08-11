@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ETModel
 {
@@ -11,6 +12,8 @@ namespace ETModel
         public int Place { get; set; } = 0;
         public int Count { get ; set ; }
         public int Durability { get; set; }
+        public long CastId = -1;
+        public HashSet<long> TargetIds = new HashSet<long>();
         public int changeCount = -1;
         public TaskState TaskState { get; set; }
     }

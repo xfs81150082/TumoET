@@ -7,11 +7,12 @@ namespace ETModel
 {
     public class MonsterInfo : Component
     {
+        public Dictionary<long, Monster> enemys = new Dictionary<long, Monster>();
+
         public MonsterInfo()
         {
             GetEnemyFromBD();
         }
-        public Dictionary<long, Monster> enemys = new Dictionary<long, Monster>();
 
         /// <summary>
         /// 先向 BD 服务器 初始化小怪数据
@@ -20,9 +21,8 @@ namespace ETModel
         void GetEnemyFromBD()
         {
             try
-            {
-                ///生产 Enemy 数据 Info
-                GetEnemys(4);
+            {                
+                GetEnemys(4);         ///生产 Enemy 数据 Info
 
             }
             catch (Exception e)
@@ -35,37 +35,23 @@ namespace ETModel
         {
             for (int i = 0; i < count; i++)
             {
-                Monster enemy = ComponentFactory.CreateWithId<Monster>(IdGenerater.GenerateId());
-
                 ///20190702
+                Monster enemy = ComponentFactory.CreateWithId<Monster>(IdGenerater.GenerateId());
                 enemy.AddComponent<NumericComponent>();
-                enemy.spawnPosition = new Vector3(-35 + 10 * i, 0, 30);
-
-
-                SetNumeric(enemy, new object());
-
                 enemys.Add(enemy.Id, enemy);
             }
-
             SetPosition(enemys);
-        }
-        void SetNumeric(Monster enemy, object obj)
-        {
-            if (enemy.GetComponent<NumericComponent>() == null) return;
-            NumericComponent num = enemy.GetComponent<NumericComponent>();
-            /// 二次赋值
-            num.Set(NumericType.ValuationAdd, 80);       // HpAdd 数值,进行赋值
         }
 
         void SetPosition(Dictionary<long, Monster> enemys)
         {
             List<long> list = new List<long>(enemys.Keys);
-
             enemys[list[0]].spawnPosition = new Vector3(-35, 0, 30);
             enemys[list[1]].spawnPosition = new Vector3(-15, 0, 30);
             enemys[list[2]].spawnPosition = new Vector3(15, 0, 30);
             enemys[list[3]].spawnPosition = new Vector3(35, 0, 30);
         }
+    
 
     }
 }

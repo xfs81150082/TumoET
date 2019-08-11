@@ -29,7 +29,7 @@ namespace ETHotfix
                     }
                     MessageHelper.Broadcast(m2C_RemoveUnits0, message.PlayerUnitIds.ToArray());
 
-                    Console.WriteLine(" M2M_RemoveUnitHandler-25-sessionId/unitId/unittype： " + session.Id + " / " + message.UnitIds.First() + " / " + (UnitType)message.UnitType);
+                    Console.WriteLine(" M2M_RemoveUnitHandler-32-sessionId/unitId/unittype： " + session.Id + " / " + message.UnitIds.First() + " / " + (UnitType)message.UnitType);
                     break;
                 case 1:
                     M2C_RemoveUnits m2C_RemoveUnits1 = new M2C_RemoveUnits() { UnitType = unitType };
@@ -42,7 +42,7 @@ namespace ETHotfix
                     }
                     MessageHelper.Broadcast(m2C_RemoveUnits1, message.PlayerUnitIds.ToArray());
 
-                    Console.WriteLine(" M2M_RemoveUnitHandler-25-sessionId/unitId/unittype： " + session.Id + " / " + message.UnitIds.First() + " / " + (UnitType)message.UnitType);
+                    Console.WriteLine(" M2M_RemoveUnitHandler-45-sessionId/unitId/unittype： " + session.Id + " / " + message.UnitIds.First() + " / " + (UnitType)message.UnitType);
                     break;
 
             }

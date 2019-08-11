@@ -23,10 +23,8 @@ namespace ETModel
         void GetEnemyFromBD()
         {
             try
-            {
-                ///生产Users数据Info///生产Player数据Info                
-                GetUsers();
-
+            {                         
+                GetUsers();         ///生产Users数据Info///生产Player数据Info
             }
             catch (Exception e)
             {
@@ -69,8 +67,23 @@ namespace ETModel
 
                 player.AddComponent<NumericComponent>();
 
-                player.GetComponent<NumericComponent>().Set(NumericType.MaxValuationAdd, 140);   // MaxHpAdd 数值,进行赋值
+                NumericComponent numC = player.GetComponent<NumericComponent>();
+                ///20190621
+                // 这里初始化base值，给各个数值进行赋值           
+                // 注意，这两个语句都将触发数值改变组件，只是没有写Max的处理函数，所以会没有反应
+                player.GetComponent<NumericComponent>().Set(NumericType.ValuationBase, 40);
+                player.GetComponent<NumericComponent>().Set(NumericType.MaxValuationBase, 120);
+                player.GetComponent<NumericComponent>().Set(NumericType.ManageBase, 10);
+                player.GetComponent<NumericComponent>().Set(NumericType.MaxManageBase, 40);
+                player.GetComponent<NumericComponent>().Set(NumericType.CaseBase, 14);
+                player.GetComponent<NumericComponent>().Set(NumericType.MaxCaseBase, 40);
+
+                player.GetComponent<NumericComponent>().Set(NumericType.LevelBase, 1);
+                player.GetComponent<NumericComponent>().Set(NumericType.ExpBase, 1);
+                player.GetComponent<NumericComponent>().Set(NumericType.CoinBase, 1);
+
                 player.GetComponent<NumericComponent>().Set(NumericType.ValuationAdd, 140);      // HpAdd 数值,进行赋值
+                player.GetComponent<NumericComponent>().Set(NumericType.MaxValuationAdd, 140);   // MaxHpAdd 数值,进行赋值
 
                 players.Add(player.Id, player);
             }

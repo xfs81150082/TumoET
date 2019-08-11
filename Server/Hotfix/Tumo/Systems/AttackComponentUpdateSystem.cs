@@ -7,9 +7,9 @@ using System.Text;
 namespace ETHotfix
 {
     [ObjectSystem]
-    public class AttackComponentUpdateSystem : UpdateSystem<UnitSkillComponent>
+    public class AttackComponentUpdateSystem : UpdateSystem<AttackComponent>
     {
-        public override void Update(UnitSkillComponent self)
+        public override void Update(AttackComponent self)
         {
             self.TakeAttack();
         }

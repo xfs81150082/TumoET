@@ -12,10 +12,11 @@ namespace ETModel
     public partial class M2C_AddUnit : IActorMessage { }
     [Message(OuterOpcode.M2C_RemoveUnit)]
     public partial class M2C_RemoveUnit : IActorMessage { }
-    [Message(OuterOpcode.W2M_DeathActorRequest)]
-    public partial class W2M_DeathActorRequest : IActorLocationRequest { }
-    [Message(OuterOpcode.M2W_DeathActorResponse)]
-    public partial class M2W_DeathActorResponse : IActorLocationResponse { }
+
+    //[Message(OuterOpcode.W2M_DeathActorRequest)]
+    //public partial class W2M_DeathActorRequest : IActorLocationRequest { }
+    //[Message(OuterOpcode.M2W_DeathActorResponse)]
+    //public partial class M2W_DeathActorResponse : IActorLocationResponse { }
 
     [Message(OuterOpcode.C2G_PingRequest)]
     public partial class C2G_PingRequest : IRequest { }
@@ -28,6 +29,9 @@ namespace ETModel
     public partial class Patrol_Map : IActorLocationMessage { }
     [Message(OuterOpcode.See_Map)]
     public partial class See_Map : IActorLocationMessage { }
+    [Message(OuterOpcode.Death_Map)]
+    public partial class Death_Map : IActorLocationMessage { }
+
     [Message(OuterOpcode.Attack_Map)]
     public partial class Attack_Map : IActorLocationMessage { }
     [Message(OuterOpcode.Move_Map)]
@@ -122,17 +126,18 @@ namespace ETModel
         public const ushort SqrDistance_Map = 1431;
         public const ushort Patrol_Map = 1433;
         public const ushort See_Map = 1434;
-        public const ushort Attack_Map = 1435;
-        public const ushort Move_Map = 1436;
-        public const ushort Move_KeyCodeMap = 1437;
+        public const ushort Death_Map = 1435;
+        public const ushort Attack_Map = 1436;
+        public const ushort Move_Map = 1437;
+        public const ushort Move_KeyCodeMap = 1438;
 
-        public const ushort C2M_KeyboardPathResult = 1439;
-        public const ushort M2C_KeyboardPosition = 1443;
-        public const ushort M2C_KeyboardEulerAnglers = 1445;
-        public const ushort C2M_KeyboardSkillResult = 1447;
+        public const ushort C2M_KeyboardPathResult = 1451;
+        public const ushort M2C_KeyboardPosition = 1452;
+        public const ushort M2C_KeyboardEulerAnglers = 1453;
+        public const ushort C2M_KeyboardSkillResult = 1454;
 
-        public const ushort C2M_KeyboardSkillRequest = 1449;
-        public const ushort M2C_KeyboardSkillResponse = 1451;
+        public const ushort C2M_KeyboardSkillRequest = 1455;
+        public const ushort M2C_KeyboardSkillResponse = 1456;
 
 
         #endregion

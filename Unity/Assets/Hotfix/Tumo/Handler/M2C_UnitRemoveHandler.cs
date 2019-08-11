@@ -22,14 +22,19 @@ namespace ETHotfix
                         {
                             continue;
                         }
-
                         Unit unit0 = unitComponent.Get(unitInfo.UnitId);
                         GameObject unitGo0 = unit0.GameObject;
-
                         if (unit0 != null && unit0.GameObject != null)
                         {
-                            unitComponent.Remove(unit0.Id);
-                            GameObject.Destroy(unitGo0, 1.0f);
+                            if (unitInfo.UnitId == ETModel.Game.Scene.GetComponent<PlayerComponent>().MyPlayer.UnitId)
+                            {
+                                unit0.Position = new Vector3(-40, 0, -20);
+                            }
+                            else
+                            {
+                                unitComponent.Remove(unit0.Id);
+                                GameObject.Destroy(unitGo0, 1.0f);
+                            }
                         }
                     }
                     Debug.Log(" M2C_AddUnitHandler-35-Player: " + unittype + " : " + oldcount0 + " - " + message.Units.Count + " = " + unitComponent.Count);
@@ -43,10 +48,8 @@ namespace ETHotfix
                         {
                             continue;
                         }
-
                         Unit unit1 = enemyunitComponent.Get(unitInfo.UnitId);
                         GameObject unitGo1 = unit1.GameObject;
-
                         if (unit1 != null && unit1.GameObject != null)
                         {
                             enemyunitComponent.Remove(unit1.Id);
@@ -54,8 +57,6 @@ namespace ETHotfix
                         }
                     }
                     Debug.Log(" M2C_AddUnitHandler-56-Monster: " + unittype + " : " + oldcount1 + " - " + message.Units.Count + " = " + enemyunitComponent.Count);
-                    break;
-                case 2:
                     break;
             }
         }

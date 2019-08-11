@@ -4,16 +4,7 @@ using System.Text;
 
 namespace ETModel
 {
-    [ObjectSystem]
-    public class UnitSkillComponentAwakeSystem : AwakeSystem<UnitSkillComponent>
-    {
-        public override void Awake(UnitSkillComponent self)
-        {
-            self.Awake();
-        }
-    }
-
-    public class UnitSkillComponent : Entity
+    public class AttackComponent : Entity
     {
         public bool isAttacking = false;                                 //表示是否战斗状态
 
@@ -28,10 +19,13 @@ namespace ETModel
         public float attackDistance = float.PositiveInfinity;
         public float cdDistance = 25.0f;
 
-        public Unit attacker { get; set; }                               //正在攻击我的敌人
-        public Unit target { get; set; }                                 //我正在攻击的敌人
-        public HashSet<long> attackers = new HashSet<long>();            //已攻击到我的敌人
-        public HashSet<long> targeters = new HashSet<long>();            //已被我攻击到的敌人
+        public Unit attacker { get; set; }                                            //正在攻击我的敌人
+        public Unit target { get; set; }                                                //我正在攻击的敌人
+        public HashSet<long> attackers = new HashSet<long>();                          //已攻击到我的敌人
+        public HashSet<long> targeters = new HashSet<long>();                         //已被我攻击到的敌人
+        public Queue<SkillItem> TakeDamages = new Queue<SkillItem>();         //技能减伤列表集合
+        public Queue<SkillItem> AddBuffs = new Queue<SkillItem>();         //技能减伤列表集合
+
 
         public string currentKey;
         public Dictionary<long, int> idSkillitemls = new Dictionary<long, int>();             // 我有那些技能，及其等级
@@ -39,10 +33,6 @@ namespace ETModel
         public Dictionary<long, int> idBuffs = new Dictionary<long, int>();                   // 我身上挂的Buff,及其等级
         public SkillItem curSkillItem;                                                        // 我的当前技能（最近一次使用用的技能）
 
-        public void Awake()
-        {
-            this.AddComponent<NumericComponent>();
-        }
 
     }
 }

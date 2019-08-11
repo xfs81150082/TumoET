@@ -51,7 +51,7 @@ namespace ETHotfix
 
         async ETVoid SpawnUnit(Monster monster)
         {
-            M2G_CreateUnit response = (M2G_CreateUnit)await SessionHelper.MapSession().Call(new G2M_CreateUnit() { UnitType = (int)UnitType.Monster, RolerId = monster.Id });
+            M2T_CreateUnit response = (M2T_CreateUnit)await SessionHelper.MapSession().Call(new T2M_CreateUnit() { UnitType = (int)UnitType.Monster, RolerId = monster.Id, UnitId = 0 });
             monster.UnitId = response.UnitId;
         }
 

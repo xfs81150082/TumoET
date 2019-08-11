@@ -14,26 +14,26 @@ namespace ETHotfix
             //SendClient();
         }
 
-        void SendClient()
-        {
-            //Console.WriteLine(" TestComponentUpdateSystem-20-unitIds: " + TimeHelper.ClientNow());
+        //void SendClient()
+        //{
+        //    //Console.WriteLine(" TestComponentUpdateSystem-20-unitIds: " + TimeHelper.ClientNow());
 
-            //long[] unitIds = Game.Scene.GetComponent<MonsterUnitComponent>().GetIdsAll();
+        //    //long[] unitIds = Game.Scene.GetComponent<MonsterUnitComponent>().GetIdsAll();
 
-            MessageHelper.Broadcast(new Move_KeyCodeMap());
-        }
+        //    MessageHelper.Broadcast(new Move_KeyCodeMap());
+        //}
 
-        async ETVoid ETVoidAsync()
-        {
-            long[] unitIds = Game.Scene.GetComponent<MonsterUnitComponent>().GetIdsAll();
+        //async ETVoid ETVoidAsync()
+        //{
+        //    long[] unitIds = Game.Scene.GetComponent<MonsterUnitComponent>().GetIdsAll();
 
-            Console.WriteLine(" TestComponentUpdateSystem-20-unitIds: " + unitIds);
+        //    Console.WriteLine(" TestComponentUpdateSystem-20-unitIds: " + unitIds);
 
-            M2W_DeathActorResponse response = (M2W_DeathActorResponse)await ActorHelper.ActorLocation(unitIds[0]).Call(new W2M_DeathActorRequest() { Info = "TestComponentUpdateSystem-20" });
+        //    //M2W_DeathActorResponse response = (M2W_DeathActorResponse)await ActorHelper.ActorLocation(unitIds[0]).Call(new W2M_DeathActorRequest() { Info = "TestComponentUpdateSystem-20" });
 
-            Console.WriteLine(" TestComponentUpdateSystem-24-response: " + response.Message);
+        //    //Console.WriteLine(" TestComponentUpdateSystem-24-response: " + response.Message);
 
-        }
+        //}
 
 
     }

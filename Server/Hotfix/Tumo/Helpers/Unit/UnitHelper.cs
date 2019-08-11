@@ -16,10 +16,34 @@ namespace ETHotfix
             if (player != null)
             {
                 player.spawnPosition = unitVec;
-
-                Console.WriteLine(" UnitHelper-19-playerVec: " + player.Id + " / " + player.UnitId + " : " + player.spawnPosition.ToString());
             }
         }
+
+        public static T2M_CreateUnit T2M_CreateUnit(this Unit unit)
+        {
+            //重置生产Player单元Unit
+            Player player = Game.Scene.GetComponent<PlayerComponent>().GetByUnitId(unit.Id);
+            T2M_CreateUnit t2M_CreateUnit = new T2M_CreateUnit() { UnitType = (int)UnitType.Player, RolerId = player.Id, GateSessionId = unit.GetComponent<UnitGateComponent>().GateSessionActorId, UnitId = unit.Id };
+            return t2M_CreateUnit;
+        }
+
+        public static void ToZero(this Unit unit)
+        {
+            unit.GetComponent<SqrDistanceComponent>().neastUnit = null;
+            unit.GetComponent<SqrDistanceComponent>().neastDistance = float.PositiveInfinity;
+            unit.GetComponent<AttackComponent>().target = null;
+            unit.GetComponent<AttackComponent>().isAttacking = false;
+
+            if (unit.GetComponent<PatrolComponent>() != null)
+            {
+                unit.GetComponent<PatrolComponent>().isPatrol = true;
+            }
+            if (unit.GetComponent<SeeComponent>() != null)
+            {
+                unit.GetComponent<SeeComponent>().target = null;
+            }
+        }
+
 
         public static void UpdateLevel(this Unit unit)
         {

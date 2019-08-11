@@ -12,7 +12,6 @@ namespace ETHotfix
     {
         public override void Update(PatrolComponent self)
         {
-            if (!self.isPatrol) return;
            self.UpdatePatrol();
         }
         

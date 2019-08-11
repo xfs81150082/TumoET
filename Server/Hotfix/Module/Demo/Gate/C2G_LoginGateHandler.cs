@@ -31,9 +31,7 @@ namespace ETHotfix
                 response.PlayerId = player.Id;
                 reply(response);
 
-                Console.WriteLine(" C2G_LoginGateHandler-34-playerId: " + player.Id);
-
-                //session.Send(new G2C_TestHotfixMessage() { Info = "recv hotfix message success" });
+                Console.WriteLine(" C2G_LoginGateHandler-35-playerId: " + player.Id);
             }
             catch (Exception e)
             {

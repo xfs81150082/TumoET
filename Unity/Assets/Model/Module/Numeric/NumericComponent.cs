@@ -2,31 +2,9 @@
 
 namespace ETModel
 {
-	[ObjectSystem]
-	public class NumericComponentAwakeSystem : AwakeSystem<NumericComponent>
-	{
-		public override void Awake(NumericComponent self)
-		{
-			self.Awake();
-		}
-	}
-
 	public class NumericComponent: Component
     {       
         public Dictionary<int, int> NumericDic = new Dictionary<int, int>();
-
-		public void Awake()
-		{
-            // 这里初始化base值，给各个数值进行赋值
-            ///20190621
-            //注意，这两个语句都将触发数值改变组件，只是没有写Max的处理函数，所以会没有反应
-            this.Set(NumericType.Max, 9981150082);
-
-            //this.Set(NumericType.SpeedBase, 0);
-            //this.Set(NumericType.HpBase, 0);
-            //this.Set(NumericType.AttackBase, 0);
-          
-        }
 
         public float GetAsFloat(NumericType numericType)
 		{
@@ -108,5 +86,6 @@ namespace ETModel
             this.NumericDic[final] = result;
 			Game.EventSystem.Run(EventIdType.NumbericChange, this.Entity.Id, (NumericType) final, result);
 		}
+
 	}
 }

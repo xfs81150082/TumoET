@@ -14,49 +14,62 @@ namespace ETHotfix
         /// <param name="self"></param>
         public static void UpdatePatrol(this PatrolComponent self)
         {
+            if (!self.isPatrol)
+            {
+                self.isStartWalk = true;
+                self.isIdle = false;
+                self.patolNull = false;
+                self.startNull = false;
+                return;
+            }
+
             if (self.isIdle)
             {
+                //开始休息 4秒
                 if (!self.startNull)
                 {
                     self.startTime = TimeHelper.ClientNowSeconds();
                     self.startNull = true;
                 }
-
-                long timeNow = TimeHelper.ClientNowSeconds();
-
-                ///休息时间到 开始发送巡逻目标点坐标 消息
+                long timeNow = TimeHelper.ClientNowSeconds();                
                 if ((timeNow - self.startTime) > self.idleResTime)
                 {
-                    self.SendPatrolPosition();
                     self.startNull = false;
+                    self.isStartWalk = true;
                     self.isIdle = false;
                 }
             }
             else
             {
+                //发送坐标，开始行走，开始发送巡逻目标点坐标
+                if (self.isStartWalk)
+                {
+                    self.SendPatrolPosition();
+                    self.isStartWalk = false;
+                }
+
+                //如果到达目标点,开始休息,并计时4秒后 重置巡逻目标点
+                float sqr = SqrDistanceComponentHelper.Distance(self.GetParent<Unit>().Position, self.goalPoint);
+                if (sqr < 0.1f)
+                {
+                    self.isStartWalk = true;
+                    self.isIdle = true;
+                    self.patolNull = false;
+                }                
+
+                //如果卡住在地图到达不了目标点 此计时40秒后 重置巡逻目标点
                 if (!self.patolNull)
                 {
                     self.patolTimer = TimeHelper.ClientNowSeconds();
                     self.patolNull = true;
                 }
-
                 long timeNow = TimeHelper.ClientNowSeconds();
-
-                ///如果卡住在地图到达不了目标点 此计时40秒后 重置巡逻目标点
                 if ((timeNow - self.patolTimer) > self.lifeCdTime)
                 {
                     self.patolNull = false;
-                    self.isIdle = true;
+                    self.isStartWalk = true;
                 }
 
-                ///如果到达目标点,开始休息,并计时4秒后 重置巡逻目标点
-                float sqr = SqrDistanceHelper.Distance(self.GetParent<Unit>().Position, self.goalPoint);
-
-                if (sqr < 0.01f)
-                {
-                    self.patolNull = false;
-                    self.isIdle = true;
-                }
             }
         }
 
@@ -112,7 +125,7 @@ namespace ETHotfix
             }
             return endVec;
         }
-         
+        
 
     }
 }

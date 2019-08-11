@@ -22,13 +22,10 @@ namespace ETHotfix
                 Console.WriteLine(" session.InstanceId/Id: " + session.InstanceId + " / " + session.Id);
 
                 Player player = session.GetComponent<SessionPlayerComponent>().Player;
-                //Player player22 = Game.Scene.GetComponent<PlayerComponent>().Get(message.PlayerId);
-
-                ///20190714///验证过相同
-                //Console.WriteLine(" MyPlayer.Id: " + player.Id + " / " + player22.Id);
 
                 // 在map服务器上创建战斗Unit
-                M2G_CreateUnit createResponse = (M2G_CreateUnit)await SessionHelper.MapSession().Call(new G2M_CreateUnit() { UnitType = (int)UnitType.Player, RolerId = player.Id, GateSessionId = session.InstanceId });
+                M2G_CreateUnit createResponse = (M2G_CreateUnit)await SessionHelper.MapSession().Call(new G2M_CreateUnit() { UnitType = (int)UnitType.Player, RolerId = player.Id, GateSessionId = session.InstanceId, UnitId = 0 });
+
                 player.UnitId = createResponse.UnitId;
 
                 response.UnitId = player.UnitId;

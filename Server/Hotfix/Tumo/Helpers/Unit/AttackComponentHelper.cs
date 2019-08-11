@@ -12,7 +12,7 @@ namespace ETHotfix
         /// 攻击 CD 计时
         /// </summary>
         /// <param name="self"></param>
-        public static void TakeAttack(this UnitSkillComponent self)
+        public static void TakeAttack(this AttackComponent self)
         {
             if (self.GetParent<Unit>().GetComponent<RecoverComponent>().isDeath) return;
 
@@ -20,10 +20,7 @@ namespace ETHotfix
 
             if (self.target != null)
             {
-                //DeathSettlement(self.target);
-
-                self.attackDistance = SqrDistanceHelper.Distance(self.GetParent<Unit>().Position, self.target.Position);
-
+                self.attackDistance = SqrDistanceComponentHelper.Distance(self.GetParent<Unit>().Position, self.target.Position);
                 if (self.attackDistance < self.cdDistance)
                 {
                     if (!self.startNull)
@@ -33,11 +30,25 @@ namespace ETHotfix
                     }
 
                     long timeNow = TimeHelper.ClientNowSeconds();
-
                     if ((timeNow - self.startTime) > self.attcdTime)
                     {
-                        self.TakeDamage();
+                        if (self.GetParent<Unit>().GetComponent<RecoverComponent>().isDeath)
+                        {
+                            self.target = null;
+                            return;
+                        }
+                        if (self.target.GetComponent<RecoverComponent>().isDeath)
+                        {
+                            self.target = null;
+                            return;
+                        }
+                        //普通攻击，相当于施放技能41101，技能等级为0
+                        SkillItem skillItem = ComponentFactory.CreateWithId<SkillItem>(41101);
+                        skillItem.GetComponent<ChangeType>().CastId = self.GetParent<Unit>().Id;
+                        //skillItem.GetComponent<ChangeType>().TargetIds.Add(self.target.Id);
+                        skillItem.GetComponent<NumericComponent>().Set(NumericType.CaseBase, 14);
 
+                        self.target.GetComponent<AttackComponent>().TakeDamage(skillItem);
                         self.startNull = false;
                     }
                 }
@@ -53,10 +64,10 @@ namespace ETHotfix
         }
    
         /// <summary>
-        /// 得到 单目标 敌人
+        /// 单目标 得到敌人
         /// </summary>
         /// <param name="unit"></param>
-        static void GetAttackTarget(this UnitSkillComponent self)
+        static void GetAttackTarget(this AttackComponent self)
         {
             Unit unit = self.GetParent<Unit>();
 
@@ -64,7 +75,7 @@ namespace ETHotfix
             {
                 if (unit.GetComponent<RayUnitComponent>().target != null)
                 {
-                    unit.GetComponent<UnitSkillComponent>().target = unit.GetComponent<RayUnitComponent>().target;
+                    unit.GetComponent<AttackComponent>().target = unit.GetComponent<RayUnitComponent>().target;
                 }
                 else
                 {
@@ -75,70 +86,55 @@ namespace ETHotfix
             {
                 if (unit.GetComponent<SeeComponent>() != null && unit.GetComponent<SeeComponent>().target != null)
                 {
-                    unit.GetComponent<UnitSkillComponent>().target = unit.GetComponent<SeeComponent>().target;
+                    unit.GetComponent<AttackComponent>().target = unit.GetComponent<SeeComponent>().target;
                 }
             }
         }
-
+  
         /// <summary>
-        /// 单目标 普通攻击 减伤 TakeDamage
+        /// 单目标 攻击技能 加入减伤列队
         /// </summary>
         /// <param name="self"></param>
-        /// <param name="target"></param>
-        public static void TakeDamage(this UnitSkillComponent self)
+        /// <param name="skillItem"></param>
+        public static void TakeDamage(this AttackComponent self, SkillItem skillItem)
         {
-            Unit my = self.GetParent<Unit>();
-            Unit target = self.target;
-            if (self.target == null) return;
-            if (self.GetParent<Unit>().GetComponent<RecoverComponent>().isDeath) return;
-            if (self.target.GetComponent<RecoverComponent>().isDeath) return;
-
-            UnitSkillComponent attack = target.GetComponent<UnitSkillComponent>();
-            if (!attack.attackers.Contains(my.Id))
-            {
-                attack.attackers.Add(my.Id);
-            }
-
-            NumericComponent numTarget = target.GetComponent<NumericComponent>();
-            NumericComponent numSelf = my.GetComponent<NumericComponent>();
-            Random random = new Random();
-            int dom = random.Next(0, 99);
-            int domhp = 0;
-            if (dom < 26)
-            {
-                domhp = numSelf[NumericType.Case] * 2;
-                numTarget[NumericType.ValuationAdd] -= domhp; 
-            }
-            else
-            {
-                domhp = numSelf[NumericType.Case];
-                numTarget[NumericType.ValuationAdd] -= domhp;
-            }
-
-            Console.WriteLine(" TakeDamage: " + "-" + domhp + " / " + numTarget[NumericType.Valuation] + " / " + target.UnitType);
-        }
-        
-        public static void UpdateBuff(this UnitSkillComponent self)
-        {
-            Unit unit = self.GetParent<Unit>();
-            SkillItem[] skillItems = self.GetBuffs();
-           
-
-
-        }
-        public static SkillItem[] GetBuffs(this UnitSkillComponent self)
-        {
-            HashSet<SkillItem> skillItems = new HashSet<SkillItem>();
-            foreach (long tem in self.idBuffs.Keys.ToArray())
-            {
-                int level;
-                self.idBuffs.TryGetValue(tem, out level);
-                SkillItem skillItem = Game.Scene.GetComponent<SkillComponent>().Get(tem, level);
-                skillItems.Add(skillItem);
-            }
-            return skillItems.ToArray();
+            self.TakeDamages.Enqueue(skillItem);
+            self.WhileTakeDamage();
         }
 
+        /// <summary>
+        /// 单目标 减伤列队 取出 循环执行
+        /// </summary>
+        /// <param name="self"></param>
+        public static void WhileTakeDamage(this AttackComponent self)
+        {
+            while (self.TakeDamages.Count > 0)
+            {
+                SkillItem skillItem = self.TakeDamages.Dequeue();
+                Unit myself = self.GetParent<Unit>();
+                if (!self.attackers.Contains(skillItem.GetComponent<ChangeType>().CastId))
+                {
+                    self.attackers.Add(skillItem.GetComponent<ChangeType>().CastId);
+                }
+
+                NumericComponent numSk = skillItem.GetComponent<NumericComponent>();
+                skillItem.Dispose();
+                NumericComponent numSelf = myself.GetComponent<NumericComponent>();
+                Random random = new Random();
+                int dom = random.Next(0, 99);
+                int domhp = numSk[NumericType.Case];
+                if (dom < 26)
+                {
+                    numSelf[NumericType.ValuationAdd] -= domhp * 2;
+                }
+                else
+                {
+                    numSelf[NumericType.ValuationAdd] -= domhp;
+                }
+
+                Console.WriteLine(" TakeDamage-138-Myself(" + myself.UnitType + ") ： " + "-" + domhp + " / " + numSelf[NumericType.Valuation] + " /Count: " + self.TakeDamages.Count);
+            }
+        }
 
 
     }

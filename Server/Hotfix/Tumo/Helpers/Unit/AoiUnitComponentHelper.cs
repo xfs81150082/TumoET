@@ -28,8 +28,8 @@ namespace ETHotfix
                         //ToTo 通知tem客户端(多个)  加入此玩家（1个）
                         temAoiPlayer1.AddPlayers(new long[1] { self.GetParent<Unit>().Id }, new long[1] { tem });
 
-                        Console.WriteLine(" AoiUnit-208-玩家-Id：" + self.GetParent<Unit>().Id + "(" + self.gridId + ") 进入 PlayerId：" + tem + "(" + temAoiUnit1.gridId + ") 的视野。");
-                        Console.WriteLine(" AoiUnit-209-玩家-Id：" + tem + "(" + temAoiUnit1.gridId + ") 看到玩家：" + temAoiUnit1.playerIds.MovesSet.Count);
+                        Console.WriteLine(" AoiUnit-31-玩家-Id：" + self.GetParent<Unit>().Id + "(" + self.gridId + ") 进入 PlayerId：" + tem + "(" + temAoiUnit1.gridId + ") 的视野。");
+                        Console.WriteLine(" AoiUnit-32-玩家-Id：" + tem + "(" + temAoiUnit1.gridId + ") 看到玩家：" + temAoiUnit1.playerIds.MovesSet.Count);
                         break;
                     case UnitType.Monster:
                         temAoiUnit1.enemyIds.Enters.Add(self.GetParent<Unit>().Id);
@@ -38,8 +38,8 @@ namespace ETHotfix
                         //ToTo 通知tem客户端(多个)  加入此小怪（1个）
                         temAoiPlayer1.AddMonsters(new long[1] { self.GetParent<Unit>().Id }, new long[1] { tem });
 
-                        Console.WriteLine(" AoiUnit-218-小怪-Id：" + self.GetParent<Unit>().Id + "(" + self.gridId + ") 进入 PlayerId：" + tem + "(" + temAoiUnit1.gridId + ") 的视野。");
-                        Console.WriteLine(" AoiUnit-219-玩家-Id：" + tem + "(" + temAoiUnit1.gridId + ") 看到小怪：" + temAoiUnit1.enemyIds.MovesSet.Count);
+                        Console.WriteLine(" AoiUnit-41-小怪-Id：" + self.GetParent<Unit>().Id + "(" + self.gridId + ") 进入 PlayerId：" + tem + "(" + temAoiUnit1.gridId + ") 的视野。");
+                        Console.WriteLine(" AoiUnit-42-玩家-Id：" + tem + "(" + temAoiUnit1.gridId + ") 看到小怪：" + temAoiUnit1.enemyIds.MovesSet.Count);
                         break;
                 }
             }
@@ -83,8 +83,8 @@ namespace ETHotfix
                         ///ToTo 通知tem客户端(多个) 删除此玩家（1个）
                         temAoiPlayer1.RemovePlayers(new long[1] { self.GetParent<Unit>().Id }, new long[1] { tem });
 
-                        Console.WriteLine(" AoiUnit-264-玩家-Id：" + self.GetParent<Unit>().Id + " 离开 PlayerId：" + tem + "(" + temAoiUnit1.gridId + ") 的视野。");
-                        Console.WriteLine(" AoiUnit-265-玩家-Id：" + tem + "(" + temAoiUnit1.gridId + ") 看到玩家：" + temAoiUnit1.playerIds.MovesSet.Count);
+                        Console.WriteLine(" AoiUnit-86-玩家-Id：" + self.GetParent<Unit>().Id + " 离开 PlayerId：" + tem + "(" + temAoiUnit1.gridId + ") 的视野。");
+                        Console.WriteLine(" AoiUnit-87-玩家-Id：" + tem + "(" + temAoiUnit1.gridId + ") 看到玩家：" + temAoiUnit1.playerIds.MovesSet.Count);
                         break;
                     case UnitType.Monster:
                         temAoiUnit1.enemyIds.MovesSet.Remove(self.GetParent<Unit>().Id);
@@ -93,8 +93,8 @@ namespace ETHotfix
                         ///ToTo 通知tem客户端(多个) 删除此小怪（1个）
                         temAoiPlayer1.RemoveMonsters(new long[1] { self.GetParent<Unit>().Id }, new long[1] { tem });
 
-                        Console.WriteLine(" AoiUnit-274-小怪-Id：" + self.GetParent<Unit>().Id + " 离开 PlayerId：" + tem + "(" + temAoiUnit1.gridId + ") 的视野。");
-                        Console.WriteLine(" AoiUnit-275-玩家-Id：" + tem + "(" + temAoiUnit1.gridId + ") 看到小怪：" + temAoiUnit1.enemyIds.MovesSet.Count);
+                        Console.WriteLine(" AoiUnit-96-小怪-Id：" + self.GetParent<Unit>().Id + " 离开 PlayerId：" + tem + "(" + temAoiUnit1.gridId + ") 的视野。");
+                        Console.WriteLine(" AoiUnit-97-玩家-Id：" + tem + "(" + temAoiUnit1.gridId + ") 看到小怪：" + temAoiUnit1.enemyIds.MovesSet.Count);
                         break;
                 }
             }
@@ -123,8 +123,6 @@ namespace ETHotfix
         /// </summary>
         public static void DeathRemove(this AoiUnitComponent self)
         {
-            Console.WriteLine(" AoiUnitComponentHelper-DeathRemove-125-Id：" + self.GetParent<Unit>().Id);
-
             long unitId = self.GetParent<Unit>().Id;
             UnitType unitType = self.GetParent<Unit>().UnitType;
             switch (unitType)
@@ -132,69 +130,57 @@ namespace ETHotfix
                 case UnitType.Player:
                     foreach (long tem in self.playerIds.MovesSet)
                     {
-                        ///通知 刚进入小怪视野的玩家（多个） 加入这个小怪的Id（1个） 
                         AoiPlayerComponent temAoiPlayer1 = Game.Scene.GetComponent<UnitComponent>().Get(tem).GetComponent<AoiPlayerComponent>();
                         AoiUnitComponent temAoiUnit1 = Game.Scene.GetComponent<UnitComponent>().Get(tem).GetComponent<AoiUnitComponent>();
-                        temAoiUnit1.playerIds.MovesSet.Remove(unitId);
 
-                        ///ToTo 通知tem客户端(多个) 删除此玩家（1个）
-                        temAoiPlayer1.RemovePlayers(new long[1] { unitId }, new long[1] { tem });
+                        ///将自己从别人玩家的视野里删除
+                        if (tem != unitId)
+                        {
+                            temAoiUnit1.playerIds.MovesSet.Remove(unitId);
+                        }
+
+                        ///通知tem客户端(多个) 删除此玩家（1个）实例，如果是本客户端则重置此玩家自己实例位置
+                        temAoiPlayer1.RemovePlayers(new long[1] { unitId }, new long[1] { tem });                        
 
                         Console.WriteLine(" AoiUnit-145-玩家死亡-Id：" + unitId + " 离开 PlayerId：" + tem + "(" + temAoiUnit1.gridId + ") 的视野。");
                     }
 
-                    //foreach (long tem in self.enemyIds.MovesSet)
-                    //{
-                    //    ///通知 刚进入本人视野的小怪（多个） 加入本人的Id（1个） 
-                    //    AoiUnitComponent temAoiUnit0 = Game.Scene.GetComponent<MonsterUnitComponent>().Get(tem).GetComponent<AoiUnitComponent>();
-                    //    temAoiUnit0.playerIds.MovesSet.Remove(unitId);
-                    //}
+                    foreach (long tem in self.enemyIds.MovesSet)
+                    {
+                        ///将自己 从小怪（多个）的视野里删除
+                        AoiUnitComponent temAoiUnit2 = Game.Scene.GetComponent<MonsterUnitComponent>().Get(tem).GetComponent<AoiUnitComponent>();
+                        temAoiUnit2.playerIds.MovesSet.Remove(unitId);
+
+                        Console.WriteLine(" AoiUnit-151-玩家死亡-Id：" + unitId + " 离开 MonsterId：" + tem + "(" + temAoiUnit2.gridId + ") 的视野。");
+                    }
 
                     break;
                 case UnitType.Monster:
                     foreach (long tem in self.playerIds.MovesSet)
                     {
-                        ///通知 刚进入小怪视野的玩家（多个） 加入这个小怪的Id（1个） 
                         AoiPlayerComponent temAoiPlayer1 = Game.Scene.GetComponent<UnitComponent>().Get(tem).GetComponent<AoiPlayerComponent>();
                         AoiUnitComponent temAoiUnit1 = Game.Scene.GetComponent<UnitComponent>().Get(tem).GetComponent<AoiUnitComponent>();
+
+                        ///将死亡的小怪 从玩家的视野里删除
                         temAoiUnit1.enemyIds.MovesSet.Remove(unitId);
 
-                        ///ToTo 通知tem客户端(多个) 删除此小怪（1个）
+                        ///ToTo 通知tem客户端(多个) 删除此小怪（1个）实例
                         temAoiPlayer1.RemoveMonsters(new long[1] { unitId }, new long[1] { tem });
 
-                        Console.WriteLine(" AoiUnit-156-小怪死亡-Id：" + unitId + " 离开 PlayerId：" + tem + "(" + temAoiUnit1.gridId + ") 的视野。");
+                        Console.WriteLine(" AoiUnit-165-小怪死亡-Id：" + unitId + " 离开 PlayerId：" + tem + "(" + temAoiUnit1.gridId + ") 的视野。");
                     }
 
                     //foreach (long tem in self.enemyIds.MovesSet)
                     //{
-                    //    ///通知 刚进入本人视野的小怪（多个） 加入本人的Id（1个） 
-                    //    AoiUnitComponent temAoiUnit0 = Game.Scene.GetComponent<MonsterUnitComponent>().Get(tem).GetComponent<AoiUnitComponent>();
-                    //    temAoiUnit0.enemyIds.MovesSet.Remove(unitId);
+                    //    ///将死亡小怪 从其他小怪（多个）的视野里删除
+                    //    AoiUnitComponent temAoiUnit2 = Game.Scene.GetComponent<MonsterUnitComponent>().Get(tem).GetComponent<AoiUnitComponent>();
+                    //    temAoiUnit2.enemyIds.MovesSet.Remove(unitId);
                     //}
 
                     break;
             }
         }
 
-        /// <summary>
-        /// 向客户端 广播 状态同步坐标和朝向
-        /// </summary>
-        /// <param name="self"></param>
-        public static void MoveStateBroadcastToClient(this AoiUnitComponent self , Move_Map move_Map)
-        {
-            Move_KeyCodeMap move_KeyCodeMap = new Move_KeyCodeMap();
-            HashSet<long> mapPlayers = new HashSet<long>(self.playerIds.MovesSet);
-            mapPlayers.Remove(move_Map.Id);
-
-            move_KeyCodeMap.KeyType = move_Map.KeyType;
-            move_KeyCodeMap.Id = move_Map.Id;
-            move_KeyCodeMap.X = move_Map.X;
-            move_KeyCodeMap.Y = move_Map.Y;
-            move_KeyCodeMap.Z = move_Map.Z;
-            move_KeyCodeMap.AY = move_Map.AY;
-
-            MessageHelper.Broadcast(move_KeyCodeMap, mapPlayers.ToArray());
-        }
 
     }
 }

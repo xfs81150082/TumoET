@@ -6,8 +6,8 @@ namespace ETModel
 {
     #region ///20190613
 
-    [Message(InnerOpcode.M2M_CreateUnit)]
-    public partial class M2M_CreateUnit : IRequest
+    [Message(InnerOpcode.T2M_CreateUnit)]
+    public partial class T2M_CreateUnit : IRequest
     {
         public int RpcId { get; set; }
 
@@ -16,16 +16,26 @@ namespace ETModel
         public long RolerId { get; set; }
 
         public long UnitId { get; set; }
+
+        public long GateSessionId { get; set; }
     }
 
-    [Message(InnerOpcode.M2M_GetEnemyUnit)]
-    public partial class M2M_GetEnemyUnit : IRequest
+    [Message(InnerOpcode.M2T_CreateUnit)]
+    public partial class M2T_CreateUnit : IResponse
     {
         public int RpcId { get; set; }
 
-        public long playerUnitId { get; set; }
+        public int Error { get; set; }
+
+        public string Message { get; set; }
+
+        // 自己的unit id
+        public long UnitId { get; set; }
+
+        // 所有的unit
+        public List<UnitInfo> Units = new List<UnitInfo>();
     }
-    
+
     [Message(InnerOpcode.M2M_AddUnits)]
     public partial class M2M_AddUnits : IRequest
     {
@@ -50,7 +60,7 @@ namespace ETModel
 
         public HashSet<long> PlayerUnitIds { get; set; } = new HashSet<long>();
         public HashSet<long> UnitIds { get; set; } = new HashSet<long>();
-    }
+    }    
 
     #endregion
 
@@ -399,8 +409,6 @@ namespace ETModel
         public int RpcId { get; set; }
 
         public int UnitType { get; set; }
-
-        //public long PlayerId { get; set; }
 
         public long RolerId { get; set; }
 

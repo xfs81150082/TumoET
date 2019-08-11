@@ -8,7 +8,7 @@ namespace ETHotfix
 {
     public static class AoiPlayerComponentHelper
     {
-        #region
+        #region UpdateAddRemove
         public static void UpdateAddRemove(this AoiPlayerComponent self)
         {
             AoiUnitComponent aoiUnit = self.GetParent<Unit>().GetComponent<AoiUnitComponent>();
@@ -44,11 +44,11 @@ namespace ETHotfix
                 Console.WriteLine(" AoiPlayer-44-小怪：" + aoiUnit.enemyIds.Leaves.Count + " 个，" + "离开 PlayerId：" + self.GetParent<Unit>().Id + "(" + aoiUnit.gridId + ") 视野。");
                 Console.WriteLine(" AoiPlayer-45-玩家：" + self.GetParent<Unit>().Id + "(" + aoiUnit.gridId + ") 看到小怪：" + aoiUnit.enemyIds.MovesSet.Count);
             }
-        }        
+        }
 
         #endregion
-        
-        #region
+
+        #region  给客户端 添加 单元实例
         /// <summary>
         /// 给客户端 添加 玩家 单元实例
         /// </summary>
@@ -60,7 +60,7 @@ namespace ETHotfix
             M2M_AddUnits m2M_AddUnits = new M2M_AddUnits() { UnitType = (int)UnitType.Player, UnitIds = unitIds.ToHashSet(), PlayerUnitIds = playerUnitIds.ToHashSet() };
             SessionHelper.MapSession().Send(m2M_AddUnits);
 
-            Console.WriteLine(" AoiPlayerComponentHelper-55-playerId/us/ps: "+self.GetParent<Unit>().Id+" : " + unitIds.Length + " / " + playerUnitIds.Length);
+            Console.WriteLine(" AoiPlayerComponentHelper-63-playerId/ucount/pcount: "+self.GetParent<Unit>().Id+" : " + unitIds.Length + " / " + playerUnitIds.Length);
         }
 
         /// <summary>
@@ -74,12 +74,12 @@ namespace ETHotfix
             M2M_AddUnits m2M_AddUnits = new M2M_AddUnits() { UnitType = (int)UnitType.Monster, UnitIds = unitIds.ToHashSet(), PlayerUnitIds = playerUnitIds.ToHashSet() };
             SessionHelper.MapSession().Send(m2M_AddUnits);
 
-            Console.WriteLine(" AoiPlayerComponentHelper-69-playerId/us/ps: " + self.GetParent<Unit>().Id + " : " + unitIds.Length + " / " + playerUnitIds.Length);
+            Console.WriteLine(" AoiPlayerComponentHelper-77-playerId/us/ps: " + self.GetParent<Unit>().Id + " : " + unitIds.Length + " / " + playerUnitIds.Length);
         }
 
         #endregion
 
-        #region
+        #region 给客户端 删除 单元实例
         /// <summary>
         /// 给客户端 删除 玩家 单元实例
         /// </summary>
@@ -88,10 +88,10 @@ namespace ETHotfix
         public static void RemovePlayers(this AoiPlayerComponent self, long[] unitIds, long[] playerUnitIds)
         {
             /// 广播创建的unit
-            M2M_AddUnits m2M_AddUnits = new M2M_AddUnits() { UnitType = (int)UnitType.Player, UnitIds = unitIds.ToHashSet(), PlayerUnitIds = playerUnitIds.ToHashSet() };
-            SessionHelper.MapSession().Send(m2M_AddUnits);
+            M2M_RemoveUnits m2M_RemoveUnits = new M2M_RemoveUnits() { UnitType = (int)UnitType.Player, UnitIds = unitIds.ToHashSet(), PlayerUnitIds = playerUnitIds.ToHashSet() };
+            SessionHelper.MapSession().Send(m2M_RemoveUnits);
 
-            Console.WriteLine(" AoiPlayerComponentHelper-86-playerId/us/ps: " + self.GetParent<Unit>().Id + " : " + unitIds.Length + " / " + playerUnitIds.Length);
+            Console.WriteLine(" AoiPlayerComponentHelper-94-playerId/us/ps: " + self.GetParent<Unit>().Id + " : " + unitIds.Length + " / " + playerUnitIds.Length);
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace ETHotfix
             M2M_RemoveUnits m2M_RemoveUnits = new M2M_RemoveUnits() { UnitType = (int)UnitType.Monster, UnitIds = unitIds.ToHashSet(), PlayerUnitIds = playerUnitIds.ToHashSet() };
             SessionHelper.MapSession().Send(m2M_RemoveUnits);
 
-            Console.WriteLine(" AoiPlayerComponentHelper-100-playerId/us/ps: " + self.GetParent<Unit>().Id + " : " + unitIds.Length + " / " + playerUnitIds.Length);
+            Console.WriteLine(" AoiPlayerComponentHelper-108-playerId/us/ps: " + self.GetParent<Unit>().Id + " : " + unitIds.Length + " / " + playerUnitIds.Length);
         }
 
         #endregion

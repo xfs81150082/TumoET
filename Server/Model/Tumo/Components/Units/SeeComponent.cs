@@ -10,10 +10,12 @@ namespace ETModel
         public bool isSee = false;                                           //是否在追击敌人
         public Unit target;                                                  //选定的目标，追击或攻击的目标必定是选定的目标
         public float targetDistance { get; set; } = float.PositiveInfinity;
+        public float enterSeeDis { get; set; } = 225.0f;
 
-        public bool startNull = false;
+        //public bool startNull = false;
+        public long delTime = 0;
         public long seeTimer = 0;
-        public long resTime = 100;
+        public long resTime = 40;
         public long speed = 2;
 
         public bool isSeePath = false;                                        //表示是否有追击路径
