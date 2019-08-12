@@ -75,11 +75,11 @@ namespace ETModel
         Case,
     }
 
-    public enum Tribe
+    public enum TribeType
     {
-        Administration,
+        Manage,
         Valuation,
-        Metering,
+        Measure,
         Case,
     }
 

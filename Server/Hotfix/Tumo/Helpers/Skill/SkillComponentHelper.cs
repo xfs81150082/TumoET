@@ -8,12 +8,12 @@ namespace ETHotfix
 {
     public static class SkillComponentHelper
     {
-        public static SkillItem Get(this SkillComponent self, long id, int level)
-        {
-            SkillItem item = self.Get(id);
-            item.UpdateLevel(level);
-            return item;
-        }    
+        //public static SkillItem Get(this SkillComponent self, long id, int level)
+        //{
+        //    Skill item = self.Get(id);
+        //    item.UpdateLevel(level);
+        //    return item;
+        //}    
 
 
 

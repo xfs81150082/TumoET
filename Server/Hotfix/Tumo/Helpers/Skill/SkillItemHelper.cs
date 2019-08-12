@@ -9,7 +9,15 @@ namespace ETHotfix
     {
         public static void UpdateLevel(this SkillItem self, int level)
         {
-
+            switch (self.GetComponent<Skill>().TribeType)
+            {
+                case TribeType.Valuation:
+                    break;
+                case TribeType.Case:
+                    self.GetComponent<NumericComponent>().Set(NumericType.CaseBase, 14);
+                    self.GetComponent<NumericComponent>().Set(NumericType.CaseAdd, level * 4);
+                    break;
+            }
         }
       
 

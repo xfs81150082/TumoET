@@ -13,7 +13,9 @@ namespace ETHotfix
             M2C_KeyboardSkillResponse response = new M2C_KeyboardSkillResponse();
             try
             {
-                unit.GetComponent<AttackComponent>().currentKey = message.Info;
+                unit.GetComponent<UnitSkillComponent>().currentKey = message.Info;
+                unit.GetComponent<UnitSkillComponent>().Cast(message.Info);
+
                 ///通知 播放 死亡录像
                 ///TOTO
 

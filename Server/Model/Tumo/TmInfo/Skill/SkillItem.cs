@@ -17,6 +17,7 @@ namespace ETModel
     {
         public void Awake()
         {
+            //Skill skill = Game.Scene.GetComponent<SkillComponent>().Get(this.Id);
             Skill skill = ComponentFactory.CreateWithId<Skill>(this.Id);
             this.AddComponent(skill);
             this.AddComponent<ChangeType>();

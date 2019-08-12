@@ -66,6 +66,7 @@ namespace ETHotfix
                 unit.AddComponent<RecoverComponent>();
                 unit.AddComponent<SqrDistanceComponent>();
                 unit.AddComponent<RayUnitComponent>();
+                unit.AddComponent<UnitSkillComponent>();
 
                 unit.AddComponent<MovePositionComponent>();
                 unit.AddComponent<UnitDirComponent>();

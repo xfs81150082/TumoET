@@ -21,9 +21,6 @@ namespace ETModel
         [BsonElement]
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public readonly Dictionary<long, Skill> idSkills = new Dictionary<long, Skill>();
-
-        public readonly Dictionary<long, SkillItem> idSkillItems = new Dictionary<long, SkillItem>();
-
         public void Awake()
         {
             SkillItemInfo  Info = new SkillItemInfo();
@@ -34,22 +31,22 @@ namespace ETModel
         } 
 
         #region SkillItem
-        public void Add(SkillItem item)
+        public void Add(Skill item)
         {
-            this.idSkillItems.Add(item.Id, item);
+            this.idSkills.Add(item.Id, item);
         }     
 
-        public SkillItem Get(long id)
+        public Skill Get(long id)
         {
-            this.idSkillItems.TryGetValue(id, out SkillItem item);
+            this.idSkills.TryGetValue(id, out Skill item);
             return item;
         }
 
         public void Remove(long id)
         {
-            SkillItem unit;
-            this.idSkillItems.TryGetValue(id, out unit);
-            this.idSkillItems.Remove(id);
+            Skill unit;
+            this.idSkills.TryGetValue(id, out unit);
+            this.idSkills.Remove(id);
             unit?.Dispose();
         }
 
@@ -57,18 +54,18 @@ namespace ETModel
         {
             get
             {
-                return this.idSkillItems.Count;
+                return this.idSkills.Count;
             }
         }
 
-        public long[] GetSkillItemIdsAll()
+        public long[] GetIdsAll()
         {
-            return this.idSkillItems.Keys.ToArray();
+            return this.idSkills.Keys.ToArray();
         }
 
-        public SkillItem[] GetSkillItemAll()
+        public Skill[] GetAll()
         {
-            return this.idSkillItems.Values.ToArray();
+            return this.idSkills.Values.ToArray();
         }
         
         #endregion
@@ -79,13 +76,7 @@ namespace ETModel
             {
                 return;
             }
-            base.Dispose();
-
-            foreach (SkillItem unit in this.idSkillItems.Values)
-            {
-                unit.Dispose();
-            }
-            this.idSkillItems.Clear();
+            base.Dispose();        
 
             foreach (Skill unit in this.idSkills.Values)
             {

@@ -15,12 +15,7 @@ namespace ETHotfix
             ///删除 客户端 死亡的单元实例或更新玩家位置
             entity.GetComponent<AoiUnitComponent>().DeathRemove();
 
-            /////结算经验和金币
-            //entity.GetComponent<AttackComponent>().GetExpAndCoin();
-
-            //Console.WriteLine(" Death_MapHandler-24-unittype/unitid: " + entity.UnitType + " / " + entity.Id);
-
-            ///删除 Unit
+            ///删除 死亡的 Unit
             switch (entity.UnitType)
             {
                 case UnitType.Monster:
@@ -33,7 +28,7 @@ namespace ETHotfix
                     ///重新生产Unit，先取得参数，后删除，再发送生产指令
                     T2M_CreateUnit t2M_Create = entity.T2M_CreateUnit();
 
-                    Console.WriteLine(" Death_MapHandler-41-playerid: " + t2M_Create.RolerId + " /unitid: " + t2M_Create.UnitId + " /GateSessionId: " + t2M_Create.GateSessionId+" /Count:" + Game.Scene.GetComponent<UnitComponent>().Count);
+                    Console.WriteLine(" Death_MapHandler-31-playerid: " + t2M_Create.RolerId + " /unitid: " + t2M_Create.UnitId + " /GateSessionId: " + t2M_Create.GateSessionId+" /Count:" + Game.Scene.GetComponent<UnitComponent>().Count);
 
                     //后删除
                     Game.Scene.GetComponent<UnitComponent>().Remove(entity.Id);
@@ -41,13 +36,14 @@ namespace ETHotfix
                     //再发送生产指令
                     CreatePlayerAsync(t2M_Create).Coroutine();
 
-                    Console.WriteLine(" Death_MapHandler-51-players: " + Game.Scene.GetComponent<UnitComponent>().Count);
+                    Console.WriteLine(" Death_MapHandler-39-players: " + Game.Scene.GetComponent<UnitComponent>().Count);
                     break;
             }
             ///通知 播放 死亡录像
             ///TOTO
         }
 
+        // 创建 新的 Unit
         protected async ETVoid CreatePlayerAsync(T2M_CreateUnit message)
         {
             // 在map服务器上创建战斗Unit
