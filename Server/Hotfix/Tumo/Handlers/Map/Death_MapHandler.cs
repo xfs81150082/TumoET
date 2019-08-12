@@ -15,8 +15,8 @@ namespace ETHotfix
             ///删除 客户端 死亡的单元实例或更新玩家位置
             entity.GetComponent<AoiUnitComponent>().DeathRemove();
 
-            ///结算经验和金币
-            entity.GetComponent<RecoverComponent>().GetExpAndCoin();
+            /////结算经验和金币
+            //entity.GetComponent<AttackComponent>().GetExpAndCoin();
 
             //Console.WriteLine(" Death_MapHandler-24-unittype/unitid: " + entity.UnitType + " / " + entity.Id);
 

@@ -10,7 +10,15 @@ namespace ETModel
         public void Run(long id, int value)
         {
             ///20190621
-            //Console.WriteLine(" UnitId: " + id + ". MaxHp 最大血量变化了，变化之后的值为：" + value);
+            Unit unit = Game.Scene.GetComponent<MonsterUnitComponent>().Get(id);
+            if (unit != null)
+            {
+                NumericComponent num = unit.GetComponent<NumericComponent>();
+                int mhb = num[NumericType.MaxValuationBase];
+                int mha = num[NumericType.MaxValuationAdd];
+
+                Console.WriteLine(" type/MaxHp/Maxhb/Maxha: " + unit.UnitType + " ：" + value + " / " + mhb + " / " + mha);
+            }
         }
     }
 }

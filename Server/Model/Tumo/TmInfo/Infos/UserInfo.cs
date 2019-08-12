@@ -73,8 +73,8 @@ namespace ETModel
                 // 注意，这两个语句都将触发数值改变组件，只是没有写Max的处理函数，所以会没有反应
                 player.GetComponent<NumericComponent>().Set(NumericType.ValuationBase, 40);
                 player.GetComponent<NumericComponent>().Set(NumericType.MaxValuationBase, 120);
-                player.GetComponent<NumericComponent>().Set(NumericType.ManageBase, 10);
-                player.GetComponent<NumericComponent>().Set(NumericType.MaxManageBase, 40);
+                //player.GetComponent<NumericComponent>().Set(NumericType.ManageBase, 10);
+                //player.GetComponent<NumericComponent>().Set(NumericType.MaxManageBase, 40);
                 player.GetComponent<NumericComponent>().Set(NumericType.CaseBase, 14);
                 player.GetComponent<NumericComponent>().Set(NumericType.MaxCaseBase, 40);
 

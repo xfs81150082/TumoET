@@ -63,12 +63,12 @@ namespace ETHotfix
         public static Unit NeastUnit(Unit unit, Unit[] units)
         {
             Unit obj = null;
-            if (!unit.GetComponent<RecoverComponent>().isDeath)
+            if (!unit.GetComponent<AttackComponent>().isDeath)
             {
                 float dis = float.PositiveInfinity;
                 foreach (Unit tem in units)
                 {
-                    if (!tem.GetComponent<RecoverComponent>().isDeath)
+                    if (!tem.GetComponent<AttackComponent>().isDeath)
                     {
                         if (tem != null)
                         {
@@ -110,10 +110,17 @@ namespace ETHotfix
                 if (self.GetParent<Unit>().GetComponent<PatrolComponent>() != null)
                 {
                     self.GetParent<Unit>().GetComponent<PatrolComponent>().isPatrol = false;
-
-                    //Console.WriteLine(" SqrDistanceHelper-112-type: " + self.GetParent<Unit>().UnitType + " isPatrol: " + self.GetParent<Unit>().GetComponent<PatrolComponent>().isPatrol);
                 }
-                //Console.WriteLine(" SqrDistanceHelper-115-type:" + self.GetParent<Unit>().UnitType + " isAttacking: " + self.GetParent<Unit>().GetComponent<AttackComponent>().isAttacking + " neastDis: " + self.neastDistance);
+
+                if (!self.isShow)
+                {
+                    Console.WriteLine(" SqrDistanceHelper-117- type: " + self.GetParent<Unit>().UnitType + " 进入 战斗。" + self.GetParent<Unit>().GetComponent<AttackComponent>().isAttacking);
+                    if (self.GetParent<Unit>().GetComponent<PatrolComponent>() != null)
+                    {
+                        Console.WriteLine(" SqrDistanceHelper-120- type: " + self.GetParent<Unit>().UnitType + " 进入 追击。" + self.GetParent<Unit>().GetComponent<PatrolComponent>().isPatrol);
+                    }
+                    self.isShow = true;
+                }
             }
             else
             {
@@ -122,10 +129,18 @@ namespace ETHotfix
                 if (self.GetParent<Unit>().GetComponent<PatrolComponent>() != null)
                 {
                     self.GetParent<Unit>().GetComponent<PatrolComponent>().isPatrol = true;
-
-                    //Console.WriteLine(" SqrDistanceHelper-125-type: " + self.GetParent<Unit>().UnitType + " isPatrol: " + self.GetParent<Unit>().GetComponent<PatrolComponent>().isPatrol);
                 }
-                //Console.WriteLine(" SqrDistanceHelper-128-type:" + self.GetParent<Unit>().UnitType + " isAttacking: " + self.GetParent<Unit>().GetComponent<AttackComponent>().isAttacking + " neastDis: " + self.neastDistance);
+
+                if (self.isShow)
+                {
+                    Console.WriteLine(" SqrDistanceHelper-136- type: " + self.GetParent<Unit>().UnitType + " 离开 战斗。" + self.GetParent<Unit>().GetComponent<AttackComponent>().isAttacking);
+                    if (self.GetParent<Unit>().GetComponent<PatrolComponent>() != null)
+                    {
+                        Console.WriteLine(" SqrDistanceHelper-139- type: " + self.GetParent<Unit>().UnitType + " 离开 追击。" + self.GetParent<Unit>().GetComponent<PatrolComponent>().isPatrol);
+                    }
+                    self.isShow = false;
+                }
+
             }
         }
 

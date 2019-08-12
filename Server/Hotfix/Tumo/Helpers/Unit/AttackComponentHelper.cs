@@ -14,7 +14,7 @@ namespace ETHotfix
         /// <param name="self"></param>
         public static void TakeAttack(this AttackComponent self)
         {
-            if (self.GetParent<Unit>().GetComponent<RecoverComponent>().isDeath) return;
+            if (self.isDeath) return;
 
             GetAttackTarget(self);
 
@@ -32,12 +32,12 @@ namespace ETHotfix
                     long timeNow = TimeHelper.ClientNowSeconds();
                     if ((timeNow - self.startTime) > self.attcdTime)
                     {
-                        if (self.GetParent<Unit>().GetComponent<RecoverComponent>().isDeath)
+                        if (self.isDeath)
                         {
                             self.target = null;
                             return;
                         }
-                        if (self.target.GetComponent<RecoverComponent>().isDeath)
+                        if (self.target.GetComponent<AttackComponent>().isDeath)
                         {
                             self.target = null;
                             return;
@@ -75,7 +75,7 @@ namespace ETHotfix
             {
                 if (unit.GetComponent<RayUnitComponent>().target != null)
                 {
-                    unit.GetComponent<AttackComponent>().target = unit.GetComponent<RayUnitComponent>().target;
+                    self.target = unit.GetComponent<RayUnitComponent>().target;
                 }
                 else
                 {
@@ -86,7 +86,7 @@ namespace ETHotfix
             {
                 if (unit.GetComponent<SeeComponent>() != null && unit.GetComponent<SeeComponent>().target != null)
                 {
-                    unit.GetComponent<AttackComponent>().target = unit.GetComponent<SeeComponent>().target;
+                    self.target = unit.GetComponent<SeeComponent>().target;
                 }
             }
         }
@@ -125,14 +125,98 @@ namespace ETHotfix
                 int domhp = numSk[NumericType.Case];
                 if (dom < 26)
                 {
-                    numSelf[NumericType.ValuationAdd] -= domhp * 2;
+                    numSelf[NumericType.ValuationAdd] -= (domhp * 2);
                 }
                 else
                 {
                     numSelf[NumericType.ValuationAdd] -= domhp;
                 }
 
-                Console.WriteLine(" TakeDamage-138-Myself(" + myself.UnitType + ") ： " + "-" + domhp + " / " + numSelf[NumericType.Valuation] + " /Count: " + self.TakeDamages.Count);
+                //判断死亡结算
+                self.DeathSettlement();
+
+                if (self.isDeath)
+                {
+                    break;
+                }
+
+                Console.WriteLine(" TakeDamage-143-Myself(" + myself.UnitType + ") ： " + "-" + domhp + " / " + numSelf[NumericType.Valuation] + " /Count: " + self.TakeDamages.Count);
+            }
+        }
+
+        /// <summary>
+        /// 死亡判断 后结算
+        /// </summary>
+        /// <param name="unit"></param>
+        public static void DeathSettlement(this AttackComponent self)
+        {
+            Console.WriteLine(" AttackComponentHelper-153- type: " + self.GetParent<Unit>().UnitType + " 判断 结算。" + self.isSettlement);
+
+            NumericComponent numC = self.GetParent<Unit>().GetComponent<NumericComponent>();
+
+            if (numC[NumericType.Valuation] <= 0)
+            {
+                ///Hp小于0时，标记死亡状态
+                self.isDeath = true;
+
+                ActorLocationSender actorLocationSender = Game.Scene.GetComponent<ActorLocationSenderComponent>().Get(self.GetParent<Unit>().Id);
+                actorLocationSender.Send(new Death_Map());
+
+                if (self.isSettlement) return;
+
+                self.GetExpAndCoin();
+
+                self.isSettlement = true;
+
+                Console.WriteLine(" AttackComponentHelper-171- type: " + self.GetParent<Unit>().UnitType + " 完成 结算。" + self.isSettlement);
+            }
+        }
+
+        /// <summary>
+        /// 发放工资 经验和金币
+        /// </summary>
+        /// <param name="self"></param>
+        public static void GetExpAndCoin(this AttackComponent self)
+        {
+            Unit selfunit = self.GetParent<Unit>();
+            NumericComponent numC = selfunit.GetComponent<NumericComponent>();
+            //AttackComponent targetAttack = selfunit.GetComponent<AttackComponent>();
+
+            if (self != null)
+            {
+                int addexp = numC[NumericType.Level] * numC[NumericType.Level] + 1;
+                int addcoin = numC[NumericType.Level] + 1;
+                NumericComponent numeric = null;
+                ///我的类型，我敌人的类型是什么呢
+                switch (selfunit.UnitType)
+                {
+                    case UnitType.Player:
+                        if (self.attackers.Count > 0)
+                        {
+                            foreach (long tem in self.attackers.ToArray())
+                            {
+                                numeric = Game.Scene.GetComponent<MonsterUnitComponent>().Get(tem).GetComponent<NumericComponent>();
+                                numeric[NumericType.ExpAdd] += addexp;
+                                numeric[NumericType.CoinAdd] += addcoin;
+                            }
+                            self.attackers.Clear();
+                        }
+                        Console.WriteLine(" DeathSettlement-205-type(得到经验和金币): " + numeric.GetParent<Unit>().UnitType + " addexp/exp: " + addexp + "/" + numeric[NumericType.Exp] + "  addcoin/coin: " + addcoin + "/" + numeric[NumericType.Coin]);
+                        break;
+                    case UnitType.Monster:
+                        if (self.attackers.Count > 0)
+                        {
+                            foreach (long tem in self.attackers.ToArray())
+                            {
+                                numeric = Game.Scene.GetComponent<UnitComponent>().Get(tem).GetComponent<NumericComponent>();
+                                numeric[NumericType.ExpAdd] += addexp;
+                                numeric[NumericType.CoinAdd] += addcoin;
+                            }
+                            self.attackers.Clear();
+                        }
+                        Console.WriteLine(" DeathSettlement-218-type(得到经验和金币): " + numeric.GetParent<Unit>().UnitType + " addexp/exp: " + addexp + "/" + numeric[NumericType.Exp] + "  addcoin/coin: " + addcoin + "/" + numeric[NumericType.Coin]);
+                        break;
+                }
             }
         }
 

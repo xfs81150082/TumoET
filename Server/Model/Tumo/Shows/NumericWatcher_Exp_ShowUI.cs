@@ -13,7 +13,7 @@ namespace ETModel
         public void Run(long id, int value)
         {
             ///20190621
-            Console.WriteLine(" UnitId: " + id + ". Exp经验值变化了，变化之后的值为：" + value + " NowTime: " + TimeHelper.ClientNowSeconds());
+            //Console.WriteLine(" UnitId: " + id + ". Exp经验值变化了，变化之后的值为：" + value + " NowTime: " + TimeHelper.ClientNowSeconds());
         }
     }
 }

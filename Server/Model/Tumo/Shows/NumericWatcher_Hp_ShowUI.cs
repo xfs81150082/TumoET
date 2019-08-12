@@ -12,8 +12,16 @@ namespace ETModel
     {
         public void Run(long id, int value)
         {
-            ///20190621
-            Console.WriteLine(" UnitId: " + id + ". Hp 血量变化了，变化之后的值为：" + value + " NowTime: " + TimeHelper.ClientNowSeconds());
+             ///20190621
+            Unit unit = Game.Scene.GetComponent<MonsterUnitComponent>().Get(id);
+            if (unit != null)
+            {
+                NumericComponent num = unit.GetComponent<NumericComponent>();
+                int hb = num[NumericType.ValuationBase];
+                int ha = num[NumericType.ValuationAdd];
+
+                Console.WriteLine(" type/Hp/hb/ha: " + unit.UnitType + " ：" + value + " / " + hb + " / " + ha);
+           }
         }
     }
 }

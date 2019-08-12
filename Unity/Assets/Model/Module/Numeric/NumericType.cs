@@ -3,49 +3,52 @@
     public enum NumericType
     {
         #region Manage 1001 管理，每升1级加1，影响防御,要钱难度
-        Manage = 1001,                                
-        ManageBase = Manage * 10 + 1,
-        ManageAdd = Manage * 10 + 2,
-        ManagePct = Manage * 10 + 3,
-        ManageFinalAdd = Manage * 10 + 4,
-        ManageFinalPct = Manage * 10 + 5,
+        //Manage = 1001,                                
+        //ManageBase = Manage * 10 + 1,
+        //ManageAdd = Manage * 10 + 2,
+        //ManagePct = Manage * 10 + 3,
+        //ManageFinalAdd = Manage * 10 + 4,
+        //ManageFinalPct = Manage * 10 + 5,
 
-        MaxManage = 1002,
-        MaxManageBase = MaxManage * 10 + 1,
-        MaxManagePct = MaxManage * 10 + 3,
-        MaxManageFinalAdd = MaxManage * 10 + 4,
-        MaxManageFinalPct = MaxManage * 10 + 5,
+        //MaxManage = 1002,
+        //MaxManageBase = MaxManage * 10 + 1,
+        //MaxManagePct = MaxManage * 10 + 3,
+        //MaxManageFinalAdd = MaxManage * 10 + 4,
+        //MaxManageFinalPct = MaxManage * 10 + 5,
         #endregion
 
         #region Valuation 2001 计价，每升1级加1.2，影响气血，自带钱数
-        Valuation = 2001,                            
+        Valuation = 2001,
         ValuationBase = Valuation * 10 + 1,
         ValuationAdd = Valuation * 10 + 2,
         ValuationPct = Valuation * 10 + 3,
         ValuationFinalAdd = Valuation * 10 + 4,
         ValuationFinalPct = Valuation * 10 + 5,
 
-        MaxValuation = 2001,
+        MaxValuation = 2002,
         MaxValuationBase = MaxValuation * 10 + 1,
         MaxValuationAdd = MaxValuation * 10 + 2,
         MaxValuationPct = MaxValuation * 10 + 3,
         MaxValuationFinalAdd = MaxValuation * 10 + 4,
         MaxValuationFinalPct = MaxValuation * 10 + 5,
-  
+
         #endregion
 
         #region Measure 3001 计量，每升1级加1，影响速度，要钱速度
-        Measure = 3001,                             
-        MeasureBase = Measure * 10 + 1,
-        MeasureAdd = Measure * 10 + 2,
-        MeasurePct = Measure * 10 + 3,
-        MeasureFinalAdd = Measure * 10 + 4,
-        MeasureFinalPct = Measure * 10 + 5,
+        //Measure = 3001,                             
+        //MeasureBase = Measure * 10 + 1,
+        //MeasureAdd = Measure * 10 + 2,
+        //MeasurePct = Measure * 10 + 3,
+        //MeasureFinalAdd = Measure * 10 + 4,
+        //MeasureFinalPct = Measure * 10 + 5,
 
-        MaxMeasure = 3001,
-        MaxMeasureBase = MaxMeasure * 10 + 1,
-        MaxMeasureAdd = MaxMeasure * 10 + 2,
-      
+        //MaxMeasure = 3002,
+        //MaxMeasureBase = MaxMeasure * 10 + 1,
+        //MaxMeasureAdd = MaxMeasure * 10 + 2,
+        //MaxMeasurePct = MaxMeasure * 10 + 3,
+        //MaxMeasureFinalAdd = MaxMeasure * 10 + 4,
+        //MaxMeasureFinalPct = MaxMeasure * 10 + 5,
+
         #endregion
 
         #region Case 4001 案例，每升1级加1.4，影响攻击，要钱数量 
@@ -56,10 +59,12 @@
         CaseFinalAdd = Case * 10 + 4,
         CaseFinalPct = Case * 10 + 5,
 
-        MaxCase = 4001,
+        MaxCase = 4002,
         MaxCaseBase = MaxCase * 10 + 1,
         MaxCaseAdd = MaxCase * 10 + 2,
-
+        MaxCasePct = MaxCase * 10 + 3,
+        MaxCaseFinalAdd = MaxCase * 10 + 4,
+        MaxCaseFinalPct = MaxCase * 10 + 5,
         #endregion
 
         #region Level 5001

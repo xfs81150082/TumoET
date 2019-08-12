@@ -22,11 +22,11 @@ namespace ETModel
             Tasker inv31101 = ComponentFactory.CreateWithId<Tasker>(31101);
             Tasker inv41101 = ComponentFactory.CreateWithId<Tasker>(41101);
 
-            inv11101.AddComponent<NumericComponent>().Set(NumericType.ManageAdd, 10);
+            //inv11101.AddComponent<NumericComponent>().Set(NumericType.ManageAdd, 10);
             inv11101.AddComponent<NumericComponent>().Set(NumericType.ValuationAdd, 10);
             inv21101.AddComponent<NumericComponent>().Set(NumericType.ValuationAdd, 12);
             inv21101.AddComponent<NumericComponent>().Set(NumericType.ValuationAdd, 12);
-            inv31101.AddComponent<NumericComponent>().Set(NumericType.MeasureAdd, 10);
+            //inv31101.AddComponent<NumericComponent>().Set(NumericType.MeasureAdd, 10);
             inv31101.AddComponent<NumericComponent>().Set(NumericType.ValuationAdd, 10);
             inv41101.AddComponent<NumericComponent>().Set(NumericType.CaseAdd, 14);
             inv41101.AddComponent<NumericComponent>().Set(NumericType.ValuationAdd, 14);
@@ -44,11 +44,11 @@ namespace ETModel
             TaskerItem item31101 = ComponentFactory.CreateWithId<TaskerItem>(IdGenerater.GenerateId());
             TaskerItem item41101 = ComponentFactory.CreateWithId<TaskerItem>(IdGenerater.GenerateId());
 
-            item11101.AddComponent<NumericComponent>().Set(NumericType.ManageAdd, 10);
+            //item11101.AddComponent<NumericComponent>().Set(NumericType.ManageAdd, 10);
             item11101.AddComponent<NumericComponent>().Set(NumericType.ValuationAdd, 10);
             item21101.AddComponent<NumericComponent>().Set(NumericType.ValuationAdd, 12);
             item21101.AddComponent<NumericComponent>().Set(NumericType.ValuationAdd, 12);
-            item31101.AddComponent<NumericComponent>().Set(NumericType.MeasureAdd, 10);
+            //item31101.AddComponent<NumericComponent>().Set(NumericType.MeasureAdd, 10);
             item31101.AddComponent<NumericComponent>().Set(NumericType.ValuationAdd, 10);
             item41101.AddComponent<NumericComponent>().Set(NumericType.CaseAdd, 14);
             item41101.AddComponent<NumericComponent>().Set(NumericType.ValuationAdd, 14);

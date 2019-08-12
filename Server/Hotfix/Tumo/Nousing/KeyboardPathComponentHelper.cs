@@ -106,7 +106,7 @@ namespace ETHotfix
 
                     Vector3 targetEulerAngles = self.GetTargetEulerAngles(self.h);
 
-                    self.GetParent<Unit>().GetComponent<UnitAnglesComponent>().TurnTo(targetEulerAngles).Coroutine();
+                    //self.GetParent<Unit>().GetComponent<UnitAnglesComponent>().TurnTo(targetEulerAngles).Coroutine();
                 }
             }
             else

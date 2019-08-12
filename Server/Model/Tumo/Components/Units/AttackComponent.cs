@@ -7,6 +7,8 @@ namespace ETModel
     public class AttackComponent : Entity
     {
         public bool isAttacking = false;                                 //表示是否战斗状态
+        public bool isDeath = false;
+        public bool isSettlement = false;
 
         public bool deathNull = false;
         public long deathTime = 0;

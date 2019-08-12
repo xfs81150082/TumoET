@@ -21,11 +21,11 @@ namespace ETModel
             Skill inv31101 = ComponentFactory.CreateWithId<Skill>(31101);
             Skill inv41101 = ComponentFactory.CreateWithId<Skill>(41101);
 
-            inv11101.AddComponent<NumericComponent>().Set(NumericType.ManageAdd, 10);
+            //inv11101.AddComponent<NumericComponent>().Set(NumericType.ManageAdd, 10);
             inv11101.AddComponent<NumericComponent>().Set(NumericType.ValuationAdd, 10);
             inv21101.AddComponent<NumericComponent>().Set(NumericType.ValuationAdd, 12);
             inv21101.AddComponent<NumericComponent>().Set(NumericType.ValuationAdd, 12);
-            inv31101.AddComponent<NumericComponent>().Set(NumericType.MeasureAdd, 10);
+            //inv31101.AddComponent<NumericComponent>().Set(NumericType.MeasureAdd, 10);
             inv31101.AddComponent<NumericComponent>().Set(NumericType.ValuationAdd, 10);
             inv41101.AddComponent<NumericComponent>().Set(NumericType.CaseAdd, 14);
             inv41101.AddComponent<NumericComponent>().Set(NumericType.ValuationAdd, 14);
