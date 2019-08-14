@@ -11,8 +11,6 @@ namespace ETHotfix
     {
         protected override void Run(Unit entity, Move_Map message)
         {
-            //entity.GetComponent<UnitDirComponent>().MoveMap(message);
-
             Vector3 target = new Vector3(message.X, message.Y, message.Z);
 
             if (message.V == 0f)
@@ -25,8 +23,6 @@ namespace ETHotfix
 
                     entity.Position = target;
                     entity.SaveVector3();
-
-                    entity.GetComponent<MapPathComponent>().MoveTo(target).Coroutine();
 
                     Console.WriteLine(" Move_MapHandler-26-ServerPos: CancellationTokenSource is Cancel." + entity.Position.ToString());
                 }

@@ -61,22 +61,16 @@ namespace ETHotfix
                 Game.EventSystem.Awake<UnitType>(unit, UnitType.Player);
                 unit.AddComponent<AoiUnitComponent>();
                 unit.AddComponent<AoiPlayerComponent>();    //玩家独有
-                unit.AddComponent<NumericComponent>();
+                unit.AddComponent<NumericComponent>().PlayerNumericInit();
                 unit.AddComponent<AttackComponent>().isDeath = false;
                 unit.AddComponent<RecoverComponent>();
                 unit.AddComponent<SqrDistanceComponent>();
                 unit.AddComponent<RayUnitComponent>();
                 unit.AddComponent<UnitSkillComponent>();
-
-                unit.AddComponent<MovePositionComponent>();
                 unit.AddComponent<MapPathComponent>();
-                //unit.AddComponent<UnitDirComponent>();
 
-                unit.GetComponent<NumericComponent>().PlayerNumericInit();
-                unit.GetComponent<MoveComponent>().moveSpeed = 4.0f;
-
-                Console.WriteLine(" M2M_CreateUnitHandler-78-gateActorid: " + unit.GetComponent<UnitGateComponent>().GateSessionActorId);
-                Console.WriteLine(" M2M_CreateUnitHandler-79-Players: " + Game.Scene.GetComponent<UnitComponent>().Count);
+                Console.WriteLine(" M2M_CreateUnitHandler-72-gateActorid: " + unit.GetComponent<UnitGateComponent>().GateSessionActorId);
+                Console.WriteLine(" M2M_CreateUnitHandler-73-Players: " + Game.Scene.GetComponent<UnitComponent>().Count);
             }
             catch (Exception e)
             {
@@ -112,17 +106,16 @@ namespace ETHotfix
                 ///20190702
                 Game.EventSystem.Awake<UnitType>(unit, UnitType.Monster);
                 unit.AddComponent<AoiUnitComponent>();
-                unit.AddComponent<NumericComponent>();
+                unit.AddComponent<NumericComponent>().MonsterNumericInit();
                 unit.AddComponent<AttackComponent>().isDeath = false;
                 unit.AddComponent<SqrDistanceComponent>();
                 unit.AddComponent<RecoverComponent>();
                 unit.AddComponent<PatrolComponent>();
                 unit.AddComponent<SeeComponent>();
 
-                unit.GetComponent<NumericComponent>().MonsterNumericInit();
                 unit.GetComponent<MoveComponent>().moveSpeed = 2.0f;
 
-                Console.WriteLine(" M2M_CreateUnitHandler-125-Monsters: " + Game.Scene.GetComponent<MonsterUnitComponent>().Count);
+                Console.WriteLine(" M2M_CreateUnitHandler-118-Monsters: " + Game.Scene.GetComponent<MonsterUnitComponent>().Count);
             }
             catch (Exception e)
             {
