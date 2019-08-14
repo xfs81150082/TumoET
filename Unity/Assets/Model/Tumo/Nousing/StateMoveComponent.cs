@@ -14,18 +14,18 @@ namespace ETModel
     {
         public override void Update(StateMoveComponent self)
         {
-            self.Update();
+            //self.Update();
         }
     }
     
     public class StateMoveComponent : Component
     {
-        public List<Move_KeyCodeMap> mypath = new List<Move_KeyCodeMap>();
+        //public List<Move_Map> mypath = new List<Move_Map>();
 
-        public void Update()
-        {
-            //Move();
-        }                  
+        //public void Update()
+        //{
+        //    //Move();
+        //}                  
 
         //public void Move()
         //{

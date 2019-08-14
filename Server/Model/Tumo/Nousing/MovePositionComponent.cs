@@ -8,7 +8,7 @@ namespace ETModel
 {
     public class MovePositionComponent : Component
     {
-        public Vector3 TargetPosition;
+        public Vector3 Target;
 
         // 开启移动协程的时间
         public long StartTime;
@@ -30,7 +30,7 @@ namespace ETModel
         public async ETTask MoveToAsync(Vector3 target, CancellationToken cancellationToken)
         {
             // 新目标点离旧目标点太近，不设置新的
-            if ((target - this.TargetPosition).sqrMagnitude < 0.01f)
+            if ((target - this.Target).sqrMagnitude < 0.01f)
             {
                 return;
             }
@@ -41,7 +41,7 @@ namespace ETModel
                 return;
             }
 
-            this.TargetPosition = target;
+            this.Target = target;
 
             // 开启协程移动
             await StartMove(cancellationToken);
@@ -54,9 +54,9 @@ namespace ETModel
             Unit unit = this.GetParent<Unit>();
             this.StartPos = unit.Position;
             this.StartTime = TimeHelper.Now();
-            float distance = (this.TargetPosition - this.StartPos).magnitude;
+            float distance = (this.Target - this.StartPos).magnitude;
 
-            Vector3 target = new Vector3(this.TargetPosition.x, this.TargetPosition.y, this.TargetPosition.z);
+            Vector3 target = new Vector3(this.Target.x, this.Target.y, this.Target.z);
 
             if (Math.Abs(distance) < 0.1f)
             {
@@ -73,14 +73,14 @@ namespace ETModel
                 long timeNow = TimeHelper.Now();
                 if (timeNow - this.StartTime >= this.needTime)
                 {
-                    unit.Position = this.TargetPosition;
+                    unit.Position = this.Target;
 
                     Console.WriteLine(" MovePositionComponent-78-unitPos: " + unit.UnitType + "  " + unit.Position.ToString());
                 }
                 else
                 {
                     float amount = (timeNow - this.StartTime) * 1f / this.needTime;
-                    unit.Position = Vector3.Lerp(this.StartPos, this.TargetPosition, amount);
+                    unit.Position = Vector3.Lerp(this.StartPos, this.Target, amount);
 
                     Console.WriteLine(" MovePositionComponent-85-unitPos: " + unit.UnitType + "  " + unit.Position.ToString());
                 }
@@ -94,7 +94,7 @@ namespace ETModel
 
                 if (timeNow - this.StartTime >= this.needTime)
                 {
-                    unit.Position = this.TargetPosition;
+                    unit.Position = this.Target;
 
                     Console.WriteLine(" MovePositionComponent-99-unitPos: " + unit.UnitType + "  " + unit.Position.ToString());
 
@@ -102,7 +102,7 @@ namespace ETModel
                 }
 
                 float amount = (timeNow - this.StartTime) * 1f / this.needTime;
-                unit.Position = Vector3.Lerp(this.StartPos, this.TargetPosition, amount);
+                unit.Position = Vector3.Lerp(this.StartPos, this.Target, amount);
 
             }
         }

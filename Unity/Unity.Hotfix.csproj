@@ -126,13 +126,13 @@
     <Compile Include="Assets\Hotfix\Module\UI\UIType.cs" />
     <Compile Include="Assets\Hotfix\Tumo\Component\KeyboardSkillComponent.cs" />
     <Compile Include="Assets\Hotfix\Tumo\Component\RaycastHitComponent.cs" />
+    <Compile Include="Assets\Hotfix\Tumo\Handler\M2C_KeyboardDirectionHandler.cs" />
+    <Compile Include="Assets\Hotfix\Tumo\Handler\M2C_KeyboardPositionHandler.cs" />
     <Compile Include="Assets\Hotfix\Tumo\Handler\M2C_UnitAddHandler.cs" />
     <Compile Include="Assets\Hotfix\Tumo\Handler\M2C_UnitRemoveHandler.cs" />
     <Compile Include="Assets\Hotfix\Tumo\Helper\KeyboardSkillComponentHelper.cs" />
     <Compile Include="Assets\Hotfix\Tumo\Nousing\KeyboardPathComponent.cs" />
     <Compile Include="Assets\Hotfix\Tumo\Nousing\KeyboardPathComponentHelper.cs" />
-    <Compile Include="Assets\Hotfix\Tumo\Nousing\M2C_KeyboardEulerAnglersHandler.cs" />
-    <Compile Include="Assets\Hotfix\Tumo\Nousing\M2C_KeyboardPositionHandler.cs" />
     <None Include="Assets\Hotfix\Unity.Hotfix.asmdef" />
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

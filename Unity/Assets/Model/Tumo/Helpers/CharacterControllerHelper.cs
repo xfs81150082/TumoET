@@ -53,7 +53,7 @@ namespace ETModel
 
             self.animatorComponent.AnimSet(self.v);
 
-            self.SetMoveMap();
+            self.SetMap();
         }
 
         public static bool IsGrounded(this CharacterControllerComponent self)
@@ -61,7 +61,7 @@ namespace ETModel
             return Physics.Raycast(self.GetParent<Unit>().GameObject.transform.position, -Vector3.up, self.gdy);
         }
 
-        static void SetMoveMap(this CharacterControllerComponent self)
+        static void SetMap(this CharacterControllerComponent self)
         {
             if (self.isStart)
             {
@@ -85,30 +85,36 @@ namespace ETModel
                 }
             }
 
+            self.SetMoveMap();
+
+            self.SetTurnMap();
+        }
+
+        static void SetMoveMap(this CharacterControllerComponent self)
+        {
             if (Math.Abs(self.v) > 0.05f)
             {
                 if (self.startTime == 0)
                 {
                     Vector3 clientPos = self.GetParent<Unit>().Position;
                     Vector3 dir = self.moveDirection;
+                    Vector3 TargetPos = clientPos + dir;
 
                     self.move_Map.KeyType = (int)KeyType.KeyCode;
                     self.move_Map.Id = ETModel.Game.Scene.GetComponent<PlayerComponent>().MyPlayer.UnitId;
 
                     self.move_Map.V = self.v;
 
-                    self.move_Map.X = clientPos.x;
-                    self.move_Map.Y = 0;
-                    self.move_Map.Z = clientPos.z;
-
-                    self.move_Map.AX = dir.x;
-                    self.move_Map.AY = 0;
-                    self.move_Map.AZ = dir.z;
+                    self.move_Map.X = TargetPos.x;
+                    self.move_Map.Y = TargetPos.y;
+                    self.move_Map.Z = TargetPos.z;
 
                     ETModel.SessionComponent.Instance.Session.Send(self.move_Map);
 
                     self.isStart = true;
                     self.isZero = false;
+
+                    Debug.Log(" CharacterControllerHelper-117-TargetPos: " + TargetPos.ToString());
                 }
             }
             else
@@ -116,35 +122,54 @@ namespace ETModel
                 if (!self.isZero)
                 {
                     self.v = 0;
-                    self.moveDirection = Vector3.zero;
-
-                    Vector3 clientPos = self.GetParent<Unit>().Position;
-                    Vector3 dir = self.moveDirection;
+                    Vector3 TargetPos = self.GetParent<Unit>().Position;
 
                     self.move_Map.KeyType = (int)KeyType.KeyCode;
                     self.move_Map.Id = ETModel.Game.Scene.GetComponent<PlayerComponent>().MyPlayer.UnitId;
 
                     self.move_Map.V = self.v;
 
-                    self.move_Map.X = clientPos.x;
-                    self.move_Map.Y = 0;
-                    self.move_Map.Z = clientPos.z;
-
-                    self.move_Map.AX = dir.x;
-                    self.move_Map.AY = 0;
-                    self.move_Map.AZ = dir.z;
+                    self.move_Map.X = TargetPos.x;
+                    self.move_Map.Y = TargetPos.y;
+                    self.move_Map.Z = TargetPos.z;
 
                     ETModel.SessionComponent.Instance.Session.Send(self.move_Map);
 
                     self.isZero = true;
 
-                    Debug.Log(" CharacterControllerHelper-146-clientPos/dir: " + clientPos.ToString() + " / " + dir.ToString());
+                    Debug.Log(" CharacterControllerHelper-140-TargetPos: " + TargetPos.ToString());
                 }
             }
 
         }
 
+        static void SetTurnMap(this CharacterControllerComponent self)
+        {
+            if (Math.Abs(self.h) > 0.05f)
+            {
+                if (self.startTime == 0)
+                {
+                    Vector3 dir = self.GetParent<Unit>().GameObject.transform.forward;
+
+                    self.turn_Map.KeyType = (int)KeyType.KeyCode;
+                    self.turn_Map.Id = ETModel.Game.Scene.GetComponent<PlayerComponent>().MyPlayer.UnitId;
+
+                    self.turn_Map.H = self.h;
+                    self.turn_Map.X = dir.x;
+                    self.turn_Map.Y = dir.y;
+                    self.turn_Map.Z = dir.z;
+
+                    ETModel.SessionComponent.Instance.Session.Send(self.turn_Map);
+
+                    self.isStart = true;
+                    self.isZero = false;
+                }
+            }
+        }
 
 
     }
+
+
+
 }

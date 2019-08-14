@@ -46,6 +46,7 @@ namespace ETModel
         public Vector3 ClickPoint;
         public int mapMask;
         public readonly Move_Map move_Map = new Move_Map();
+        public readonly Turn_Map turn_Map = new Turn_Map();
 
         public void Awake()
         {

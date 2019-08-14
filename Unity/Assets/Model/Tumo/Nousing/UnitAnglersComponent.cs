@@ -16,7 +16,7 @@ namespace ETModel
 
         public CancellationTokenSource CancellationTokenSource;
 
-        public async ETVoid StartTurn(M2C_KeyboardEulerAnglers message)
+        public async ETVoid StartTurn(M2C_KeyboardDirection message)
         {
             Debug.Log(" UnitAnglersComponent-21-angles: " + message.Y + " / " + message.Ys[0]);
 

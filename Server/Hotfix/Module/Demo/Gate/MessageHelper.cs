@@ -46,14 +46,16 @@ namespace ETHotfix
         public static void Broadcast(IActorMessage message, long playerUnitId)
         {
             Unit unit = Game.Scene.GetComponent<UnitComponent>().Get(playerUnitId);
-            UnitGateComponent unitGateComponent = unit.GetComponent<UnitGateComponent>();
-            if (unitGateComponent.IsDisconnect)
+            if (unit.GetComponent<UnitGateComponent>().IsDisconnect || unit.GetComponent<UnitGateComponent>() == null)
             {
                 return;
             }
 
+            UnitGateComponent unitGateComponent = unit.GetComponent<UnitGateComponent>();
             ActorMessageSender actorMessageSender = Game.Scene.GetComponent<ActorMessageSenderComponent>().Get(unitGateComponent.GateSessionActorId);
             actorMessageSender.Send(message);
         }
+
+
     }
 }

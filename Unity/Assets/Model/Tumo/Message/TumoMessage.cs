@@ -2243,10 +2243,10 @@ namespace ETModel
             }
         }
     }
-    public partial class Move_KeyCodeMap : pb::IMessage
+    public partial class Turn_Map : pb::IMessage
     {
-        private static readonly pb::MessageParser<Move_KeyCodeMap> _parser = new pb::MessageParser<Move_KeyCodeMap>(() => (Move_KeyCodeMap)MessagePool.Instance.Fetch(typeof(Move_KeyCodeMap)));
-        public static pb::MessageParser<Move_KeyCodeMap> Parser { get { return _parser; } }
+        private static readonly pb::MessageParser<Turn_Map> _parser = new pb::MessageParser<Turn_Map>(() => (Turn_Map)MessagePool.Instance.Fetch(typeof(Turn_Map)));
+        public static pb::MessageParser<Turn_Map> Parser { get { return _parser; } }
 
         private int rpcId_;
         public int RpcId
@@ -2573,6 +2573,7 @@ namespace ETModel
         }
     }
 
+
     public partial class C2M_KeyboardPathResult : pb::IMessage
     {
         private static readonly pb::MessageParser<C2M_KeyboardPathResult> _parser = new pb::MessageParser<C2M_KeyboardPathResult>(() => (C2M_KeyboardPathResult)MessagePool.Instance.Fetch(typeof(C2M_KeyboardPathResult)));
@@ -2780,6 +2781,7 @@ namespace ETModel
             }
         }
     }
+
     public partial class M2C_KeyboardPosition : pb::IMessage
     {
         private static readonly pb::MessageParser<M2C_KeyboardPosition> _parser = new pb::MessageParser<M2C_KeyboardPosition>(() => (M2C_KeyboardPosition)MessagePool.Instance.Fetch(typeof(M2C_KeyboardPosition)));
@@ -2989,10 +2991,10 @@ namespace ETModel
         }
 
     }
-    public partial class M2C_KeyboardEulerAnglers : pb::IMessage
+    public partial class M2C_KeyboardDirection : pb::IMessage
     {
-        private static readonly pb::MessageParser<M2C_KeyboardEulerAnglers> _parser = new pb::MessageParser<M2C_KeyboardEulerAnglers>(() => (M2C_KeyboardEulerAnglers)MessagePool.Instance.Fetch(typeof(M2C_KeyboardEulerAnglers)));
-        public static pb::MessageParser<M2C_KeyboardEulerAnglers> Parser { get { return _parser; } }
+        private static readonly pb::MessageParser<M2C_KeyboardDirection> _parser = new pb::MessageParser<M2C_KeyboardDirection>(() => (M2C_KeyboardDirection)MessagePool.Instance.Fetch(typeof(M2C_KeyboardDirection)));
+        public static pb::MessageParser<M2C_KeyboardDirection> Parser { get { return _parser; } }
 
         private long actorId_;
         public long ActorId
@@ -3198,163 +3200,7 @@ namespace ETModel
         }
 
     }
-    public partial class C2M_KeyboardSkillResult : pb::IMessage
-    {
-        private static readonly pb::MessageParser<C2M_KeyboardSkillResult> _parser = new pb::MessageParser<C2M_KeyboardSkillResult>(() => (C2M_KeyboardSkillResult)MessagePool.Instance.Fetch(typeof(C2M_KeyboardSkillResult)));
-        public static pb::MessageParser<C2M_KeyboardSkillResult> Parser { get { return _parser; } }
 
-        private int rpcId_;
-        public int RpcId
-        {
-            get { return rpcId_; }
-            set
-            {
-                rpcId_ = value;
-            }
-        }
-
-        private long actorId_;
-        public long ActorId
-        {
-            get { return actorId_; }
-            set
-            {
-                actorId_ = value;
-            }
-        }
-
-        private int keyType_;
-        public int KeyType
-        {
-            get { return keyType_; }
-            set
-            {
-                keyType_ = value;
-            }
-        }
-
-        private long id_;
-        public long Id
-        {
-            get { return id_; }
-            set
-            {
-                id_ = value;
-            }
-        }
-
-        private string keyboard_;
-        public string Keyboard
-        {
-            get { return keyboard_; }
-            set
-            {
-                keyboard_ = value;
-            }
-        }   
-
-        public void WriteTo(pb::CodedOutputStream output)
-        {
-            if (Id != 0L)
-            {
-                output.WriteRawTag(13);
-                output.WriteInt64(Id);
-            }
-            if (KeyType != 0)
-            {
-                output.WriteRawTag(21);
-                output.WriteInt32(KeyType);
-            }
-            if (Keyboard.Length != 0)
-            {
-                output.WriteRawTag(29);
-                output.WriteString(Keyboard);
-            }           
-
-            if (RpcId != 0)
-            {
-                output.WriteRawTag(208, 5);
-                output.WriteInt32(RpcId);
-            }
-            if (ActorId != 0L)
-            {
-                output.WriteRawTag(232, 5);
-                output.WriteInt64(ActorId);
-            }
-        }
-
-        public int CalculateSize()
-        {
-            int size = 0;
-            if (RpcId != 0)
-            {
-                size += 2 + pb::CodedOutputStream.ComputeInt32Size(RpcId);
-            }
-            if (ActorId != 0L)
-            {
-                size += 2 + pb::CodedOutputStream.ComputeInt64Size(ActorId);
-            }
-
-            if (Id != 0L)
-            {
-                size += 2 + pb::CodedOutputStream.ComputeInt64Size(Id);
-            }
-            if (KeyType != 0)
-            {
-                size += 2 + pb::CodedOutputStream.ComputeInt32Size(KeyType);
-            }
-            if (Keyboard.Length != 0)
-            {
-                size += 2 + pb::CodedOutputStream.ComputeStringSize(Keyboard);
-            }
-            return size;
-        }
-
-        public void MergeFrom(pb::CodedInputStream input)
-        {
-            id_ = 0;
-            keyType_ = 0;
-            keyboard_ = "";
-            rpcId_ = 0;
-            actorId_ = 0;
-            uint tag;
-            while ((tag = input.ReadTag()) != 0)
-            {
-                switch (tag)
-                {
-                    default:
-                        input.SkipLastField();
-                        break;
-                    case 13:
-                        {
-                            Id = input.ReadInt64();
-                            break;
-                        }
-                    case 21:
-                        {
-                            KeyType = input.ReadInt32();
-                            break;
-                        }                  
-                    case 29:
-                        {
-                            Keyboard = input.ReadString();
-                            break;
-                        }                  
-
-                    case 720:
-                        {
-                            RpcId = input.ReadInt32();
-                            break;
-                        }
-                    case 744:
-                        {
-                            ActorId = input.ReadInt64();
-                            break;
-                        }
-                }
-            }
-        }
-    }
 
     public partial class C2M_KeyboardSkillRequest : pb::IMessage
     {
