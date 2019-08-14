@@ -26,8 +26,10 @@ namespace ETHotfix
 
             self.CancellationTokenSource?.Cancel();
             self.CancellationTokenSource = new CancellationTokenSource();
+
             //ToTo 同步到服务端 本身坐标和向量坐标
             await self.MoveAsync(self.ABPath.Result);
+
             self.CancellationTokenSource.Dispose();
             self.CancellationTokenSource = null;
         }
@@ -50,7 +52,8 @@ namespace ETHotfix
                 await self.Entity.GetComponent<MoveComponent>().MoveToAsync(v3, self.CancellationTokenSource.Token);
             }
         }
-        // 广播 本身坐标和向量坐标
+
+        //广播 本身坐标和向量坐标
         public static void BroadcastPath(this MapPathComponent self, List<Vector3> path, int index, int offset)
         {
 
@@ -76,7 +79,7 @@ namespace ETHotfix
             }
             MessageHelper.Broadcast(m2C_KeyboardPosition, unit.GetComponent<AoiUnitComponent>().playerIds.MovesSet.ToArray());
 
-            Console.WriteLine(" UnitDirComponentHelper-90-MoveToClient:  " + m2C_KeyboardPosition.Id + " ( " + m2C_KeyboardPosition.X + ", " + m2C_KeyboardPosition.Y + ", " + m2C_KeyboardPosition.Z + ")");
+            Console.WriteLine(" UnitDirComponentHelper-82-MoveToClient:  " + m2C_KeyboardPosition.Id + " ( " + m2C_KeyboardPosition.X + ", " + m2C_KeyboardPosition.Y + ", " + m2C_KeyboardPosition.Z + ")");
         }
 
     }

@@ -27,8 +27,8 @@ namespace ETModel
 		public Dictionary<string, AnimationClip> animationClips = new Dictionary<string, AnimationClip>();
 		public HashSet<string> Parameter = new HashSet<string>();
 
-		public MotionType MotionType;
-		public float MontionSpeed;
+        public MotionType MotionType = MotionType.None;
+        public float MontionSpeed = 0;
 		public bool isStop;
 		public float stopSpeed;
 		public Animator Animator;
@@ -81,6 +81,8 @@ namespace ETModel
 
         void UpdatePlayerAnimator()
         {
+            Debug.Log(" AnimatorComponent-84-MotionType: " + MotionType);
+
             if (this.isStop)
 			{
 				return;
@@ -100,8 +102,8 @@ namespace ETModel
                 //this.Animator.SetFloat("Move", this.MontionSpeed);
                 //this.Animator.SetTrigger(this.MotionType.ToString());
 
-				this.MontionSpeed = 0;
-				this.MotionType = MotionType.None;
+				//this.MontionSpeed = 0;
+				//this.MotionType = MotionType.None;
 			}
 			catch (Exception ex)
 			{
@@ -110,6 +112,10 @@ namespace ETModel
         }
 
         #region
+        public void AnimSet(MotionType motion)
+        {
+            this.MotionType = motion;
+        }
 
         public void AnimSet(float v)
         {
@@ -120,25 +126,15 @@ namespace ETModel
             }
             else if (Math.Abs(v) < 0.5)
             {
-                AnimSet("Walk", 0, v);
+                AnimSet("Walk");
             }
             else
             {
-                AnimSet("Run", 0, v);
+                AnimSet("Run");
             }
-        }
+        }    
 
-        public void AnimSet( float h, float v)
-        {
-            AnimSet("Move", h, v);
-        }
-
-        public void AnimSet( string moveState)
-        {
-            AnimSet(moveState, 0, 0);
-        }
-
-        void AnimSet(string moveState, float h, float v)
+        void AnimSet(string moveState)
         {
             switch (moveState)
             {

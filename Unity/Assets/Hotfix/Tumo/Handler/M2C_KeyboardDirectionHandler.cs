@@ -23,7 +23,8 @@ namespace ETHotfix
 
             Vector3 self = unit.Position;
             Vector3 targetPos = self + dirPos;
-            unit.GameObject.transform.LookAt(targetPos);
+
+            unit.GetComponent<TurnComponent>().Turn(targetPos);
         }
 
 

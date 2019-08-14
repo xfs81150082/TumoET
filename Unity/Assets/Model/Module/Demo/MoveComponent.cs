@@ -33,7 +33,7 @@ namespace ETModel
         {
             if (this.moveTcs == null)
             {
-                this.GetParent<Unit>().GetComponent<AnimatorComponent>().AnimSet(0.0f);
+                this.GetParent<Unit>().GetComponent<AnimatorComponent>().AnimSet(MotionType.None);
                 return;
             }
 
@@ -48,6 +48,8 @@ namespace ETModel
                 tcs.SetResult();
                 return;
             }
+
+            this.GetParent<Unit>().GetComponent<AnimatorComponent>().AnimSet(MotionType.Move);
 
             float amount = (timeNow - this.StartTime) * 1f / this.needTime;
             unit.Position = Vector3.Lerp(this.StartPos, this.Target, amount);

@@ -36,7 +36,7 @@ namespace ETModel
                     }
                 }
 
-                await this.Entity.GetComponent<MovePositionComponent>().MoveToAsync(targetPos, speed, cancellationToken);
+                await this.Entity.GetComponent<MoveComponent>().MoveToAsync(targetPos, speed, cancellationToken);
             }
         }
 

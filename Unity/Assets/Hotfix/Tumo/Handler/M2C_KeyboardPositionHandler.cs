@@ -26,13 +26,13 @@ namespace ETHotfix
 
             Debug.Log(" M2C_KeyboardPositionHandler-23-playerId: " + message.Id);
 
-            unit.GetComponent<AnimatorComponent>().AnimSet(1.0f);
+            //unit.GetComponent<AnimatorComponent>().AnimSet(1.0f);
 
-            UnitPathComponent unitPathComponent = unit.GetComponent<UnitPathComponent>();
-            unitPathComponent.StartMove(message).Coroutine();
+            //UnitPathComponent unitPathComponent = unit.GetComponent<UnitPathComponent>();
+            //unitPathComponent.StartMove(message).Coroutine();
 
-            //UnitPositionComponent unitPositionComponent = unit.GetComponent<UnitPositionComponent>();
-            //unitPositionComponent.StartMove(message).Coroutine();
+            UnitPositionComponent unitPositionComponent = unit.GetComponent<UnitPositionComponent>();
+            unitPositionComponent.StartMove(message).Coroutine();
 
             GizmosDebug.Instance.Path.Clear();
             GizmosDebug.Instance.Path.Add(new Vector3(message.X, message.Y, message.Z));
