@@ -13,6 +13,11 @@ namespace ETModel
     [Message(OuterOpcode.M2C_RemoveUnit)]
     public partial class M2C_RemoveUnit : IActorMessage { }
 
+    [Message(OuterOpcode.M2C_KeyboardPosition)]
+    public partial class M2C_KeyboardPosition : IActorMessage { }
+    [Message(OuterOpcode.M2C_KeyboardDirection)]
+    public partial class M2C_KeyboardDirection : IActorMessage { }
+
     //[Message(OuterOpcode.W2M_DeathActorRequest)]
     //public partial class W2M_DeathActorRequest : IActorLocationRequest { }
     //[Message(OuterOpcode.M2W_DeathActorResponse)]
@@ -32,21 +37,13 @@ namespace ETModel
     [Message(OuterOpcode.Death_Map)]
     public partial class Death_Map : IActorLocationMessage { }
 
-    [Message(OuterOpcode.Attack_Map)]
-    public partial class Attack_Map : IActorLocationMessage { }
     [Message(OuterOpcode.Move_Map)]
     public partial class Move_Map : IActorLocationMessage { }
-    [Message(OuterOpcode.Move_KeyCodeMap)]
-    public partial class Move_KeyCodeMap : IActorMessage { }
+    [Message(OuterOpcode.Turn_Map)]
+    public partial class Turn_Map : IActorLocationMessage { }
 
     [Message(OuterOpcode.C2M_KeyboardPathResult)]
     public partial class C2M_KeyboardPathResult : IActorLocationMessage { }
-    [Message(OuterOpcode.M2C_KeyboardPosition)]
-    public partial class M2C_KeyboardPosition : IActorMessage { }
-    [Message(OuterOpcode.M2C_KeyboardEulerAnglers)]
-    public partial class M2C_KeyboardEulerAnglers : IActorMessage { }
-    [Message(OuterOpcode.C2M_KeyboardSkillResult)]
-    public partial class C2M_KeyboardSkillResult : IActorLocationMessage { }
 
     [Message(OuterOpcode.C2M_KeyboardSkillRequest)]
     public partial class C2M_KeyboardSkillRequest : IActorLocationRequest { }
@@ -127,13 +124,12 @@ namespace ETModel
         public const ushort Patrol_Map = 1433;
         public const ushort See_Map = 1434;
         public const ushort Death_Map = 1435;
-        public const ushort Attack_Map = 1436;
         public const ushort Move_Map = 1437;
-        public const ushort Move_KeyCodeMap = 1438;
+        public const ushort Turn_Map = 1438;
 
         public const ushort C2M_KeyboardPathResult = 1451;
         public const ushort M2C_KeyboardPosition = 1452;
-        public const ushort M2C_KeyboardEulerAnglers = 1453;
+        public const ushort M2C_KeyboardDirection = 1453;
         public const ushort C2M_KeyboardSkillResult = 1454;
 
         public const ushort C2M_KeyboardSkillRequest = 1455;

@@ -8,11 +8,10 @@ namespace ETModel
 {
     public class UnitDirComponent : Component
     {
-        public Vector3 dirPos;       //向量坐标
+        //public Vector3 clientPos;    //客户端坐标
+        //public Vector3 dirPos;       //向量坐标
 
-        public Vector3 TargetPosition;  //目标坐标
-
-        public CancellationTokenSource CancellationTokenSource;
+        public Vector3 Target;    //结果坐标
 
         public override void Dispose()
         {

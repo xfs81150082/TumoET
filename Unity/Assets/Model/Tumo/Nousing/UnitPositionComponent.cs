@@ -20,7 +20,7 @@ namespace ETModel
         {
             for (int i = 0; i < this.Path.Count; ++i)
             {
-                Vector3 v = this.Path[i];
+                Vector3 targetPos = this.Path[i];
 
                 float speed = 5;
 
@@ -28,15 +28,15 @@ namespace ETModel
                 {
                     // 矫正移动速度
                     Vector3 clientPos = this.GetParent<Unit>().Position;
-                    float serverf = (ServerPos - v).magnitude;
+                    float serverf = (this.ServerPos - targetPos).magnitude;
                     if (serverf > 0.1f)
                     {
-                        float clientf = (clientPos - v).magnitude;
+                        float clientf = (clientPos - targetPos).magnitude;
                         speed = clientf / serverf * speed;
                     }
                 }
 
-                await this.Entity.GetComponent<MovePositionComponent>().MoveToAsync(v, speed, cancellationToken);
+                await this.Entity.GetComponent<MovePositionComponent>().MoveToAsync(targetPos, speed, cancellationToken);
             }
         }
 
@@ -51,11 +51,15 @@ namespace ETModel
             {
                 this.Path.Add(new Vector3(message.Xs[i], message.Ys[i], message.Zs[i]));
             }
-            ServerPos = new Vector3(message.X, message.Y, message.Z);
+            this.ServerPos = new Vector3(message.X, message.Y, message.Z);
 
             await StartMove(this.CancellationTokenSource.Token);
+
             this.CancellationTokenSource.Dispose();
             this.CancellationTokenSource = null;
         }
+
+
+
     }
 }

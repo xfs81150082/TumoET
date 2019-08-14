@@ -14,7 +14,10 @@ namespace ETHotfix
             if (unit == null)
             {
                 unit = ETModel.Game.Scene.GetComponent<UnitComponent>().Get(message.Id);
+
+                //if(unit.Id == ETModel.Game.Scene.GetComponent<PlayerComponent>().MyPlayer.UnitId) { return; }
             }
+
             if (unit == null) return;
 
             //unit.GetComponent<AnimatorComponent>().SetFloatValue("Speed", 5f);

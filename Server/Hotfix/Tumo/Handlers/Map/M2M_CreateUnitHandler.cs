@@ -69,8 +69,8 @@ namespace ETHotfix
                 unit.AddComponent<UnitSkillComponent>();
 
                 unit.AddComponent<MovePositionComponent>();
-                unit.AddComponent<UnitDirComponent>();
                 unit.AddComponent<MapPathComponent>();
+                //unit.AddComponent<UnitDirComponent>();
 
                 unit.GetComponent<NumericComponent>().PlayerNumericInit();
                 unit.GetComponent<MoveComponent>().moveSpeed = 4.0f;

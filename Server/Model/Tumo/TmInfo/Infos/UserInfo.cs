@@ -34,15 +34,29 @@ namespace ETModel
 
         void GetUsers()
         {
-            User user1 = ComponentFactory.CreateWithId<User>(101);
+            User user1 = ComponentFactory.CreateWithId<User>(11101);
             user1.Count = 1;
+            user1.Account = "tumo";
+            user1.Password = "123456";
             users.Add(user1.Id, user1);
 
-            User user2 = ComponentFactory.CreateWithId<User>(102);
+            User user2 = ComponentFactory.CreateWithId<User>(21101);
             user2.Count = 1;
-            user2.Account = "tumo";
+            user2.Account = "cost";
             user2.Password = "123456";
             users.Add(user2.Id, user2);
+
+            User user3 = ComponentFactory.CreateWithId<User>(31101);
+            user3.Count = 1;
+            user3.Account = "fa";
+            user3.Password = "123456";
+            users.Add(user3.Id, user3);
+
+            User user4 = ComponentFactory.CreateWithId<User>(41101);
+            user4.Count = 1;
+            user4.Account = "song";
+            user4.Password = "123456";
+            users.Add(user4.Id, user4);
 
             GetPlayersByUsers(users.Values.ToArray());
 
