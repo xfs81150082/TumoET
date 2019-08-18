@@ -11,8 +11,8 @@ namespace ETHotfix
     {
         public override void Update(SqrDistanceComponent self)
         {
-            self.SqrDistance();
-            self.UpdateIsAttacking();
+            //self.SqrDistance();
+            //self.UpdateIsAttacking();
         }    
 
 

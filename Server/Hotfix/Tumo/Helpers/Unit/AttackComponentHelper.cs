@@ -8,66 +8,32 @@ namespace ETHotfix
 {
     public static class AttackComponentHelper
     {
+        #region 行为树模式
         /// <summary>
-        /// 攻击 CD 计时
+        /// 检查有无进入战斗状态
         /// </summary>
-        /// <param name="self"></param>
-        public static void TakeAttack(this AttackComponent self)
+        /// <param name="unit"></param>
+        public static bool CheckIsBattling(this AttackComponent self)
         {
-            if (self.isDeath) return;
-
-            GetAttackTarget(self);
-
-            if (self.target != null)
+            if (self.GetParent<Unit>().GetComponent<SqrDistanceComponent>().neastDistance < self.battlingDis)
             {
-                self.attackDistance = SqrDistanceComponentHelper.Distance(self.GetParent<Unit>().Position, self.target.Position);
-                if (self.attackDistance < self.cdDistance)
-                {
-                    if (!self.startNull)
-                    {
-                        self.startTime = TimeHelper.ClientNowSeconds();
-                        self.startNull = true;
-                    }
+                self.isBattling = true;
 
-                    long timeNow = TimeHelper.ClientNowSeconds();
-                    if ((timeNow - self.startTime) > self.attcdTime)
-                    {
-                        if (self.isDeath)
-                        {
-                            self.target = null;
-                            return;
-                        }
-                        if (self.target.GetComponent<AttackComponent>().isDeath)
-                        {
-                            self.target = null;
-                            return;
-                        }
-                        //普通攻击，相当于施放技能41101，技能等级为0
-                        SkillItem skillItem = ComponentFactory.CreateWithId<SkillItem>(41101);
-                        skillItem.GetComponent<ChangeType>().CastId = self.GetParent<Unit>().Id;
-                        //skillItem.GetComponent<ChangeType>().TargetIds.Add(self.target.Id);
-                        skillItem.GetComponent<NumericComponent>().Set(NumericType.CaseBase, 14);
+                return false;
+            }
+            else
+            {
+                self.isBattling = false;
 
-                        self.target.GetComponent<AttackComponent>().TakeDamage(skillItem);
-                        self.startNull = false;
-                    }
-                }
-                else
-                {
-                    if (self.startNull)
-                    {
-                        self.startTime = 0;
-                        self.startNull = false;
-                    }
-                }
-            }           
+                return true;
+            }
         }
-   
+
         /// <summary>
         /// 单目标 得到敌人
         /// </summary>
         /// <param name="unit"></param>
-        static void GetAttackTarget(this AttackComponent self)
+        public static bool CheckAttackTarget(this AttackComponent self)
         {
             Unit unit = self.GetParent<Unit>();
 
@@ -76,21 +42,76 @@ namespace ETHotfix
                 if (unit.GetComponent<RayUnitComponent>().target != null)
                 {
                     self.target = unit.GetComponent<RayUnitComponent>().target;
+
+                    return true;
                 }
                 else
                 {
                     ///正前方，5 米内，最近小怪
+
                 }
             }
             else
             {
-                if (unit.GetComponent<SeeComponent>() != null && unit.GetComponent<SeeComponent>().target != null)
+                if (unit.GetComponent<SeekComponent>() != null && unit.GetComponent<SeekComponent>().target != null)
                 {
-                    self.target = unit.GetComponent<SeeComponent>().target;
+                    self.targetDistance = SqrDistanceComponentHelper.Distance(unit.Position, unit.GetComponent<SeekComponent>().target.Position);
+                    if (self.targetDistance < self.attackDis)
+                    {
+                        self.target = unit.GetComponent<SeekComponent>().target;
+
+                        return true;
+                    }
                 }
             }
+
+            self.target = null;
+
+            return false;
         }
-  
+
+        /// <summary>
+        /// 攻击 CD 计时
+        /// </summary>
+        /// <param name="self"></param>
+        public static void AttackTarget(this AttackComponent self)
+        {
+            if (self.isDeath) return;
+
+            if (self.target != null)
+            {
+                if (!self.startNull)
+                {
+                    self.startTime = TimeHelper.ClientNowSeconds();
+                    self.startNull = true;
+                }
+
+                long timeNow = TimeHelper.ClientNowSeconds();
+                if ((timeNow - self.startTime) > self.attcdTime)
+                {
+                    if (self.isDeath)
+                    {
+                        self.target = null;
+                        return;
+                    }
+                    if (self.target.GetComponent<AttackComponent>().isDeath)
+                    {
+                        self.target = null;
+                        return;
+                    }
+                    //普通攻击，相当于施放技能41101，技能等级为0
+                    SkillItem skillItem = ComponentFactory.CreateWithId<SkillItem>(41101);
+                    skillItem.GetComponent<ChangeType>().CastId = self.GetParent<Unit>().Id;
+                    //skillItem.GetComponent<ChangeType>().TargetIds.Add(self.target.Id);
+                    skillItem.GetComponent<NumericComponent>().Set(NumericType.CaseBase, 14);
+
+                    self.target.GetComponent<AttackComponent>().TakeDamage(skillItem);
+                    self.startNull = false;
+                }
+
+            }           
+        }
+
         /// <summary>
         /// 单目标 攻击技能 加入减伤列队
         /// </summary>
@@ -132,44 +153,51 @@ namespace ETHotfix
                     numSelf[NumericType.ValuationAdd] -= domhp;
                 }
 
-                //判断死亡结算
-                self.DeathSettlement();
+                //if (self.CheckDeath())
+                //{
+                //    //判断死亡结算
+                //    self.RemoveUnit();
 
-                if (self.isDeath)
-                {
-                    break;
-                }
+                //    self.GetExpAndCoin();
+
+                //    break;
+                //}
 
                 Console.WriteLine(" TakeDamage-143-Myself(" + myself.UnitType + ") ： " + "-" + domhp + " / " + numSelf[NumericType.Valuation] + " /Count: " + self.TakeDamages.Count);
             }
         }
 
         /// <summary>
+        /// 检查是否死亡
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
+        public static bool CheckDeath(this AttackComponent self)
+        {
+            NumericComponent numC = self.GetParent<Unit>().GetComponent<NumericComponent>();
+
+            if (numC[NumericType.Valuation] > 0)
+            {
+                self.isDeath = false;
+
+                return false;
+            }
+
+            self.isDeath = true;
+
+            return true;
+        }
+
+        /// <summary>
         /// 死亡判断 后结算
         /// </summary>
         /// <param name="unit"></param>
-        public static void DeathSettlement(this AttackComponent self)
+        public static void RemoveUnit(this AttackComponent self)
         {
-            Console.WriteLine(" AttackComponentHelper-153- type: " + self.GetParent<Unit>().UnitType + " 判断 结算。" + self.isSettlement);
+            Console.WriteLine(" AttackComponentHelper-172- type: " + self.GetParent<Unit>().UnitType + " 删除单元 Unit。");
 
-            NumericComponent numC = self.GetParent<Unit>().GetComponent<NumericComponent>();
-
-            if (numC[NumericType.Valuation] <= 0)
-            {
-                ///Hp小于0时，标记死亡状态
-                self.isDeath = true;
-
-                ActorLocationSender actorLocationSender = Game.Scene.GetComponent<ActorLocationSenderComponent>().Get(self.GetParent<Unit>().Id);
-                actorLocationSender.Send(new Death_Map());
-
-                if (self.isSettlement) return;
-
-                self.GetExpAndCoin();
-
-                self.isSettlement = true;
-
-                Console.WriteLine(" AttackComponentHelper-171- type: " + self.GetParent<Unit>().UnitType + " 完成 结算。" + self.isSettlement);
-            }
+            ActorLocationSender actorLocationSender = Game.Scene.GetComponent<ActorLocationSenderComponent>().Get(self.GetParent<Unit>().Id);
+            actorLocationSender.Send(new Death_Map());
         }
 
         /// <summary>
@@ -178,9 +206,10 @@ namespace ETHotfix
         /// <param name="self"></param>
         public static void GetExpAndCoin(this AttackComponent self)
         {
+            if (self.isSettlement) return;
+
             Unit selfunit = self.GetParent<Unit>();
             NumericComponent numC = selfunit.GetComponent<NumericComponent>();
-            //AttackComponent targetAttack = selfunit.GetComponent<AttackComponent>();
 
             if (self != null)
             {
@@ -218,8 +247,95 @@ namespace ETHotfix
                         break;
                 }
             }
+            self.isSettlement = true;
         }
 
+
+        #endregion
+
+        /// <summary>
+        /// 攻击 CD 计时
+        /// </summary>
+        /// <param name="self"></param>
+        //public static void TakeAttack(this AttackComponent self)
+        //{
+        //    if (self.isDeath) return;
+
+        //    //GetAttackTarget(self);
+
+        //    if (self.target != null)
+        //    {
+        //        self.attackDistance = SqrDistanceComponentHelper.Distance(self.GetParent<Unit>().Position, self.target.Position);
+        //        if (self.attackDistance < self.cdDistance)
+        //        {
+        //            if (!self.startNull)
+        //            {
+        //                self.startTime = TimeHelper.ClientNowSeconds();
+        //                self.startNull = true;
+        //            }
+
+        //            long timeNow = TimeHelper.ClientNowSeconds();
+        //            if ((timeNow - self.startTime) > self.attcdTime)
+        //            {
+        //                if (self.isDeath)
+        //                {
+        //                    self.target = null;
+        //                    return;
+        //                }
+        //                if (self.target.GetComponent<AttackComponent>().isDeath)
+        //                {
+        //                    self.target = null;
+        //                    return;
+        //                }
+        //                //普通攻击，相当于施放技能41101，技能等级为0
+        //                SkillItem skillItem = ComponentFactory.CreateWithId<SkillItem>(41101);
+        //                skillItem.GetComponent<ChangeType>().CastId = self.GetParent<Unit>().Id;
+        //                //skillItem.GetComponent<ChangeType>().TargetIds.Add(self.target.Id);
+        //                skillItem.GetComponent<NumericComponent>().Set(NumericType.CaseBase, 14);
+
+        //                self.target.GetComponent<AttackComponent>().TakeDamage(skillItem);
+        //                self.startNull = false;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            if (self.startNull)
+        //            {
+        //                self.startTime = 0;
+        //                self.startNull = false;
+        //            }
+        //        }
+        //    }           
+        //}
+   
+
+        /// <summary>
+        /// 死亡判断 后结算
+        /// </summary>
+        /// <param name="unit"></param>
+        //public static void DeathSettlement(this AttackComponent self)
+        //{
+        //    Console.WriteLine(" AttackComponentHelper-153- type: " + self.GetParent<Unit>().UnitType + " 判断 结算。" + self.isSettlement);
+
+        //    NumericComponent numC = self.GetParent<Unit>().GetComponent<NumericComponent>();
+
+        //    if (numC[NumericType.Valuation] <= 0)
+        //    {
+        //        ///Hp小于0时，标记死亡状态
+        //        self.isDeath = true;
+
+        //        ActorLocationSender actorLocationSender = Game.Scene.GetComponent<ActorLocationSenderComponent>().Get(self.GetParent<Unit>().Id);
+        //        actorLocationSender.Send(new Death_Map());
+
+        //        if (self.isSettlement) return;
+
+        //        self.GetExpAndCoin();
+
+        //        self.isSettlement = true;
+
+        //        Console.WriteLine(" AttackComponentHelper-171- type: " + self.GetParent<Unit>().UnitType + " 完成 结算。" + self.isSettlement);
+        //    }
+        //}
 
     }
 }
