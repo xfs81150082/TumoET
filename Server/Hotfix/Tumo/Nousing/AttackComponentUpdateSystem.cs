@@ -11,7 +11,7 @@ namespace ETHotfix
     {
         public override void Update(AttackComponent self)
         {
-            self.TakeAttack();
+            //self.TakeAttack();
         }
 
 

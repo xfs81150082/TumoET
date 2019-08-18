@@ -9,6 +9,7 @@ namespace ETHotfix
 {
     public static class SqrDistanceComponentHelper
     {
+        #region 行为树模式
         public static void SqrDistance(this SqrDistanceComponent self)
         {
             AoiUnitComponent aoiUnit = self.GetParent<Unit>().GetComponent<AoiUnitComponent>();
@@ -48,7 +49,9 @@ namespace ETHotfix
                 self.neastUnit = null;
                 return;
             }
+
             self.neastUnit = NeastUnit(self.GetParent<Unit>(), units);
+
             if (self.neastUnit != null)
             {
                 self.neastDistance = Distance(self.GetParent<Unit>().Position, self.neastUnit.Position);
@@ -101,48 +104,50 @@ namespace ETHotfix
             return offsect.sqrMagnitude;
         }
 
-        public static void UpdateIsAttacking(this SqrDistanceComponent self)
-        {
-            if (self.neastDistance < self.enterAttackSqr)
-            {
-                self.GetParent<Unit>().GetComponent<AttackComponent>().isAttacking = true;
+        #endregion
 
-                if (self.GetParent<Unit>().GetComponent<PatrolComponent>() != null)
-                {
-                    self.GetParent<Unit>().GetComponent<PatrolComponent>().isPatrol = false;
-                }
+        //public static void UpdateIsAttacking(this SqrDistanceComponent self)
+        //{
+        //    if (self.neastDistance < self.enterAttackSqr)
+        //    {
+        //        self.GetParent<Unit>().GetComponent<AttackComponent>().isBattling = true;
 
-                if (!self.isShow)
-                {
-                    Console.WriteLine(" SqrDistanceHelper-117- type: " + self.GetParent<Unit>().UnitType + " 进入 战斗。" + self.GetParent<Unit>().GetComponent<AttackComponent>().isAttacking);
-                    if (self.GetParent<Unit>().GetComponent<PatrolComponent>() != null)
-                    {
-                        Console.WriteLine(" SqrDistanceHelper-120- type: " + self.GetParent<Unit>().UnitType + " 进入 追击。" + self.GetParent<Unit>().GetComponent<PatrolComponent>().isPatrol);
-                    }
-                    self.isShow = true;
-                }
-            }
-            else
-            {
-                self.GetParent<Unit>().GetComponent<AttackComponent>().isAttacking = false;
+        //        if (self.GetParent<Unit>().GetComponent<PatrolComponent>() != null)
+        //        {
+        //            self.GetParent<Unit>().GetComponent<PatrolComponent>().isPatrol = false;
+        //        }
 
-                if (self.GetParent<Unit>().GetComponent<PatrolComponent>() != null)
-                {
-                    self.GetParent<Unit>().GetComponent<PatrolComponent>().isPatrol = true;
-                }
+        //        if (!self.isShow)
+        //        {
+        //            Console.WriteLine(" SqrDistanceHelper-117- type: " + self.GetParent<Unit>().UnitType + " 进入 战斗。" + self.GetParent<Unit>().GetComponent<AttackComponent>().isBattling);
+        //            if (self.GetParent<Unit>().GetComponent<PatrolComponent>() != null)
+        //            {
+        //                Console.WriteLine(" SqrDistanceHelper-120- type: " + self.GetParent<Unit>().UnitType + " 进入 追击。" + self.GetParent<Unit>().GetComponent<PatrolComponent>().isPatrol);
+        //            }
+        //            self.isShow = true;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        self.GetParent<Unit>().GetComponent<AttackComponent>().isBattling = false;
 
-                if (self.isShow)
-                {
-                    Console.WriteLine(" SqrDistanceHelper-136- type: " + self.GetParent<Unit>().UnitType + " 离开 战斗。" + self.GetParent<Unit>().GetComponent<AttackComponent>().isAttacking);
-                    if (self.GetParent<Unit>().GetComponent<PatrolComponent>() != null)
-                    {
-                        Console.WriteLine(" SqrDistanceHelper-139- type: " + self.GetParent<Unit>().UnitType + " 离开 追击。" + self.GetParent<Unit>().GetComponent<PatrolComponent>().isPatrol);
-                    }
-                    self.isShow = false;
-                }
+        //        if (self.GetParent<Unit>().GetComponent<PatrolComponent>() != null)
+        //        {
+        //            self.GetParent<Unit>().GetComponent<PatrolComponent>().isPatrol = true;
+        //        }
 
-            }
-        }
+        //        if (self.isShow)
+        //        {
+        //            Console.WriteLine(" SqrDistanceHelper-136- type: " + self.GetParent<Unit>().UnitType + " 离开 战斗。" + self.GetParent<Unit>().GetComponent<AttackComponent>().isBattling);
+        //            if (self.GetParent<Unit>().GetComponent<PatrolComponent>() != null)
+        //            {
+        //                Console.WriteLine(" SqrDistanceHelper-139- type: " + self.GetParent<Unit>().UnitType + " 离开 追击。" + self.GetParent<Unit>().GetComponent<PatrolComponent>().isPatrol);
+        //            }
+        //            self.isShow = false;
+        //        }
+
+        //    }
+        //}
 
 
     }

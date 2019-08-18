@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ETModel
 {
-    public class SeeComponent : Component
+    public class SeekComponent : Component
     {
         public bool isSee = false;                                           //是否在追击敌人
         public Unit target;                                                  //选定的目标，追击或攻击的目标必定是选定的目标

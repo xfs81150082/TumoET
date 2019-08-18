@@ -12,7 +12,7 @@ namespace ETHotfix
     {
         public override void Update(PatrolComponent self)
         {
-           self.UpdatePatrol();
+           //self.UpdatePatrol();
         }
         
         

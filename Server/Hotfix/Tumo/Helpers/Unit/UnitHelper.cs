@@ -32,15 +32,15 @@ namespace ETHotfix
             unit.GetComponent<SqrDistanceComponent>().neastUnit = null;
             unit.GetComponent<SqrDistanceComponent>().neastDistance = float.PositiveInfinity;
             unit.GetComponent<AttackComponent>().target = null;
-            unit.GetComponent<AttackComponent>().isAttacking = false;
+            unit.GetComponent<AttackComponent>().isBattling = false;
 
             if (unit.GetComponent<PatrolComponent>() != null)
             {
                 unit.GetComponent<PatrolComponent>().isPatrol = true;
             }
-            if (unit.GetComponent<SeeComponent>() != null)
+            if (unit.GetComponent<SeekComponent>() != null)
             {
-                unit.GetComponent<SeeComponent>().target = null;
+                unit.GetComponent<SeekComponent>().target = null;
             }
         }
 
