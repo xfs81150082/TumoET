@@ -20,6 +20,7 @@ namespace ETHotfix
             }
             Skill skill = Game.Scene.GetComponent<SkillComponent>().Get(skid);
             self.curSkillItem = ComponentFactory.CreateWithId<SkillItem>(skid);
+
             self.curSkillItem.UpdateLevel(10);
             
             if (ray.target != null)

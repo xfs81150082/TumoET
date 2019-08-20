@@ -12,6 +12,8 @@ namespace ETHotfix
             switch (self.GetComponent<Skill>().TribeType)
             {
                 case TribeType.Valuation:
+                    self.GetComponent<NumericComponent>().Set(NumericType.ValuationBase, 12);
+                    self.GetComponent<NumericComponent>().Set(NumericType.ValuationAdd, level * 4);
                     break;
                 case TribeType.Case:
                     self.GetComponent<NumericComponent>().Set(NumericType.CaseBase, 14);
