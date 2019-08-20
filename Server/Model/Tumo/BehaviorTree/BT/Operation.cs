@@ -24,12 +24,12 @@ namespace ETModel
             this.fn = fn;
         }
 
-        public Operation(System.Action fn)
+        public Operation(Action fn)
         {
             this.fn = fn;
         }
 
-        public Operation(System.Func<IEnumerator<BtState>> coroutineFactory)
+        public Operation(Func<IEnumerator<BtState>> coroutineFactory)
         {
             this.coroutineFactory = coroutineFactory;
         }
@@ -44,7 +44,9 @@ namespace ETModel
             else
             {
                 if (coroutine == null)
+                {
                     coroutine = coroutineFactory();
+                }
                 if (!coroutine.MoveNext())
                 {
                     coroutine = null;
@@ -52,7 +54,9 @@ namespace ETModel
                 }
                 var result = coroutine.Current;
                 if (result == BtState.Continue)
+                {
                     return BtState.Continue;
+                }
                 else
                 {
                     coroutine = null;
@@ -63,7 +67,7 @@ namespace ETModel
 
         public override string ToString()
         {
-            return "Action : " + fn.Method.ToString();
+            return "Operation : " + fn.Method.ToString();
         }
     }
 

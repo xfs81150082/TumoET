@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ETModel
 {
-    public  class TreePlayerComponent : Component
+    public  class PlayerBehaviorTreeComponent : Component
     {
         public Root root;
     }

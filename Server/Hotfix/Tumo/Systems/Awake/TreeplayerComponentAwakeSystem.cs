@@ -6,9 +6,9 @@ using System.Text;
 namespace ETHotfix
 {
     [ObjectSystem]
-    public class TreePlayerComponentAwakeSystem : AwakeSystem<TreePlayerComponent>
+    public class TreePlayerComponentAwakeSystem : AwakeSystem<PlayerBehaviorTreeComponent>
     {
-        public override void Awake(TreePlayerComponent self)
+        public override void Awake(PlayerBehaviorTreeComponent self)
         {
             TreePlayerInit(self);   /// AI 玩家智能 行为树模式
         }
@@ -17,7 +17,7 @@ namespace ETHotfix
         /// AI 玩家智能 行为树模式
         /// </summary>
         /// <param name="self"></param>
-        void TreePlayerInit(TreePlayerComponent self)
+        void TreePlayerInit(PlayerBehaviorTreeComponent self)
         {
             self.root = BT.Root();
 

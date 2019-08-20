@@ -6,9 +6,9 @@ using System.Text;
 namespace ETHotfix
 {
     [ObjectSystem]
-    public class TreeMonsterComponentUpdateSystem : UpdateSystem<TreeMonsterComponent>
+    public class TreeMonsterComponentUpdateSystem : UpdateSystem<MonsterBehaviorTreeComponent>
     {
-        public override void Update(TreeMonsterComponent self)
+        public override void Update(MonsterBehaviorTreeComponent self)
         {
             self.root.Tick();
         }

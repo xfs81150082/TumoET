@@ -5,7 +5,7 @@ using System.Text;
 namespace ETModel
 {
     //根节点，循环执行
-    public class Root : Block
+    public class Root : Branch
     {
         public bool isTerminated = false;
 
