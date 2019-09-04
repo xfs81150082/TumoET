@@ -109,7 +109,7 @@ namespace ETHotfix
                     tem.seeGrids.Add(nine);
                 }
 
-                Console.WriteLine(" AoiGridComponentAwakeSystem-122-seeGrids: " + tem.gridId + " / " + tem.seeGrids.Count);
+                //Console.WriteLine(" AoiGridComponentAwakeSystem-122-seeGrids: " + tem.gridId + " / " + tem.seeGrids.Count);
             }
         }
 

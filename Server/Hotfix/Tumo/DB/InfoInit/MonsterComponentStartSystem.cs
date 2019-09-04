@@ -14,7 +14,7 @@ namespace ETHotfix
         public override void Start(MonsterComponent self)
         {
             ///先向 BD 服务器 初始化小怪数据
-            GetEnemyFromBD();
+            //GetEnemyFromBD();
         }
 
         /// <summary>

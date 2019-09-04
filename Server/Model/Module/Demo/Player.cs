@@ -20,6 +20,10 @@ namespace ETModel
         public long UnitId { get; set; }
 
         public Vector3 spawnPosition;
+        public string createdate;
+        public int exp;
+        public int hp;
+        public int level;
 
         public Player() { }
 
