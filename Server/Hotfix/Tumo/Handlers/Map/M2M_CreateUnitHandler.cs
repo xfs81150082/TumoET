@@ -68,7 +68,7 @@ namespace ETHotfix
                 unit.AddComponent<RayUnitComponent>();
                 unit.AddComponent<UnitSkillComponent>();
                 unit.AddComponent<MapPathComponent>();
-                unit.AddComponent<UnitTreeComponent>();
+                unit.AddComponent<PlayerBehaviorTreeComponent>();
 
                 Console.WriteLine(" M2M_CreateUnitHandler-72-gateActorid: " + unit.GetComponent<UnitGateComponent>().GateSessionActorId);
                 Console.WriteLine(" M2M_CreateUnitHandler-73-Players: " + Game.Scene.GetComponent<UnitComponent>().Count);
@@ -113,7 +113,7 @@ namespace ETHotfix
                 unit.AddComponent<RecoverComponent>();
                 unit.AddComponent<PatrolComponent>();
                 unit.AddComponent<SeekComponent>();
-                unit.AddComponent<UnitTreeComponent>();
+                unit.AddComponent<MonsterBehaviorTreeComponent>();
 
                 unit.GetComponent<MoveComponent>().moveSpeed = 2.0f;
 

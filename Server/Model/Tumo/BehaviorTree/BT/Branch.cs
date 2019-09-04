@@ -11,7 +11,9 @@ namespace ETModel
         public virtual Branch OpenBranch(params BtNode[] children)
         {
             for (var i = 0; i < children.Length; i++)
+            {
                 this.children.Add(children[i]);
+            }
             return this;
         }
 

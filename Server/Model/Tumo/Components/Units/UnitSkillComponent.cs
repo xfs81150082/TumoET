@@ -10,6 +10,7 @@ namespace ETModel
         public Dictionary<string, long> keycodeIds = new Dictionary<string, long>();
         public Dictionary<long, int> idLevels = new Dictionary<long, int>();
         public SkillItem curSkillItem;
+        public Root root;
 
     }
 }

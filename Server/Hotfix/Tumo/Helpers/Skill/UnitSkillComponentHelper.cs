@@ -14,12 +14,13 @@ namespace ETHotfix
 
             self.currentKey = keycode;
             self.keycodeIds.TryGetValue(self.currentKey, out long skid);
-            Skill skill = Game.Scene.GetComponent<SkillComponent>().Get(skid);
             if (skid == 0)
             {
                 skid = 41101;
             }
+            Skill skill = Game.Scene.GetComponent<SkillComponent>().Get(skid);
             self.curSkillItem = ComponentFactory.CreateWithId<SkillItem>(skid);
+
             self.curSkillItem.UpdateLevel(10);
             
             if (ray.target != null)
@@ -29,8 +30,9 @@ namespace ETHotfix
 
             if (attack.target != null)
             {
-                attack.target.GetComponent<AttackComponent>().TakeDamages.Enqueue(self.curSkillItem);
+                attack.target.GetComponent<AttackComponent>().TakeDamage(self.curSkillItem);
             }
+
         }
 
 

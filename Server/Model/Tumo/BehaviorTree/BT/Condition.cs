@@ -5,9 +5,9 @@ using System.Text;
 namespace ETModel
 {
     [ObjectSystem]
-    public class ConditionAwakeSystem : AwakeSystem<Condition, System.Func<bool>>
+    public class ConditionAwakeSystem : AwakeSystem<Condition, Func<bool>>
     {
-        public override void Awake(Condition self, System.Func<bool> a)
+        public override void Awake(Condition self, Func<bool> a)
         {
             self.Awake(a);
         }
@@ -15,16 +15,14 @@ namespace ETModel
 
     public class Condition : BtNode
     {
-        public System.Func<bool> fn;
+        public Func<bool> fn;
 
-        public void Awake(System.Func<bool> fn)
+        public void Awake(Func<bool> fn)
         {
             this.fn = fn;
         }
 
-        //public Condition() { }
-
-        public Condition(System.Func<bool> fn)
+        public Condition(Func<bool> fn)
         {
             this.fn = fn;
         }

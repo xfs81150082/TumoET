@@ -81,7 +81,7 @@ namespace ETModel
 
         void UpdatePlayerAnimator()
         {
-            Debug.Log(" AnimatorComponent-84-MotionType: " + MotionType);
+            //Debug.Log(" AnimatorComponent-84-MotionType: " + MotionType);
 
             if (this.isStop)
 			{

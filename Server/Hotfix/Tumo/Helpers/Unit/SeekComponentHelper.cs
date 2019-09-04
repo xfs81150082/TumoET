@@ -8,14 +8,20 @@ namespace ETHotfix
     public static class SeekComponentHelper
     {
         #region 行为树模式
-        /// 检查有无追击目标
-        public static void CheckSeekTarget(this SeekComponent self)
+        /// 检查有无追击目标-Monster
+        public static bool CheckSeekTarget(this SeekComponent self)
         {
+            self.GetParent<Unit>().GetComponent<SqrDistanceComponent>().SqrDistance();
+
             if (self.target == null)
             {
                 if (self.GetParent<Unit>().GetComponent<SqrDistanceComponent>().neastDistance < self.enterSeeDis)
                 {
                     self.target = self.GetParent<Unit>().GetComponent<SqrDistanceComponent>().neastUnit;
+
+                    self.GetParent<Unit>().GetComponent<AttackComponent>().isBattling = true;
+
+                    return true;
                 }
             }
             else
@@ -27,11 +33,24 @@ namespace ETHotfix
                     if (self.GetParent<Unit>().GetComponent<SqrDistanceComponent>().neastDistance < self.enterSeeDis)
                     {
                         self.target = self.GetParent<Unit>().GetComponent<SqrDistanceComponent>().neastUnit;
-                    }
 
-                    self.target = null;
+                        self.GetParent<Unit>().GetComponent<AttackComponent>().isBattling = true;
+
+                        return true;
+                    }
+                }
+                else
+                {
+                    self.GetParent<Unit>().GetComponent<AttackComponent>().isBattling = true;
+
+                    return true;
                 }
             }
+            self.target = null;
+
+            self.GetParent<Unit>().GetComponent<AttackComponent>().isBattling = false;
+
+            return false;
         }
 
         /// 追击目标

@@ -10,8 +10,8 @@ namespace ETModel
         public static Sequence Sequence() { return new Sequence(); }
         public static Selector Selector(bool shuffle = false) { return new Selector(shuffle); }
 
-        public static Condition Condition(Func<bool> fn) { return new Condition(fn); }
-        public static Operation Call(Action fn) { return new Operation(fn); }
+        public static Condition Call(Func<bool> fn) { return new Condition(fn); }
+        public static Operation Send(Action fn) { return new Operation(fn); }
 
         public static Trigger Trigger(string name, bool set = true) { return new Trigger(name, set); }     
     }

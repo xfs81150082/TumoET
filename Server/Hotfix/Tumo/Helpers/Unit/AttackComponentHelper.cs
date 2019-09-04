@@ -10,11 +10,13 @@ namespace ETHotfix
     {
         #region 行为树模式
         /// <summary>
-        /// 检查有无进入战斗状态
+        /// 检查有无进入战斗状态-Player
         /// </summary>
         /// <param name="unit"></param>
         public static bool CheckIsBattling(this AttackComponent self)
         {
+            self.GetParent<Unit>().GetComponent<SqrDistanceComponent>().SqrDistance();
+
             if (self.GetParent<Unit>().GetComponent<SqrDistanceComponent>().neastDistance < self.battlingDis)
             {
                 self.isBattling = true;
@@ -33,37 +35,52 @@ namespace ETHotfix
         /// 单目标 得到敌人
         /// </summary>
         /// <param name="unit"></param>
-        public static bool CheckAttackTarget(this AttackComponent self)
+        public static bool PlayerCheckAttackTarget(this AttackComponent self)
         {
             Unit unit = self.GetParent<Unit>();
 
-            if (unit.GetComponent<RayUnitComponent>() != null)
+            if (unit.GetComponent<RayUnitComponent>() != null && unit.GetComponent<RayUnitComponent>().target != null)
             {
-                if (unit.GetComponent<RayUnitComponent>().target != null)
+                self.targetDistance = SqrDistanceComponentHelper.Distance(unit.Position, unit.GetComponent<RayUnitComponent>().target.Position);
+
+                if (self.targetDistance < self.attackDis)
                 {
                     self.target = unit.GetComponent<RayUnitComponent>().target;
 
                     return true;
                 }
-                else
-                {
-                    ///正前方，5 米内，最近小怪
-
-                }
             }
             else
             {
-                if (unit.GetComponent<SeekComponent>() != null && unit.GetComponent<SeekComponent>().target != null)
-                {
-                    self.targetDistance = SqrDistanceComponentHelper.Distance(unit.Position, unit.GetComponent<SeekComponent>().target.Position);
-                    if (self.targetDistance < self.attackDis)
-                    {
-                        self.target = unit.GetComponent<SeekComponent>().target;
+                ///正前方，5 米内，最近小怪
 
-                        return true;
-                    }
+            }
+
+            self.target = null;
+
+            return false;
+        }
+
+        /// <summary>
+        /// 单目标 得到敌人
+        /// </summary>
+        /// <param name="unit"></param>
+        public static bool MonsterCheckAttackTarget(this AttackComponent self)
+        {
+            Unit unit = self.GetParent<Unit>();
+
+            if (unit.GetComponent<SeekComponent>() != null && unit.GetComponent<SeekComponent>().target != null)
+            {
+                self.targetDistance = SqrDistanceComponentHelper.Distance(unit.Position, unit.GetComponent<SeekComponent>().target.Position);
+
+                if (self.targetDistance < self.attackDis)
+                {
+                    self.target = unit.GetComponent<SeekComponent>().target;
+
+                    return true;
                 }
             }
+
 
             self.target = null;
 
@@ -76,40 +93,30 @@ namespace ETHotfix
         /// <param name="self"></param>
         public static void AttackTarget(this AttackComponent self)
         {
-            if (self.isDeath) return;
+            if (self.delTime == 0)
+            {            
+                //普通攻击，相当于施放技能41101，技能等级为0
+                SkillItem skillItem = ComponentFactory.CreateWithId<SkillItem>(41101);
 
-            if (self.target != null)
+                skillItem.UpdateLevel(0);
+
+                skillItem.GetComponent<ChangeType>().CastId = self.GetParent<Unit>().Id;
+
+                skillItem.GetComponent<NumericComponent>().Set(NumericType.CaseBase, 14);
+
+                self.target.GetComponent<AttackComponent>().TakeDamage(skillItem);
+
+                self.startTime = TimeHelper.ClientNowSeconds();
+            }
+
+            long timeNow = TimeHelper.ClientNowSeconds();
+
+            self.delTime = timeNow - self.startTime + 1;
+
+            if (self.delTime > (self.attcdTime + 1)) 
             {
-                if (!self.startNull)
-                {
-                    self.startTime = TimeHelper.ClientNowSeconds();
-                    self.startNull = true;
-                }
-
-                long timeNow = TimeHelper.ClientNowSeconds();
-                if ((timeNow - self.startTime) > self.attcdTime)
-                {
-                    if (self.isDeath)
-                    {
-                        self.target = null;
-                        return;
-                    }
-                    if (self.target.GetComponent<AttackComponent>().isDeath)
-                    {
-                        self.target = null;
-                        return;
-                    }
-                    //普通攻击，相当于施放技能41101，技能等级为0
-                    SkillItem skillItem = ComponentFactory.CreateWithId<SkillItem>(41101);
-                    skillItem.GetComponent<ChangeType>().CastId = self.GetParent<Unit>().Id;
-                    //skillItem.GetComponent<ChangeType>().TargetIds.Add(self.target.Id);
-                    skillItem.GetComponent<NumericComponent>().Set(NumericType.CaseBase, 14);
-
-                    self.target.GetComponent<AttackComponent>().TakeDamage(skillItem);
-                    self.startNull = false;
-                }
-
-            }           
+                self.delTime = 0;
+            }
         }
 
         /// <summary>
@@ -152,17 +159,6 @@ namespace ETHotfix
                 {
                     numSelf[NumericType.ValuationAdd] -= domhp;
                 }
-
-                //if (self.CheckDeath())
-                //{
-                //    //判断死亡结算
-                //    self.RemoveUnit();
-
-                //    self.GetExpAndCoin();
-
-                //    break;
-                //}
-
                 Console.WriteLine(" TakeDamage-143-Myself(" + myself.UnitType + ") ： " + "-" + domhp + " / " + numSelf[NumericType.Valuation] + " /Count: " + self.TakeDamages.Count);
             }
         }

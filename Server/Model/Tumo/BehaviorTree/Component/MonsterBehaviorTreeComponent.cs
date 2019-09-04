@@ -4,9 +4,8 @@ using System.Text;
 
 namespace ETModel
 {
-    public  class UnitTreeComponent : Component
+    public class MonsterBehaviorTreeComponent : Component
     {
         public Root root;
-
     }
 }
