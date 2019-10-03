@@ -144,7 +144,7 @@ namespace App
                         Game.Scene.AddComponent<ConsoleComponent>();
                         // Game.Scene.AddComponent<HttpComponent>();
 
-                        Console.WriteLine(" 内网： " + innerConfig.Address + " 外网： " + outerConfig.Address);
+                        Console.WriteLine(" 内网： " + innerConfig.Address + " 外网1： " + outerConfig.Address + " 外网2： " + outerConfig.Address2);
 
 
                         #region ///20190613

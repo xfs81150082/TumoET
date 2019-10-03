@@ -10,6 +10,10 @@ namespace ETHotfix
         {
             try
             {
+                //2019.9.22
+                //GlobalConfigComponent.Instance.GlobalProto.Address = "111.231.11.127:10002";
+                //GlobalConfigComponent.Instance.GlobalProto.Address = "111.231.135.176:10002";
+
                 // 创建一个ETModel层的Session
                 ETModel.Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(GlobalConfigComponent.Instance.GlobalProto.Address);
 				
@@ -18,7 +22,8 @@ namespace ETHotfix
                 R2C_Login r2CLogin = (R2C_Login) await realmSession.Call(new C2R_Login() { Account = account, Password = password });
                 realmSession.Dispose();
 
-                Debug.Log(" LoginHelper-21-key/Address: " + r2CLogin.Key + " / " + r2CLogin.Address);
+                Debug.Log(" LoginHelper-21-Address: " + GlobalConfigComponent.Instance.GlobalProto.Address);
+                Debug.Log(" LoginHelper-22-key/Address: " + r2CLogin.Key + " / " + r2CLogin.Address);
 
                 // 创建一个ETModel层的Session,并且保存到ETModel.SessionComponent中
                 ETModel.Session gateSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(r2CLogin.Address);
